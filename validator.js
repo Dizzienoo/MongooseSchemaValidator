@@ -15,8 +15,24 @@ module.exports = function (input) {
 				systemErrors.push({[key]: `Type ${object[key].type} is not supported`});
 			}
 			else {
-				switch (object[key].type) {
-					case
+				let value = input[key];
+				let {type} = value;
+				console.log(type);
+				switch (type) {
+				case String:
+					console.log(`String`);
+					break;
+				case Number:
+					console.log(`Number`);
+					break;
+				case Object:
+					console.log(`Object`);
+					break;
+				case mongoose.Schema.Types.ObjectId:
+					console.log(`Mongoose ID`);
+					break;
+				default: 
+					console.log(`Error`);
 				}
 			}
 		});
