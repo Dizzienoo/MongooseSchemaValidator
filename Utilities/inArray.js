@@ -1,4 +1,3 @@
-
 module.exports = function (needle, haystack) {
 	try {
 		if (!Array.isArray(haystack)) {
