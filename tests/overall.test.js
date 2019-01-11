@@ -136,17 +136,11 @@ describe (`Check the Schema Validator`, () => {
 describe (`Check String inputs`, () => {
 	test(`Check that Number fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 123});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a String`}));
+		let response = schema({name: 123});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, not a String`}
+		});
 	});
 
 	test(`Check that Number passes, conversion`, () => {
@@ -158,17 +152,11 @@ describe (`Check String inputs`, () => {
 
 	test(`Check that Boolean fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a String`}));
+		let response = schema({name: true});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, not a String`}
+		});
 	});
 
 	test(`Check that Boolean passes, conversion`, () => {
@@ -180,17 +168,11 @@ describe (`Check String inputs`, () => {
 
 	test(`Check that Date fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: new Date(`1 January 2001`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a String`}));
+		let response = schema({name: new Date(`1 January 2001`)});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, not a String`}
+		});
 	});
 
 	test(`Check that Date passes, conversion`, () => {
@@ -202,17 +184,11 @@ describe (`Check String inputs`, () => {
 
 	test(`Check that MongooseId fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a String`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, not a String`}
+		});
 	});
 
 	test(`Check that MongooseId passes, conversion`, () => {
@@ -252,32 +228,14 @@ describe (`Check String inputs`, () => {
 
 	test(`Check that String Min Length detects string that is too short`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String, minlength: 5}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `aaa`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, String provided is shorter than the min length of 5`}));
+		let response = schema({name: `aaa`});
+		expect(response).toEqual({inputErrors: true, errors: {name: `Error, String provided is shorter than the min length of 5`}});
 	});
 
 	test(`Check that String Max Length detects string that is too long`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String, maxlength: 5}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `aaaaaaaaaa`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, String provided is longer than the max length of 5`}));
+		let response = schema({name: `aaaaaaaaaa`});
+		expect(response).toEqual({inputErrors: true, errors: {name: `Error, String provided is longer than the max length of 5`}});
 	});
 
 	test(`Check that String in defined Enum is detected`, () => {
@@ -297,17 +255,10 @@ describe (`Check String inputs`, () => {
 			`string2`,
 			`Adam Wallis`
 		]}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `aaa`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, String provided is not in the Enum Array`}));
+		let response = schema({name: `aaa`});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, String provided is not in the Enum Array`}});
 	});
 
 	test(`Check that Match option accepts correct String`, () => {
@@ -319,37 +270,21 @@ describe (`Check String inputs`, () => {
 
 	test(`Check that Match option rejects incorrect String`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: String, match: /\S+@\S+\.\S+/}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `aaa`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, String provided does not pass Match test`}));
+		let response = schema({name: `aaa`});
+		expect(response).toEqual({
+			inputErrors: true, 
+			errors: {name: `Error, String provided does not pass Match test`}});
 	});
 });
 
-///////////////////////
-//// Number Checks ////
-///////////////////////
+// ///////////////////////
+// //// Number Checks ////
+// ///////////////////////
 describe (`Check Number inputs`, () => {
 	test(`Check that Number String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `123`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: `123`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that Number String passes, conversion`, () => {
@@ -361,47 +296,20 @@ describe (`Check Number inputs`, () => {
 
 	test(`Check that Normal String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `stringy`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: `stringy`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that Normal String fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `stringy`}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: `stringy`}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that Boolean fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that true Boolean passes, conversion`, () => {
@@ -420,17 +328,8 @@ describe (`Check Number inputs`, () => {
 
 	test(`Check that Date fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: new Date(`1 January 2001`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: new Date(`1 January 2001`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that Date passes, conversion`, () => {
@@ -442,32 +341,14 @@ describe (`Check Number inputs`, () => {
 
 	test(`Check that MongooseId fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that MongooseId fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Number`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Number`}});
 	});
 
 	test(`Check that Number passes, no conversion`, () => {
@@ -507,68 +388,32 @@ describe (`Check Number inputs`, () => {
 	
 	test(`Check that Number under min fails`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number, min: 5, max: 15}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 1}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, Number is smaller than 5`}));
+		let response = schema({name: 1}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, Number is smaller than 5`}});
 	});
 
 	test(`Check that Number over max fails`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Number, min: 5, max: 15}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 16}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, Number is larger than 15`}));
+		let response = schema({name: 16}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, Number is larger than 15`}});
 	});
 });
 
 
-////////////////////////
-//// Boolean Checks ////
-////////////////////////
+// ////////////////////////
+// //// Boolean Checks ////
+// ////////////////////////
 describe (`Check Boolean inputs`, () => {
 	test(`Check that Positive Number fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Boolean}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 1});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Boolean`}));
+		let response = schema({name: 1});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Boolean`}});
 	});
 
 	test(`Check that Negative Number fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Boolean}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: -1});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Boolean`}));
+		let response = schema({name: -1});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Boolean`}});
 	});
 
 	test(`Check that Null Number passes, conversion`, () => {
@@ -608,17 +453,8 @@ describe (`Check Boolean inputs`, () => {
 
 	test(`Check that Date fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Boolean}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: new Date(`1 January 2001`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Boolean`}));
+		let response = schema({name: new Date(`1 January 2001`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Boolean`}});
 	});
 
 	test(`Check that Date passes, conversion`, () => {
@@ -630,17 +466,8 @@ describe (`Check Boolean inputs`, () => {
 
 	test(`Check that MongooseId fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Boolean}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Boolean`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Boolean`}});
 	});
 
 	test(`Check that MongooseId passes, conversion`, () => {
@@ -652,38 +479,20 @@ describe (`Check Boolean inputs`, () => {
 });
 
 
-/////////////////////
-//// Date Checks ////
-/////////////////////
+// /////////////////////
+// //// Date Checks ////
+// /////////////////////
 describe (`Check Date inputs`, () => {
 	test(`Check that Positive Number fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 1});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: 1});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Negative Number fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: 0});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: 0});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Null Number passes, conversion`, () => {
@@ -723,47 +532,20 @@ describe (`Check Date inputs`, () => {
 
 	test(`Check that MongooseId fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that MongooseId fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: mongoose.Types.ObjectId(`5c34e4966b86103a80a71f57`)}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Boolean fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that false Boolean passes, conversion`, () => {
@@ -782,68 +564,32 @@ describe (`Check Date inputs`, () => {
 
 	test(`Check that Non-Date String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Non-Date String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `justastring`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: `justastring`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Non-Date String fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `justastring`}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: `justastring`}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 
 	test(`Check that Date String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: Date}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `1 January 1970`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a Date`}));
+		let response = schema({name: `1 January 1970`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a Date`}});
 	});
 });
 
-///////////////////////////
-//// MongooseID Checks ////
-///////////////////////////
+// ///////////////////////////
+// //// MongooseID Checks ////
+// ///////////////////////////
 describe (`Check MongooseId inputs`, () => {
 	test(`Check that MongooseID passes, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
@@ -861,77 +607,32 @@ describe (`Check MongooseId inputs`, () => {
 
 	test(`Check that Boolean fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that Boolean fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: true}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: true}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that Date fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: new Date(`1 January 2001`)});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: new Date(`1 January 2001`)});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that Date fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: new Date(`1 January 2001`)}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: new Date(`1 January 2001`)}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that MongooseId String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `5c34e4966b86103a80a71f57`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: `5c34e4966b86103a80a71f57`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that MongooseId String passes, conversion`, () => {
@@ -943,38 +644,20 @@ describe (`Check MongooseId inputs`, () => {
 
 	test(`Check that Non-ID String fails, no conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `astring`});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: `astring`});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 
 	test(`Check that Non-ID String fails, conversion`, () => {
 		let schema = index.BuildValidatorSchema({name: {type: mongoose.Schema.Types.ObjectId}});
-		let errored = false;
-		let errormessage = ``;
-		try {
-			schema({name: `astring`}, {convert: true});
-		}
-		catch (err) {
-			errored = true;
-			errormessage = err.message;
-		}
-		expect(errored).toBe(true);
-		expect(errormessage).toBe(JSON.stringify({name: `Error, not a MongooseId`}));
+		let response = schema({name: `astring`}, {convert: true});
+		expect(response).toEqual({inputErrors: true, errors:{name: `Error, not a MongooseId`}});
 	});
 });
 
-///////////////////////
-//// Complete Test ////
-///////////////////////
+// ///////////////////////
+// //// Complete Test ////
+// ///////////////////////
 describe(`Put all this together into A Full Schema Check`, () => {
 	test(`Test a Creation of a Full Validated Schema that will Pass`, () => {
 		let schema = index.BuildValidatorSchema(testobject);
@@ -987,7 +670,7 @@ describe(`Put all this together into A Full Schema Check`, () => {
 			shallowarray: [`One String`, `123`],
 			deeparray: [
 				{
-					username: `Adam`,
+					username: `adam`,
 					password: `TESTPASS`,
 					age: 300
 				}
