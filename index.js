@@ -42,22 +42,22 @@ const validate = function (schema, input, options, errors) {
 					break;
 				case Number:
 					let numberreply = CheckNumber(input[key], convert, schema[key].min, schema[key].max, schema[key].message);
-					if (!isNOE(numberreply.error)) {errors[key] =numberreply.error;}
+					if (!isNOE(numberreply.error)) {errors[key]= numberreply.error;}
 					response[key] = numberreply.input;
 					break;
 				case Boolean:
 					let booleanreply = CheckBoolean(input[key], convert, schema[key].min, schema[key].max, schema[key].message);
-					if (!isNOE(booleanreply.error)) {errors[key] = booleanreply.error;}
+					if (!isNOE(booleanreply.error)) {errors[key]= booleanreply.error;}
 					response[key] = booleanreply.input;
 					break;
 				case Date:
 					let datereply = CheckDate(input[key], convert, schema[key].message);
-					if (!isNOE(datereply.error)) {errors[key] = datereply.error;}
+					if (!isNOE(datereply.error)) {errors[key]= datereply.error;}
 					response[key] = datereply.input;
 					break;
 				case mongoose.Schema.Types.ObjectId:
 					let mongoosereply = CheckMongoose(input[key], convert, schema[key].message);
-					if (!isNOE(mongoosereply.error)) {errors[key] = mongoosereply.error;}
+					if (!isNOE(mongoosereply.error)) {errors[key]= mongoosereply.error;}
 					response[key] = mongoosereply.input;
 					break;
 				case undefined:
@@ -114,8 +114,8 @@ const validate = function (schema, input, options, errors) {
 			else if (!options.trim && !isNOE(input[key])) {
 				response[key] = input[key];
 			}
-			if (!isNOE(schema[key]) && schema[key].required && isNOE(response[key])) {
-				response[key]= schema[key].errmessage || `${key} is required`;
+			if (!isNOE(schema[key]) && schema[key].required && isNOE(response[key]) && options.skipRequired !== true) {
+				errors[key]= schema[key].errmessage || `${key} is required`;
 			}
 		});
 		if (!isNOE(errors)) {
@@ -131,7 +131,7 @@ const validate = function (schema, input, options, errors) {
 	}
 };
 
-//Takes in the array obejct from the schema and determines if the Array is looking for a block of objects or if the array is an array of types
+//Takes in the array object from the schema and determines if the Array is looking for a block of objects or if the array is an array of types
 const DeepArray = function (schemaArray) {
 	try {
 		let keys = Object.keys(schemaArray);
