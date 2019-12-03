@@ -1,0 +1,55 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "max-line-length": {
+      "options": [
+        120
+      ]
+    },
+    "new-parens": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": false,
+    "indent": [
+      true,
+      "tabs",
+      2
+    ],
+    "quotemark": [
+      true,
+      "backtick",
+      "avoid-escape",
+      "avoid-template"
+    ],
+    "no-any": true,
+    "object-literal-sort-keys": false,
+    "one-line": false,
+    "no-console": {
+      "severity": "warning",
+      "options": [
+        "debug",
+        "info",
+        "log",
+        "time",
+        "timeEnd",
+        "trace"
+      ]
+    },
+    "completed-docs": [
+      true,
+      "classes",
+      "functions",
+      "methods",
+      "enums",
+      "interfaces"
+    ]
+  },
+  "jsRules": {
+    "max-line-length": {
+      "options": [
+        120
+      ]
+    }
+  }
+}

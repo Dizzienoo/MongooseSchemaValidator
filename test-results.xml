@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="17" failures="0" time="2.565">
+  <testsuite name="Test Schema Validator" errors="0" failures="0" skipped="0" timestamp="2019-12-03T22:28:50" time="2.482" tests="17">
+    <testcase classname="Test Schema Validator Check that just string into the schema field fails" name="Test Schema Validator Check that just string into the schema field fails" time="0.004">
+    </testcase>
+    <testcase classname="Test Schema Validator Check that just an array into the schema field fails" name="Test Schema Validator Check that just an array into the schema field fails" time="0.001">
+    </testcase>
+    <testcase classname="Test Schema Validator Check that empty object into the schema field fails" name="Test Schema Validator Check that empty object into the schema field fails" time="0">
+    </testcase>
+    <testcase classname="Test Schema Validator Check that just a number into the schema field fails" name="Test Schema Validator Check that just a number into the schema field fails" time="0">
+    </testcase>
+    <testcase classname="Test Schema Validator Check that just a boolean into the schema field fails" name="Test Schema Validator Check that just a boolean into the schema field fails" time="0.001">
+    </testcase>
+    <testcase classname="Test Schema Validator Check that a schema with no type fails" name="Test Schema Validator Check that a schema with no type fails" time="0.001">
+    </testcase>
+    <testcase classname="Test the Options inputs as part of schema Send in an invalid Key, expect failure" name="Test the Options inputs as part of schema Send in an invalid Key, expect failure" time="0.001">
+    </testcase>
+    <testcase classname="Test the Options inputs as part of schema Send in a valid Key, with an invalid value expect failure" name="Test the Options inputs as part of schema Send in a valid Key, with an invalid value expect failure" time="0">
+    </testcase>
+    <testcase classname="Test the Options inputs as part of schema Send in trim Key, with an invalid value, expect failure" name="Test the Options inputs as part of schema Send in trim Key, with an invalid value, expect failure" time="0.001">
+    </testcase>
+    <testcase classname="Test the Options inputs as part of schema Send in skip Key, with an invalid value, expect failure" name="Test the Options inputs as part of schema Send in skip Key, with an invalid value, expect failure" time="0">
+    </testcase>
+    <testcase classname="Input Testing Send in string input where string is expected (same layer).  Expect Success" name="Input Testing Send in string input where string is expected (same layer).  Expect Success" time="0.025">
+    </testcase>
+    <testcase classname="Input Testing Send in string input where string is expected.  Expect Success" name="Input Testing Send in string input where string is expected.  Expect Success" time="0.009">
+    </testcase>
+    <testcase classname="Input Testing Send in convertable to string input where string is expected but convert not flagged.  Expect Failure" name="Input Testing Send in convertable to string input where string is expected but convert not flagged.  Expect Failure" time="0.013">
+    </testcase>
+    <testcase classname="Input Testing Send in convertable input where string is expected and convert is flagged globally.  Expect Success" name="Input Testing Send in convertable input where string is expected and convert is flagged globally.  Expect Success" time="0.008">
+    </testcase>
+    <testcase classname="Input Testing Send in convertable input where string is expected and convert is not flagged globally but is locally.  Expect Success" name="Input Testing Send in convertable input where string is expected and convert is not flagged globally but is locally.  Expect Success" time="0.009">
+    </testcase>
+    <testcase classname="Input Testing Send in convertable input where string is expected and is flagged locally but local is disabled.  Expect Failure" name="Input Testing Send in convertable input where string is expected and is flagged locally but local is disabled.  Expect Failure" time="0.01">
+    </testcase>
+    <testcase classname="Input Testing Send in convertable input where string is expected and is flagged globally and locally but local is disabled.  Expect Success" name="Input Testing Send in convertable input where string is expected and is flagged globally and locally but local is disabled.  Expect Success" time="0.009">
+    </testcase>
+  </testsuite>
+</testsuites>

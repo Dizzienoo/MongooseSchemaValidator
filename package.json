@@ -1,18 +1,22 @@
 {
-  "name": "mongoose-schema-validator",
+  "name": "mongooseschemavalidator",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "jest"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "mongoose": "^5.4.2"
-  },
+  "license": "MIT",
   "devDependencies": {
-    "jest": "^23.6.0"
+    "@types/jest": "^24.0.23",
+    "@types/mongoose": "^5.5.24",
+    "jest": "^24.9.0",
+    "jest-junit": "^8.0.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.19.0",
+    "typescript": "^3.6.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:full": "jest --coverage --coverageReporters=cobertura --coverageReporters=html"
+  },
+  "dependencies": {
+    "mongoose": "^5.7.7"
   }
 }
