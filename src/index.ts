@@ -23,7 +23,7 @@ export default async function (schema: object) {
 		 *
 		 * @returns {IResponse} Returns either the parsed data for use of an array of errors
 		 */
-		const inner = async (input: object, options: IOptionObject) =>
+		const inner = async (input: object, options: IOptionObject = {}) =>
 			await ProcessInput(processedSchema.data, input, options);
 		return inner;
 	}

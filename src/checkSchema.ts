@@ -1,6 +1,7 @@
-import addError from "./addError";
-import ConvertSchemaTypes from "./convertSchemaTypes";
 import { EAllowedTypes, EOptionTypes, IOptionObject, IResponse } from "./interfaces";
+import addError from "./Utilities/addError";
+import ConvertSchemaTypes from "./Utilities/convertSchemaTypes";
+import isObject from "./Utilities/isObject";
 
 /**
  * Takes in a Schema, validates it is correct for the validator's purposes and converts the key types to internal enums
@@ -43,7 +44,7 @@ function recursiveCheck(schema: object, path: string = ``): object[] {
 	// Get the Keys on the Schema
 	const keys = Object.keys(schema);
 	// If the object includes the key "type" check if the type is an allowed type
-	if (keys.includes(`type`)) {
+	if (keys.includes(`type`) && !isObject(schema[`type`])) {
 		// Otherwise run through each of the keys to check if they need to go deeper or are valid in their own right
 		if (!isAllowedType(schema[`type`])) { errors.push(addError(path, `type`, `Type Provided "${schema[`type`]}" is not an allowed type"`)); }
 		// If the user has specified some MSV Options in this "branch"
@@ -65,6 +66,14 @@ function recursiveCheck(schema: object, path: string = ``): object[] {
 				// If the Array is longer than one
 				if (schema[k].length > 1) {
 					errors.push(addError(path, k, `Provided Section has more than one object in the array, this is not valid for a schema`));
+				}
+				// Otherwise, if the array is shallow (doesn't contain an object)
+				else if (!isObject(schema[k][0])) {
+					// If the input isn't a propper type in the shallow array
+					if (!isAllowedType(schema[k][0])) {
+						// Add an error
+						errors.push(addError(path, k, `The provided array does not contain deeper object fields or a valid input type`));
+					}
 				}
 				// Otherwise, we want to check the object inside the array
 				else {
@@ -101,15 +110,6 @@ function isAllowedType(type: EAllowedTypes): boolean {
 		type === EAllowedTypes.NUMBER_TYPE ||
 		type === EAllowedTypes.STRING_TYPE ||
 		type === EAllowedTypes.MIXED_TYPE);
-}
-
-/**
- * Checks if the value is an object with any fields to parse
- *
- * @param value The value to inspect for depth
- */
-function isObject(value): boolean {
-	return !(value === null || typeof value !== `object` || Array.isArray(value) || Object.keys(value).length < 1);
 }
 
 /**

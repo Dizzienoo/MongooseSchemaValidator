@@ -1,4 +1,4 @@
-import { EAllowedTypes } from "./interfaces";
+import { EAllowedTypes } from "../interfaces";
 
 export default async function (input: object): Promise<object> {
 
