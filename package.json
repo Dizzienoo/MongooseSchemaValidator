@@ -14,7 +14,8 @@
   },
   "scripts": {
     "test": "jest",
-    "test:full": "jest --coverage --coverageReporters=cobertura --coverageReporters=html"
+    "test:full": "jest --coverage --coverageReporters=cobertura --coverageReporters=html",
+    "build": "tsc"
   },
   "dependencies": {
     "mongoose": "^5.7.7"
