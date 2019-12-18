@@ -240,8 +240,6 @@ describe(`Test the Options inputs as part of schema`, () => {
 		});
 	});
 
-
-
 	test(`Send in all keys, with correct values, expect success`, async () => {
 		try {
 			const validate = await BuildValidator({
@@ -694,7 +692,7 @@ describe(`Deep Array Input Testing`, () => {
 					lotsofDepth: 1234,
 				},
 			}],
-		}, { convert: true })).toEqual({
+		}, { convert: true, trimExtraFields: true })).toEqual({
 			name: [{
 				stile: {
 					underneath: {
@@ -812,6 +810,112 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 });
+
+describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
+
+	test(`Send in Extra input with trim to true.  Expect Success`, async () => {
+		const validator = await BuildValidator({
+			name: [{ stile: { type: String } }],
+		});
+		expect(await validator({
+			name: [{ stile: `true` }],
+			extra: `string`,
+		}, { trimExtraFields: true })).toEqual({
+			name: [{ stile: `true` }],
+		});
+	});
+
+	test(`Send in Extra input with trim to true.  Expect Success`, async () => {
+		const validator = await BuildValidator({
+			name: [{ stile: { type: String } }],
+		});
+		expect(await validator({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+		}, { trimExtraFields: true })).toEqual({
+			name: [{ stile: `true` }],
+		});
+	});
+
+	test(`Send in Extra input without trim.  Expect Success`, async () => {
+		const validator = await BuildValidator({
+			name: [{ stile: { type: String } }],
+		});
+		expect(await validator({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+		})).toEqual({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+		});
+	});
+
+	test(`Send in Complex Extra Inputs. expect Success`, async () => {
+		const validator = await BuildValidator({
+			name: [{ stile: { type: String } }],
+			complicated: {
+				deep: {
+					object: Number,
+				},
+				witha: [{ finarray: Boolean }],
+			},
+		});
+		expect(await validator({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+			complicated: {
+				deep: {
+					object: 4433,
+					andAnExtra: true,
+				},
+				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
+			},
+		})).toEqual({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+			complicated: {
+				deep: {
+					object: 4433,
+					andAnExtra: true,
+				},
+				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
+			},
+		});
+	});
+
+	test(`Send in Complex Extra Inputs with Trim. expect Success`, async () => {
+		const validator = await BuildValidator({
+			name: [{ stile: { type: String } }],
+			complicated: {
+				deep: {
+					object: Number,
+				},
+				witha: [{ finarray: Boolean }],
+			},
+		});
+		expect(await validator({
+			name: [{ stile: `true` }, { press: `extra` }],
+			extra: `string`,
+			complicated: {
+				deep: {
+					object: 4433,
+					andAnExtra: true,
+				},
+				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
+			},
+		}, { trimExtraFields: true })).toEqual({
+			name: [{ stile: `true` }],
+			complicated: {
+				deep: {
+					object: 4433,
+				},
+				witha: [{ finarray: true }, { finarray: true }, { finarray: true }],
+			},
+		});
+	});
+
+});
+
 
 describe(`Number Input Testing`, () => {
 

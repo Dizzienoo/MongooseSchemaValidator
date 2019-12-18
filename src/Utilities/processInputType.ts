@@ -50,7 +50,9 @@ export default function processInputType(
 		default:
 			return {
 				data: null,
-				errors: [addError(path, key, `The type provided "${schemaValue}" isn't supported.  This is likely a parsing error that needs addressing.`)],
+				errors: [
+					addError(path, key, `The type provided "${schemaValue}" isn't supported.  This is likely a parser error.`)
+				],
 			};
 	}
 }
