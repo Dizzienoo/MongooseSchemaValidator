@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import BuildValidator from "./index";
+import { BuildValidator } from "./index";
 
 describe(`Test Schema Validator`, () => {
 

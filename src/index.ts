@@ -8,7 +8,7 @@ import processInput from "./processInput";
  *
  * @returns{function(): void}- The returned Function
  */
-export default async function (schema: object) {
+export async function BuildValidator(schema: object) {
 	// Check the Schema for type validity and option validity
 	const processedSchema = await CheckSchema(schema, {});
 	if (processedSchema.errors.length) {

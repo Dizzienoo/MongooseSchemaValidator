@@ -1,5 +1,5 @@
 {
-  "name": "mongooseschemavalidator",
+  "name": "mongoose-schema-validator",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,5 +19,6 @@
   },
   "dependencies": {
     "mongoose": "^5.7.7"
-  }
+  },
+  "files": ["build/**/*"]
 }
