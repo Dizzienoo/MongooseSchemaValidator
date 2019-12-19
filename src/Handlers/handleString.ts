@@ -1,4 +1,4 @@
-import { IHandleStringResponse, IInternalOptions } from "../interfaces";
+import { ICombinedOptions, IHandleStringResponse } from "../interfaces";
 import addError from "../Utilities/addError";
 
 /**
@@ -10,7 +10,7 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleString(
-	inputValue: string, options: IInternalOptions, path: string, key,
+	inputValue: string, options: ICombinedOptions, path: string, key,
 ): IHandleStringResponse {
 	const response: IHandleStringResponse = {
 		errors: [],
@@ -19,11 +19,15 @@ export default function handleString(
 	// If the key is empty key = path
 	if (key === ``) { key = path; }
 	// If we are supposed to convert, there is something to convert and it isn't a string
-	if (options.convert === true && inputValue !== undefined && typeof inputValue !== `string`) {
+	if (
+		((options.convert?.value === true && options.disableLocalOptions !== true) ||
+			(options.convertValues === true)) &&
+		inputValue !== undefined && typeof inputValue !== `string`
+	) {
 		inputValue = String(inputValue);
 	}
 	// If the input is required, the ignore required rule isn't set and we don't have an input
-	if (options.required === true && options.ignoreRequired !== true && inputValue === undefined) {
+	if (options.required?.value === true && options.ignoreRequired !== true && inputValue === undefined) {
 		response.errors.push(
 			addError(path, key, `The input for "${key}" is marked as required but no value has been provided`),
 		);
@@ -32,7 +36,7 @@ export default function handleString(
 	else if (inputValue !== undefined) {
 		// If the input isn't a string
 		if (typeof inputValue !== `string`) {
-			if (options.convert === true) {
+			if ((options.convert?.value === true && options.disableLocalOptions !== true) || (options.convertValues === true)) {
 				response.errors.push(
 					addError(path, key, `The input for "${key}" is not a string and cannot be converted into one`),
 				);
@@ -49,15 +53,15 @@ export default function handleString(
 			response.data = inputValue;
 		}
 		// If the response's length is longer than the max length
-		if (options.maxLength && response.data.length > options.maxLength) {
+		if (options.maxLength && response.data.length > options.maxLength.value) {
 			response.errors.push(
-				addError(path, key, `The input for "${key}" is longer than the allowed maximum, "${options.maxLength}"`),
+				addError(path, key, options.maxLength.message || `The input for "${key}" is longer than the allowed maximum, "${options.maxLength.value}"`),
 			);
 		}
 		// If the response's length is shorter than the min length
-		if (options.minLength && response.data.length < options.minLength) {
+		if (options.minLength && response.data.length < options.minLength.value) {
 			response.errors.push(
-				addError(path, key, `The input for "${key}" is shorter than the allowed minimum, "${options.minLength}"`),
+				addError(path, key, options.minLength.message || `The input for "${key}" is shorter than the allowed minimum, "${options.minLength.value}"`),
 			);
 		}
 		// Convert input to Lowercase
@@ -69,13 +73,13 @@ export default function handleString(
 			response.data = response.data.toUpperCase();
 		}
 		if (options.enum !== undefined && options.enum !== null) {
-			if (!options.enum.includes(response.data)) {
+			if (!options.enum.value.includes(response.data)) {
 				response.errors.push(
 					addError(path, key, `The input for "${key}" is not one of the designated allowed Enums`),
 				);
 			}
 		}
-		if (options.trim === true) {
+		if (options.trim?.value === true) {
 			response.data = response.data.trim();
 		}
 	}

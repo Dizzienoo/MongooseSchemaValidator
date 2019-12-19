@@ -5,7 +5,7 @@ import { ILocalOptionsResponse, IPotentialLocalOptions } from "../interfaces";
  *
  * @param localObject A "tree" of the schema that contains the "type" variable and potentially other options
  */
-export default function buildLocalOPtions(localObject: IPotentialLocalOptions): ILocalOptionsResponse {
+export default function buildLocalOptions(localObject: IPotentialLocalOptions): ILocalOptionsResponse {
 	const response: ILocalOptionsResponse = (localObject.MSV_Options !== undefined && localObject.MSV_Options !== null) ?
 		localObject.MSV_Options : {};
 	if (localObject.enum !== undefined && localObject.enum !== null) {

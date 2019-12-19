@@ -1,6 +1,7 @@
 import CheckSchema from "./checkSchema";
-import { IOptionObject, IResponse } from "./interfaces";
+import { IGlobalOptions, IResponse } from "./interfaces";
 import processInput from "./processInput";
+import { isValidGlobalOption } from "./Utilities/checkOptions";
 
 /**
  * Validates the Input vs the Pre-Created Schema
@@ -10,7 +11,7 @@ import processInput from "./processInput";
  */
 export async function buildValidator(schema: object) {
 	// Check the Schema for type validity and option validity
-	const processedSchema = await CheckSchema(schema, {});
+	const processedSchema = await CheckSchema(schema);
 	if (processedSchema.errors.length) {
 		throw SchemaException(processedSchema.errors);
 	}
@@ -23,9 +24,8 @@ export async function buildValidator(schema: object) {
 		 *
 		 * @returns {IResponse} Returns either the parsed data for use of an array of errors
 		 */
-		const inner = async (input: object, options: IOptionObject = {}) =>
+		return async (input: object, options: IGlobalOptions = {}) =>
 			await attemptProcessInput(processedSchema.data, input, options);
-		return inner;
 	}
 }
 
@@ -37,13 +37,27 @@ export async function buildValidator(schema: object) {
  * @param options Global options/configurations for processing the input
  */
 async function attemptProcessInput(
-	processedSchema: object, input: object, options: IOptionObject = {},
+	processedSchema: object, input: object, options: IGlobalOptions = {},
 ): Promise<object | object[]> {
+	const globalOptions = await isValidGlobalOption(options);
+	if (globalOptions.errors.length) {
+		if (options.doNotThrow === true) {
+			return globalOptions;
+		}
+		else {
+			throw OptionsException(globalOptions.errors);
+		}
+	}
 	// If the Schema is okay, run the checks against the input
 	const processedInput = await processInput(processedSchema, input, options);
-	// If the input processor has returned any errors
-	if (processedInput.errors.length) {
+	// If the input processor has returned any errors and we are expecting the system to throw
+	if (processedInput.errors.length && !options.doNotThrow) {
 		throw InputException(processedInput.errors);
+	}
+	// If the system has errors but we aren't throwing
+	else if (processedInput.errors.length) {
+		// Return the whole response
+		return processedInput;
 	}
 	return processedInput.data;
 }
@@ -69,5 +83,17 @@ function InputException(inputErrors: object[]) {
 	return {
 		message: `The Input Provided has errors`,
 		errors: inputErrors,
+	};
+}
+
+/**
+ * An Options Exception to highlight errors with the Options
+ *
+ * @param optionsErrors Errors generated in the Process Options function
+ */
+function OptionsException(optionsErrors: object[]) {
+	return {
+		message: `The Options Provided have errors`,
+		errors: optionsErrors,
 	};
 }

@@ -3,6 +3,16 @@
   "version": "1.0.2",
   "main": "lib/index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dizzienoo/MongooseSchemaValidator"
+  },
+  "bugs": {
+    "url": "https://github.com/Dizzienoo/MongooseSchemaValidator/issues"
+  },
+  "homepage": "https://github.com/Dizzienoo/MongooseSchemaValidator",
+  "keywords": ["mongoose", "validator", "schema"],
+  "author": "Dizzienoo",
   "devDependencies": {
     "@types/jest": "^24.0.23",
     "@types/mongoose": "^5.5.24",

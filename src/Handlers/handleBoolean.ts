@@ -1,4 +1,4 @@
-import { IHandleBooleanResponse, IOptionObject } from "../interfaces";
+import { ICombinedOptions, IHandleBooleanResponse } from "../interfaces";
 import addError from "../Utilities/addError";
 
 /**
@@ -10,14 +10,16 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleBoolean(
-	inputValue: boolean, options: IOptionObject, path: string, key: string,
+	inputValue: boolean, options: ICombinedOptions, path: string, key: string,
 ): IHandleBooleanResponse {
 	const response: IHandleBooleanResponse = {
 		errors: [],
 		data: null,
 	};
 	if (key === ``) { key = path; }
-	if (options.convert === true) {
+	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
+		(options.convertValues === true)) &&
+		inputValue !== undefined && typeof inputValue !== `boolean`) {
 		// @ts-ignore
 		if (inputValue === `false` || inputValue === `no` || inputValue === `0`) {
 			inputValue = false;
@@ -28,7 +30,7 @@ export default function handleBoolean(
 		}
 	}
 	if (typeof inputValue !== `boolean`) {
-		if (options.convert === true) {
+		if (options.required?.value === true && options.ignoreRequired !== true && inputValue === undefined) {
 			response.errors.push(
 				addError(path, key, `The input for "${key}" is not a boolean and cannot be converted into one`),
 			);

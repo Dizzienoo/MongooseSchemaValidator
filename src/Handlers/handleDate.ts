@@ -1,4 +1,4 @@
-import { IHandleDateResponse, IHandleNumberResponse, IInternalOptions } from "../interfaces";
+import { ICombinedOptions, IHandleDateResponse } from "../interfaces";
 import addError from "../Utilities/addError";
 
 /**
@@ -10,18 +10,20 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleDate(
-	inputValue: Date, options: IInternalOptions, path: string, key: string,
+	inputValue: Date, options: ICombinedOptions, path: string, key: string,
 ): IHandleDateResponse {
 	const response: IHandleDateResponse = {
 		errors: [],
 		data: null,
 	};
 	if (key === ``) { key = path; }
-	if (options.convert === true) {
+	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
+		(options.convertValues === true)) &&
+		inputValue !== undefined) {
 		inputValue = new Date(inputValue);
 	}
 	if (Object.prototype.toString.call(inputValue) !== `[object Date]`) {
-		if (options.convert === true) {
+		if ((options.convert?.value === true && options.disableLocalOptions !== true) || (options.convertValues === true)) {
 			response.errors.push(addError(path, key, `The input for "${key}" is not a date and cannot be converted into one`));
 		}
 		else {
@@ -32,11 +34,16 @@ export default function handleDate(
 		response.data = inputValue;
 	}
 	if (!response.errors.length) {
-		if (options.min && new Date(inputValue).toISOString() < new Date(options.min).toISOString()) {
-			response.errors.push(addError(path, key, `The input for "${key}" is smaller than the minimum "${options.min}"`));
+		// @ts-ignore
+		if (options.min && new Date(inputValue).toISOString() < new Date(options.min.value).toISOString()) {
+			response.errors.push(
+				addError(path, key, options.min.message || `The input for "${key}" is smaller than the minimum "${options.min.value}"`),
+			);
 		}
-		if (options.max && new Date(inputValue).toISOString() > new Date(options.max).toISOString()) {
-			response.errors.push(addError(path, key, `The input for "${key}" is larger than the maximum "${options.max}"`));
+		if (options.max && new Date(inputValue).toISOString() > new Date(options.max.value).toISOString()) {
+			response.errors.push(
+				addError(path, key, options.max.message || `The input for "${key}" is larger than the maximum "${options.max.value}"`),
+			);
 		}
 	}
 	return response;
