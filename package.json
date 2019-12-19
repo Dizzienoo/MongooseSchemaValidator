@@ -1,7 +1,7 @@
 {
   "name": "mongoose-schema-validator",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.0.2",
+  "main": "lib/index.js",
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -20,5 +20,5 @@
   "dependencies": {
     "mongoose": "^5.7.7"
   },
-  "files": ["build/**/*"]
+  "files": ["lib/**/*"]
 }

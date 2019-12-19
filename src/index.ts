@@ -8,7 +8,7 @@ import processInput from "./processInput";
  *
  * @returns{function(): void}- The returned Function
  */
-export async function BuildValidator(schema: object) {
+export async function buildValidator(schema: object) {
 	// Check the Schema for type validity and option validity
 	const processedSchema = await CheckSchema(schema, {});
 	if (processedSchema.errors.length) {
@@ -24,12 +24,21 @@ export async function BuildValidator(schema: object) {
 		 * @returns {IResponse} Returns either the parsed data for use of an array of errors
 		 */
 		const inner = async (input: object, options: IOptionObject = {}) =>
-			await ProcessInput(processedSchema.data, input, options);
+			await attemptProcessInput(processedSchema.data, input, options);
 		return inner;
 	}
 }
 
-async function ProcessInput(processedSchema: object, input: object, options: IOptionObject = {}): Promise<object | object[]> {
+/**
+ * Handle the input that we have
+ *
+ * @param processedSchema The Pre-processed schema that we are comparing the input to
+ * @param input The information we want to process
+ * @param options Global options/configurations for processing the input
+ */
+async function attemptProcessInput(
+	processedSchema: object, input: object, options: IOptionObject = {},
+): Promise<object | object[]> {
 	// If the Schema is okay, run the checks against the input
 	const processedInput = await processInput(processedSchema, input, options);
 	// If the input processor has returned any errors

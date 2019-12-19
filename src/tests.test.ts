@@ -1,12 +1,12 @@
 import { Schema, Types } from "mongoose";
-import { BuildValidator } from "./index";
+import { buildValidator } from "./index";
 
 describe(`Test Schema Validator`, () => {
 
 	test(`Check that just string into the schema field fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator(`string`);
+			await buildValidator(`string`);
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
@@ -20,7 +20,7 @@ describe(`Test Schema Validator`, () => {
 	test(`Check that just an array into the schema field fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator([]);
+			await buildValidator([]);
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
@@ -34,7 +34,7 @@ describe(`Test Schema Validator`, () => {
 	test(`Check that empty object into the schema field fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator({});
+			await buildValidator({});
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
@@ -48,7 +48,7 @@ describe(`Test Schema Validator`, () => {
 	test(`Check that just a number into the schema field fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator(1);
+			await buildValidator(1);
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
@@ -62,7 +62,7 @@ describe(`Test Schema Validator`, () => {
 	test(`Check that just a boolean into the schema field fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator(true);
+			await buildValidator(true);
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
@@ -76,7 +76,7 @@ describe(`Test Schema Validator`, () => {
 	test(`Check that a schema with no type fails`, async () => {
 		try {
 			// @ts-ignore
-			await BuildValidator({
+			await buildValidator({
 				name: String,
 				date: Number,
 				month: `Date`,
@@ -117,7 +117,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in an invalid Key, expect failure`, async () => {
 		try {
-			await BuildValidator({
+			await buildValidator({
 				name: { type: String, MSV_Options: { KEY: true } },
 			});
 			throw Error(`Failed To Recieve Expected Error`);
@@ -136,7 +136,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in a valid Key, with an invalid value expect failure`, async () => {
 		try {
-			await BuildValidator({
+			await buildValidator({
 				name: { type: String, MSV_Options: { convert: `fail` } },
 			});
 			throw Error(`Failed To Recieve Expected Error`);
@@ -155,7 +155,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in trim Key, with an invalid value, expect failure`, async () => {
 		try {
-			await BuildValidator({
+			await buildValidator({
 				name: { type: String, MSV_Options: { trim: `aaa` } },
 			});
 			throw Error(`Failed To Recieve Expected Error`);
@@ -174,7 +174,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in skip Key, with an invalid value, expect failure`, async () => {
 		try {
-			await BuildValidator({
+			await buildValidator({
 				name: { type: String, MSV_Options: { skip: `true` } },
 			});
 			throw Error(`Failed To Recieve Expected Error`);
@@ -192,7 +192,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 	});
 
 	test(`Send in Schema with required field and Input, expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, required: true },
 			name2: { type: String },
 		});
@@ -207,7 +207,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in Schema with required field but missing in Input, expect Error`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, required: true },
 				name2: { type: String },
 			});
@@ -229,7 +229,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 	});
 
 	test(`Send in Schema with required field but missing in Input but ignoring Required option, expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, required: true },
 			name2: { type: String },
 		});
@@ -242,7 +242,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 
 	test(`Send in all keys, with correct values, expect success`, async () => {
 		try {
-			const validate = await BuildValidator({
+			const validate = await buildValidator({
 				name: {
 					type: String, MSV_Options: {
 						skip: true,
@@ -271,7 +271,7 @@ describe(`Test the Options inputs as part of schema`, () => {
 describe(`String Input Testing`, () => {
 
 	test(`Send in string input where string is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: String,
 		});
 		expect(await validator({
@@ -282,7 +282,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in string input where string is expected.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String },
 		});
 		expect(await validator({
@@ -294,7 +294,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in convertable to string input where string is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String },
 			});
 			console.log(await validator({
@@ -315,7 +315,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where string is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String },
 		});
 		expect(await validator({
@@ -326,7 +326,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where string is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -338,7 +338,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in convertable input where string is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, MSV_Options: { convert: true } },
 			});
 			await validator({
@@ -359,7 +359,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in object nested input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: {
 				type: {
 					deep: String,
@@ -371,7 +371,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where string is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -383,7 +383,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in convertable to string input where string is expected and convert is flagged globally but overridden locally.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, MSV_Options: { convert: false } },
 			});
 			await validator({
@@ -405,7 +405,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in input schema with an array but an input with an object where the array is expected.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: [{ type: String }],
 			});
 			console.log(await validator({
@@ -427,7 +427,7 @@ describe(`String Input Testing`, () => {
 
 
 	test(`Send in string within minLength and maxLength params.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, minLength: 2, maxLength: 10 },
 		});
 		expect(await validator({
@@ -438,7 +438,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in string within minLength and maxLength params with convert.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, minLength: 2, maxLength: 10 },
 		});
 		expect(await validator({
@@ -450,7 +450,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in string shorter than minLength.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, minLength: 4, maxLength: 10 },
 			});
 			await validator({
@@ -472,7 +472,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in string longer than maxLength.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, minLength: 4, maxLength: 10 },
 			});
 			await validator({
@@ -493,7 +493,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in string within enum params.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, enum: [`One`, `Two`, `Three`] },
 		});
 		expect(await validator({
@@ -504,7 +504,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in convertable to string within enum params.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, enum: [`One`, `Two`, `Three`, `true`] },
 		});
 		expect(await validator({
@@ -516,7 +516,7 @@ describe(`String Input Testing`, () => {
 
 	test(`Send in string not in enum.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: String, enum: [`One`, `Two`, `Three`] },
 			});
 			await validator({
@@ -537,7 +537,7 @@ describe(`String Input Testing`, () => {
 	});
 
 	test(`Send in trimmable string.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: String, trim: true },
 		});
 		expect(await validator({
@@ -553,7 +553,7 @@ describe(`String Input Testing`, () => {
 describe(`Shallow Array Input Testing`, () => {
 
 	test(`Send in shallow array with correct input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [String],
 		});
 		expect(await validator({
@@ -564,7 +564,7 @@ describe(`Shallow Array Input Testing`, () => {
 	});
 
 	test(`Send in shallow array with multiple correct inputs.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [String],
 		});
 		expect(await validator({
@@ -576,7 +576,7 @@ describe(`Shallow Array Input Testing`, () => {
 
 	test(`Send in shallow array with multiple incorrect inputs.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: [String],
 			});
 			await validator({
@@ -605,7 +605,7 @@ describe(`Shallow Array Input Testing`, () => {
 describe(`Deep Array Input Testing`, () => {
 
 	test(`Send in deep array with correct input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ type: String }],
 		});
 		expect(await validator({
@@ -616,7 +616,7 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 	test(`Send in a deeper array with correct input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 		});
 		expect(await validator({
@@ -627,7 +627,7 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 	test(`Send in the deepest array with correct input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{
 				stile: {
 					underneath: {
@@ -667,7 +667,7 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 	test(`Send in the deepest array with correct input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{
 				stile: {
 					underneath: {
@@ -704,7 +704,7 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 	test(`Send in the deepest array with a missing input.  Expect Failure`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{
 				stile: {
 					underneath: {
@@ -744,7 +744,7 @@ describe(`Deep Array Input Testing`, () => {
 	});
 
 	test(`Send in the deepest array with missing inputs.  Expect Failure`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{
 				stile: {
 					underneath: {
@@ -814,7 +814,7 @@ describe(`Deep Array Input Testing`, () => {
 describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 
 	test(`Send in Extra input with trim to true.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 		});
 		expect(await validator({
@@ -826,7 +826,7 @@ describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 	});
 
 	test(`Send in Extra input with trim to true.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 		});
 		expect(await validator({
@@ -838,7 +838,7 @@ describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 	});
 
 	test(`Send in Extra input without trim.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 		});
 		expect(await validator({
@@ -851,7 +851,7 @@ describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 	});
 
 	test(`Send in Complex Extra Inputs. expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 			complicated: {
 				deep: {
@@ -884,7 +884,7 @@ describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 	});
 
 	test(`Send in Complex Extra Inputs with Trim. expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: [{ stile: { type: String } }],
 			complicated: {
 				deep: {
@@ -920,7 +920,7 @@ describe(`Test sending in extra input and ut beinf trimmed or not`, () => {
 describe(`Number Input Testing`, () => {
 
 	test(`Send in Number input where Number is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: Number,
 		});
 		expect(await validator({
@@ -931,7 +931,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in Number input where Number is expected.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Number },
 		});
 		expect(await validator({
@@ -943,7 +943,7 @@ describe(`Number Input Testing`, () => {
 
 	test(`Send in convertable to Number input where Number is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Number },
 			});
 			console.log(await validator({
@@ -964,7 +964,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Number is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Number },
 		});
 		expect(await validator({
@@ -975,7 +975,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Number is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Number, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -987,7 +987,7 @@ describe(`Number Input Testing`, () => {
 
 	test(`Send in convertable input where Number is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Number, MSV_Options: { convert: true } },
 			});
 			await validator({
@@ -1008,7 +1008,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in object nested input.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: {
 				type: {
 					deep: Number,
@@ -1020,7 +1020,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Number is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Number, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -1032,7 +1032,7 @@ describe(`Number Input Testing`, () => {
 
 	test(`Send in convertable to Number input where Number is expected and convert is flagged globally but overridden locally.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Number, MSV_Options: { convert: false } },
 			});
 			await validator({
@@ -1053,7 +1053,7 @@ describe(`Number Input Testing`, () => {
 	});
 
 	test(`Send in correct Number within min and max.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Number, min: 5, max: 50 },
 		});
 		expect(await validator({
@@ -1065,7 +1065,7 @@ describe(`Number Input Testing`, () => {
 
 	test(`Send in Number where input is smaller than minimum.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Number, min: 5, max: 50 },
 			});
 			await validator({
@@ -1087,7 +1087,7 @@ describe(`Number Input Testing`, () => {
 
 	test(`Send in Number where input is larger than maximum.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Number, min: 5, max: 50 },
 			});
 			await validator({
@@ -1112,7 +1112,7 @@ describe(`Number Input Testing`, () => {
 describe(`Boolean Input Testing`, () => {
 
 	test(`Send in Boolean input where Boolean is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: Boolean,
 		});
 		expect(await validator({
@@ -1123,7 +1123,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in Boolean input where Boolean is expected.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1135,7 +1135,7 @@ describe(`Boolean Input Testing`, () => {
 
 	test(`Send in convertable to Boolean input where Boolean is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Boolean },
 			});
 			console.log(await validator({
@@ -1156,7 +1156,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1167,7 +1167,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1178,7 +1178,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1189,7 +1189,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -1200,7 +1200,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1211,7 +1211,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1222,7 +1222,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
 		expect(await validator({
@@ -1233,7 +1233,7 @@ describe(`Boolean Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Boolean, MSV_Options: { convert: true } },
 		});
 		expect(await validator({
@@ -1245,7 +1245,7 @@ describe(`Boolean Input Testing`, () => {
 
 	test(`Send in convertable input where Boolean is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Boolean, MSV_Options: { convert: true } },
 			});
 			await validator({
@@ -1270,7 +1270,7 @@ describe(`Boolean Input Testing`, () => {
 describe(`Date Input Testing`, () => {
 
 	test(`Send in Date input where Date is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: Date,
 		});
 		const currDate = new Date();
@@ -1282,7 +1282,7 @@ describe(`Date Input Testing`, () => {
 	});
 
 	test(`Send in Date input where Date is expected.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Date },
 		});
 		const currDate = new Date();
@@ -1295,7 +1295,7 @@ describe(`Date Input Testing`, () => {
 
 	test(`Send in non-Date input where Date is expected.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Date },
 			});
 			await validator({
@@ -1317,7 +1317,7 @@ describe(`Date Input Testing`, () => {
 
 	test(`Send in convertable to Date input where Date is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Date },
 			});
 			const currDate = new Date();
@@ -1339,7 +1339,7 @@ describe(`Date Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Date is expected and convert is flagged globally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Date },
 		});
 		const currDate = Date.now();
@@ -1351,7 +1351,7 @@ describe(`Date Input Testing`, () => {
 	});
 
 	test(`Send in convertable input where Date is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Date, MSV_Options: { convert: true } },
 		});
 		const currDate = Date.now();
@@ -1363,7 +1363,7 @@ describe(`Date Input Testing`, () => {
 	});
 
 	test(`Send in Date that is within the min and max.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Date, min: new Date(`January 2007`), max: new Date(`December 2020`) },
 		});
 		const currDate = new Date(`Feb 2017`);
@@ -1376,7 +1376,7 @@ describe(`Date Input Testing`, () => {
 
 	test(`Send in a Date that is below the Minimum Date.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Date, min: new Date(`January 2018`), max: new Date(`December 2020`) },
 			});
 			const currDate = new Date(`Feb 2017`);
@@ -1399,7 +1399,7 @@ describe(`Date Input Testing`, () => {
 
 	test(`Send in a Date that is above the Maximum Date.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Date, min: new Date(`January 2018`), max: new Date(`December 2020`) },
 			});
 			const currDate = new Date(`Feb 2021`);
@@ -1425,7 +1425,7 @@ describe(`Date Input Testing`, () => {
 describe(`Mongoose Id Input Testing`, () => {
 
 	test(`Send in Mongoose Id input where Mongoose Id is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: Schema.Types.ObjectId,
 		});
 		const objectId = Types.ObjectId();
@@ -1437,7 +1437,7 @@ describe(`Mongoose Id Input Testing`, () => {
 	});
 
 	test(`Send in Mongoose Id input where Mongoose Id is expected (same layer).  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: Schema.Types.ObjectId,
 		});
 		expect(await validator({
@@ -1448,7 +1448,7 @@ describe(`Mongoose Id Input Testing`, () => {
 	});
 
 	test(`Send in Date input where Date is expected.  Expect Success`, async () => {
-		const validator = await BuildValidator({
+		const validator = await buildValidator({
 			name: { type: Schema.Types.ObjectId },
 		});
 		expect(await validator({
@@ -1460,7 +1460,7 @@ describe(`Mongoose Id Input Testing`, () => {
 
 	test(`Send in non-MongooseId input where MongooseId is expected.  Expect Failure`, async () => {
 		try {
-			const validator = await BuildValidator({
+			const validator = await buildValidator({
 				name: { type: Schema.Types.ObjectId },
 			});
 			await validator({
