@@ -5,12 +5,13 @@ import handleNumber from "../Handlers/handleNumber";
 import handleString from "../Handlers/handleString";
 import {
 	EAllowedTypes,
+	ICombinedOptions,
+	IGlobalOptions,
 	IHandleBooleanResponse,
 	IHandleDateResponse,
 	IHandleMongooseIdResponse,
 	IHandleNumberResponse,
 	IHandleStringResponse,
-	IOptionObject,
 } from "../interfaces";
 import addError from "./addError";
 
@@ -29,30 +30,39 @@ export default function processInputType(
 	inputValue: any,
 	path: string,
 	key: string,
-	globalOptions: IOptionObject = null,
-	localOptions: IOptionObject = null):
+	globalOptions: IGlobalOptions = null,
+	localOptions: IGlobalOptions = null):
 	IHandleStringResponse | IHandleNumberResponse | IHandleBooleanResponse |
 	IHandleDateResponse | IHandleMongooseIdResponse {
-	const options: IOptionObject = Object.assign(globalOptions, localOptions);
-	switch (schemaValue) {
-		case EAllowedTypes.BOOLEAN_TYPE:
-			return handleBoolean(inputValue, options, path, key);
-		case EAllowedTypes.STRING_TYPE:
-			return handleString(inputValue, options, path, key);
-		case EAllowedTypes.NUMBER_TYPE:
-			return handleNumber(inputValue, options, path, key);
-		case EAllowedTypes.MONGOOSE_TYPE:
-			return handleMongooseId(inputValue, options, path, key);
-		case EAllowedTypes.DATE_TYPE:
-			return handleDate(inputValue, options, path, key);
-		case EAllowedTypes.MIXED_TYPE:
-			return inputValue;
-		default:
-			return {
-				data: null,
-				errors: [
-					addError(path, key, `The type provided "${schemaValue}" isn't supported.  This is likely a parser error.`)
-				],
-			};
+	const options: ICombinedOptions = Object.assign({}, globalOptions, localOptions);
+	// If we need to skip the input
+	if (options.skip?.value !== true) {
+		switch (schemaValue) {
+			case EAllowedTypes.BOOLEAN_TYPE:
+				return handleBoolean(inputValue, options, path, key);
+			case EAllowedTypes.STRING_TYPE:
+				return handleString(inputValue, options, path, key);
+			case EAllowedTypes.NUMBER_TYPE:
+				return handleNumber(inputValue, options, path, key);
+			case EAllowedTypes.MONGOOSE_TYPE:
+				return handleMongooseId(inputValue, options, path, key);
+			case EAllowedTypes.DATE_TYPE:
+				return handleDate(inputValue, options, path, key);
+			case EAllowedTypes.MIXED_TYPE:
+				return inputValue;
+			default:
+				return {
+					data: null,
+					errors: [
+						addError(path, key, `The type provided "${schemaValue}" isn't supported.  This is likely a parser error.`),
+					],
+				};
+		}
+	}
+	else {
+		return {
+			errors: [],
+			data: inputValue,
+		};
 	}
 }

@@ -14,31 +14,55 @@ export enum EAllowedTypes {
 
 /**
  * The global options that can be set with each Validate call
- * @property {boolean} convert Do we want to attempt to convert the inputs to their desired type?
+ * @property {boolean} convertValues Do we want to attempt to convert the inputs to their desired type?
  * @property {boolean} trimExtraFields Remove any fields that are not defined in the schema?
  * @property {boolean} ignoreRequired Don't throw errors for fields marked as required in the schema but missing
  * @property {boolean} disableLocalOptions Use this option to disable any local options set at the schema level
  */
-export interface IOptionObject {
+export interface IGlobalOptions {
 	/**
 	 * Do we want to attempt to convert the inputs to their desired type?
 	 */
-	convert?: boolean; // This could be local or global
+	convertValues?: boolean;
 	/**
 	 * Remove any fields that are not defined in the schema?
 	 */
-	trimExtraFields?: boolean; // This would be a global option only
+	trimExtraFields?: boolean;
 	/**
 	 * Don't throw errors for fields marked as required in the schema but missing
 	 */
-	ignoreRequired?: boolean; // This would be a global option only
+	ignoreRequired?: boolean;
 	/**
 	 * Use this option to disable any local options set at the schema level
 	 */
-	disableLocalOptions?: boolean; // Wether to disable or allow local option settings
+	disableLocalOptions?: boolean;
+	/**
+	 * Wether the system throws an error when it detects issues with the input or not
+	 */
+	doNotThrow?: boolean;
 }
 
-export interface IInternalOptions extends IOptionObject {
+/**
+ * The Options the system supports from the mongoose schema directly
+ */
+export enum ESupportedMongooseOptions {
+	ENUM = "enum",
+	MIN_LENGTH = "minLength",
+	MAX_LENGTH = "maxLength",
+	LOWERCASE = "lowercase",
+	UPPERCASE = "uppercase",
+	TRIM = "trim",
+	MAX = "max",
+	MIN = "min",
+	REQUIRED = "required",
+	CONVERT = "convert",
+	SKIP = "skip",
+}
+
+/**
+ * The Options that are part of the Mongoose Schema already
+ */
+export interface IMongooseOptions {
 	enum?: string[];
 	minLength?: number;
 	maxLength?: number;
@@ -48,25 +72,75 @@ export interface IInternalOptions extends IOptionObject {
 	max?: Date | number;
 	min?: Date | number;
 	required?: boolean;
+	convert?: boolean;
+	skip?: boolean;
+}
+
+export interface ICombinedOptions extends ISchemaOptions, IGlobalOptions { }
+
+/**
+ * The Schema Options that the system can expect to have to handle
+ */
+export interface IMongooseOptionsResponse {
+	errors: object[];
+	data: ISchemaOptions;
+}
+
+interface ISchemaOptions {
+	required?: {
+		value: IMongooseOptions["required"],
+		message?: string,
+	};
+	enum?: {
+		value: IMongooseOptions["enum"],
+		message?: string,
+	};
+	minLength?: {
+		value: IMongooseOptions["minLength"],
+		message?: string,
+	};
+	maxLength?: {
+		value: IMongooseOptions["maxLength"],
+		message?: string,
+	};
+	lowercase?: {
+		value: IMongooseOptions["lowercase"],
+		message?: string,
+	};
+	uppercase?: {
+		value: IMongooseOptions["uppercase"],
+		message?: string,
+	};
+	trim?: {
+		value: IMongooseOptions["trim"],
+		message?: string,
+	};
+	max?: {
+		value: IMongooseOptions["max"],
+		message?: string,
+	};
+	min?: {
+		value: IMongooseOptions["min"],
+		message?: string,
+	};
+	skip?: {
+		value: IMongooseOptions["skip"],
+		message?: string,
+	};
+	convert?: {
+		value: IMongooseOptions["convert"],
+		message?: string,
+	};
 }
 
 /**
  * The allowed Option keys
  */
-export enum EOptionTypes {
-	CONVERT = "convert",
-	TRIM = "trim",
+export enum EMSVOptionTypes {
+	CONVERT_VALUES = "convertValues",
 	SKIP = "skip",
-	DISABLE_LOCAL_OPTIONS = "disableLocalOptions",
 }
-/**
- * When are we skipping the validation of this field
- */
-export enum ESkipTypes {
-	ALWAYS = "ALWAYS",
-	INPUT_ONLY = "INPUT_ONLY",
-	OUTPUT_ONLY = "OUTPUT_ONLY",
-}
+
 
 /**
  * The fields the schema and input functions return
@@ -74,6 +148,14 @@ export enum ESkipTypes {
 export interface IResponse {
 	errors: object[];
 	data: object;
+}
+
+/**
+ * The response from the global options parser
+ */
+export interface IGlobalOptionsResponse {
+	errors: object[];
+	data: IGlobalOptions;
 }
 
 /**

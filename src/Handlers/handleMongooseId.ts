@@ -1,5 +1,5 @@
 import { Schema, Types } from "mongoose";
-import { IHandleBooleanResponse, IHandleMongooseIdResponse, IOptionObject } from "../interfaces";
+import { ICombinedOptions, IHandleMongooseIdResponse } from "../interfaces";
 import addError from "../Utilities/addError";
 
 /**
@@ -11,18 +11,20 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleMongooseId(
-	inputValue: Schema.Types.ObjectId, options: IOptionObject, path: string, key: string,
+	inputValue: Schema.Types.ObjectId, options: ICombinedOptions, path: string, key: string,
 ): IHandleMongooseIdResponse {
 	const response: IHandleMongooseIdResponse = {
 		errors: [],
 		data: null,
 	};
 	if (key === ``) { key = path; }
-	if (options.convert === true) {
+	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
+		(options.convertValues === true)) &&
+		inputValue !== undefined) {
 		inputValue = new Schema.Types.ObjectId(inputValue.toString());
 	}
 	if (!/^[a-fA-F0-9]{24}$/.test(inputValue.toString())) {
-		if (options.convert === true) {
+		if ((options.convert?.value === true && options.disableLocalOptions !== true) || (options.convertValues === true)) {
 			response.errors.push(
 				addError(path, key, `The input for "${key}" is not a MongooseId and cannot be converted into one`),
 			);

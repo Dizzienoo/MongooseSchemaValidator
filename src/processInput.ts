@@ -1,11 +1,11 @@
-import { IOptionObject, IResponse } from "./interfaces";
+import { IGlobalOptions, IResponse } from "./interfaces";
 import addError from "./Utilities/addError";
 import buildLocalOptions from "./Utilities/buildLocalOptions";
 import isObject from "./Utilities/isObject";
 import keyIsAllowedType from "./Utilities/keyIsAllowedType";
 import processInputType from "./Utilities/processInputType";
 
-export default async function (schema: object, input: object, globalOptions: IOptionObject): Promise<IResponse> {
+export default async function (schema: object, input: object, globalOptions: IGlobalOptions): Promise<IResponse> {
 	const response = {
 		errors: [],
 		data: null,
@@ -32,7 +32,7 @@ export default async function (schema: object, input: object, globalOptions: IOp
  * @param path The location fo the input depth
  */
 function recursiveCheck(
-	schema: object, input: object, globalOptions: IOptionObject = null, path: string = ``,
+	schema: object, input: object, globalOptions: IGlobalOptions = null, path: string = ``,
 ): IResponse {
 	// Create an array of errors to return
 	const response = {
@@ -53,52 +53,24 @@ function recursiveCheck(
 			schemaKeys = schemaKeys.filter((e) => e !== inputKey);
 			// Define the schema key
 			const schemaKey = inputKey;
-			// If the Schema Key is A Type identifier
-			const allowedType = keyIsAllowedType(schema[schemaKey]);
-			if (allowedType !== null) {
-				// 	Then we want to check it vs value on this layer
-				const checkResponse = processInputType(schema[schemaKey], input[schemaKey], path, schemaKey, globalOptions, schema[`MSV_Options`]);
-				if (checkResponse.errors.length) {
-					response.errors = response.errors.concat(checkResponse.errors);
-				}
-				else if (checkResponse.data !== null) {
-					response.data[schemaKey] = checkResponse.data;
-				}
-			}
 			// If the schema key is an array
-			else if (Array.isArray(schema[schemaKey])) {
+			if (Array.isArray(schema[schemaKey])) {
 				// Then we want to handle the array
 				if (!Array.isArray(input[schemaKey])) {
 					response.errors = response.errors.concat([addError(path, schemaKey, `Expecting an Array of entries but did not recieve one`)]);
-				}
-				// Otherwise, if the schema array simply had a type def in it
-				else if (keyIsAllowedType(schema[schemaKey][0])) {
-					// Go through each object in the input array
-					input[schemaKey].forEach((arrayKey, i) => {
-						// Process the input with the nested schema
-						const arrRes = processInputType(schema[schemaKey][0], arrayKey, path, `${schemaKey}[${i}]`, globalOptions, {});
-						if (arrRes.errors.length) {
-							response.errors = response.errors.concat(arrRes.errors);
-						}
-						else if (arrRes.data !== null) {
-							if (response.data[schemaKey] === undefined) { response.data[schemaKey] = []; }
-							response.data[schemaKey].push(arrRes.data);
-						}
-					});
-
 				}
 				else {
 					// Check the inside of the Array Object
 					const potentialKeys = Object.keys(schema[schemaKey][0]);
 					// If the inside of the object includes type
+					// !!!! DOES THIS NOT NEED A [0] ADDED TO THE ISOBJECT CHECK?  HERE!
 					if (potentialKeys.includes(`type`) && !isObject(schema[schemaKey].type)) {
 						// Use this object as the schema and process through each input array value
 						input[schemaKey].forEach((arrayKey, i) => {
 							// Then we need to add any options from this block to local options
-							const localOptions = (globalOptions.disableLocalOptions !== true) ? buildLocalOptions(schema[schemaKey]) : {};
 							// Process The input values
 							const processResponse = processInputType(
-								schema[schemaKey][0].type, arrayKey, path, `schemaKey[${i}]`, globalOptions, localOptions,
+								schema[schemaKey][0].type, arrayKey, path, `${schemaKey}[${i}]`, globalOptions, schema[schemaKey],
 							);
 							if (processResponse.errors.length) {
 								response.errors = response.errors.concat(processResponse.errors);
@@ -135,19 +107,6 @@ function recursiveCheck(
 				const subObjKeys = Object.keys(schema[schemaKey]);
 				// If the Schema Key Object includes a type key
 				if (subObjKeys.includes(`type`) && !isObject(schema[schemaKey].type)) {
-					// Check that there is an input to check
-					// TODO: THIS MAY BE BETTER MOVED TO THE TOP OF THE FUNCTION
-					if (input === undefined || input[schemaKey] === undefined) {
-						if (schema[schemaKey].required === true && !globalOptions.ignoreRequired) {
-							response.errors = response.errors.concat([addError(path, schemaKey, `The input for "${schemaKey}" is required but empty`)]);
-						}
-						else {
-							response.data = null;
-						}
-						return response;
-					}
-					// Then we need to add any options from this block to local options
-					const localOptions = (globalOptions.disableLocalOptions !== true) ? buildLocalOptions(schema[schemaKey]) : {};
 					// Then we want to validate the type of the object against the non-nested value
 					const checkResponse = processInputType(
 						schema[schemaKey].type,
@@ -155,7 +114,7 @@ function recursiveCheck(
 						path,
 						schemaKey,
 						globalOptions,
-						localOptions,
+						schema[schemaKey],
 					);
 					if (checkResponse.errors.length) {
 						response.errors = response.errors.concat(checkResponse.errors);
@@ -192,9 +151,12 @@ function recursiveCheck(
 	// If there are any schema keys left, check if they are required
 	if (schemaKeys.length) {
 		schemaKeys.forEach((schemaKey) => {
-			if (schema[schemaKey].required && !globalOptions.ignoreRequired) {
+			if (
+				schema[schemaKey].required?.value === true &&
+				!globalOptions.ignoreRequired
+			) {
 				response.errors.push(
-					addError(path, schemaKey, `The input for "${schemaKey}" is required but empty`),
+					addError(path, schemaKey, schema[schemaKey].required.message || `The input for "${schemaKey}" is required but empty`),
 				);
 			}
 		});
