@@ -1,6 +1,6 @@
 # Mongoose Schema Validator
 
-The Mongoose Schema Validator provides functionality to validate the input and output of a system through mongoose schema objects, allowing for data trimming, conversion and checking before or after the data is processed.  This project comes out of two specific use cases for myself.  Firstly I wanted to use my already written Mongoose Schema as / in my validator when inputs came into the system though potentially before I was saving data.  Secondly, I wanted a system that could easily handle trimming the ammount of data that was being returned to the User, again tied to my already built schemas.  The first use case is demonstrated in the Usage section of this page and there is an example of how to run the second use case in the Examples section.
+The Mongoose Schema Validator provides functionality to validate the input and output of a system through mongoose schema objects, allowing for data trimming, conversion and checking before or after the data is processed.  This project comes out of two specific use cases for myself.  Firstly I wanted to use my already written Mongoose Schema in my validator when inputs came into the system though potentially before I was saving data.  Secondly, I wanted a system that could easily handle trimming the ammount of data that was being returned to the User, again tied to my already built schemas.  The first use case is demonstrated in the Usage section of this page and there is an example of how to run the second use case in the Examples section.
 
 Please note, any of the extra options provided to the MSV_Options do not effect the actual processing handled by mongoose.
 
@@ -77,7 +77,8 @@ async function validatorFunction () {
 
 ### Applying an MSV_Option before execution
 
-Depending on the use case, you may wish to tell the system to handle specific fields of the schema differently to the rest of the Schema.  For example, on an Update Request you may not want to validate a sub-document.  This can be handled by adding MSV_Options on the fly.  DO REMEMBER: MSV OPTIONS CANNOT BE ADDED TO "SHALLOW" CONFIGURATIONS, THEY CAN ONLY BE ADDED TO SCHEMA FIELDS THAT USE AN OBJECT AND "TYPE" FIELD.
+Depending on the use case, you may wish to tell the system to handle specific fields of the schema differently to the rest of the Schema.  For example, on an Update Request you may not want to validate a sub-document.  This can be handled by adding MSV_Options on the fly.  
+DO REMEMBER: MSV OPTIONS CANNOT BE ADDED TO "SHALLOW" CONFIGURATIONS, THEY CAN ONLY BE ADDED TO SCHEMA FIELDS THAT USE AN OBJECT AND "TYPE" FIELD.
 
 ```javascript
 async function validatorFunction () {
