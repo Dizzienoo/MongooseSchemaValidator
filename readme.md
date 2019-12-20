@@ -84,7 +84,7 @@ async function validatorFunction () {
 	// This schema object would probably be hosted elsewhere
 	const schema = {
 		name: {type: String},
-		DOB: Date // Could not add MSV_Options to this without converting the schema declaration to {type: Date}
+		DOB: Date // Could not add MSV_Option to this needs to be {type: Date}
 	}
 	//Creating a close on the object amd adding extra options before processing
 	const outgoingSchema = Object.assign({}, schema)
@@ -108,7 +108,7 @@ async function validatorFunction () {
 ## Options
 
 ### Mongoose Schema Options
-These options are defined as normal in the schema object and are handled by the application.  The systme will process and complete these validation tasks just as mongoose would.  Optional messages can be added in the same way as mongoose, by using {value: "" , message: ""}
+These options are defined as normal in the schema object and are handled by the application.  The system will process and complete these validation tasks just as mongoose would.  Optional messages can be added in the same way as mongoose, by using {value: "" , message: ""}
 
 General Validators:
 
@@ -141,8 +141,13 @@ Two extra fields can be added to schema lines that will be processed by MSV.  Th
 
 ```javascript
 {
-	convert: boolean; //Do we want to attempt to convert this line into its desired type
-	skip: boolean; //Do we want to skip this line when processing the input?  This option is intended to be added only in specific use cases and shouldn't be placed in the main schema as it even overrides "disableLocalOptions" for the fields upon which it is placed
+	// Do we want to attempt to convert this line into its desired type
+	convert: boolean;
+	// Do we want to skip this line when processing the input?  
+	// This option is intended to be added only in specific use cases and 
+	// shouldn't be placed in the main schema as it even overrides 
+	// "disableLocalOptions" for the fields upon which it is placed
+	skip: boolean;
 
 }
 ```
@@ -165,11 +170,14 @@ The following validator options are able to be sent with the input to determine 
 		*/
 	ignoreRequired?: boolean;
 	/**
-		* Use this option to disable any local options set at the schema level.  This will not disable the mongoose options or the custom Error messages provided, only the MSV_Options
+		* Use this option to disable any local options set at the schema level.  
+		* This will not disable the mongoose options or the custom 
+		* Error messages provided, only the MSV_Options
 		*/
 	disableLocalOptions?: boolean;
 	/**
-		* If the validator finds errors do we want it to throw an error.  Only works on the validator, the schema creation will throw regardless.
+		* If the validator finds errors do we want it to throw an error.  
+		* Only works on the validator, the schema creation will throw regardless.
 		*/
 	doNotThrow?: boolean;
 }
@@ -182,21 +190,34 @@ Custom Error Messages can be provided for all of the schema defined Inputs.
 Via array input:
 ```javascript
 {
-	name: {type: String, required: [true, "You need to provide a name, even if its just a mononym!"]}
+	name: {
+		type: String,
+		required: [true, "You need to provide a name, even if its just a mononym!"]
+	}
 }
 ```
 
 Via Object input
 ```javascript
 {
-	name: {type: String, required: { value: true, message: "You need to provide a name, even if its just a mononym!"}}
+	name: {
+		type: String, required: { 
+			value: true,
+			message: "You need to provide a name, even if its just a mononym!"
+		}
+	}
 }
 ```
 
 Due to the enum option's value being an array the only way to add a message would be to pass in the value and message in object format
 ```javascript
 {
-	name: {type: String, enum: { value: ["Dene", "Doc", "Hank", "The Monarch"], message: "You're not a Venture!"}}
+	name: {
+		type: String, enum: {
+			value: ["Dene", "Doc", "Hank", "The Monarch"],
+			message: "You're not a Venture!"
+		}
+	}
 }
 ```
 
@@ -214,7 +235,7 @@ let adminObject = Object.assign({}, userObject, {
 	dateRegistered: {type: Date, default: Date.now()},
 	lastLogin: {type: Date, default: Date.now()},
 })
-// The full database schema may have even more fields, or you may have more "layers" of information you wish to return
+// The full database schema may have even more fields, or more "layers" of information to return
 
 async function processResponse(userProfile, role) {
  if (role === "USER") {
