@@ -18,15 +18,17 @@ Package has been built using Typescript and has type definitions in the package.
 
 ### JavaScript
 
+```javascript
 const MSV = require("mongoose-schema-validator")
-
+```
 ### TypeScript
-
+```javascript
 import { buildValidator } from "mongoose-schema-validator"
-
+```
 ### Do Not Throw Option
 The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block
 
+```javascript
 async function validatorFunction () {
 	let validate = await MSV.buildValidator({
 		name: String,
@@ -45,10 +47,12 @@ async function validatorFunction () {
 	//Otherwise, we have our validated code
 	console.log(response.data)
 }
+```
 
 ### Without Do Not Throw Option
 This setup will require that the Error is caught or handled
 
+```javascript
 async function validatorFunction () {
 	let validate = await MSV.buildValidator({
 		name: String,
@@ -69,12 +73,13 @@ async function validatorFunction () {
 		console.error(err.message) // Generic Message alerting that there have been errors
 	}
 }
-
+```
 
 ### Applying an MSV_Option before execution
 
 Depending on the use case, you may wish to tell the system to handle specific fields of the schema differently to the rest of the Schema.  For example, on an Update Request you may not want to validate a sub-document.  This can be handled by adding MSV_Options on the fly.  DO REMEMBER: MSV OPTIONS CANNOT BE ADDED TO "SHALLOW" CONFIGURATIONS, THEY CAN ONLY BE ADDED TO SCHEMA FIELDS THAT USE AN OBJECT AND "TYPE" FIELD.
 
+```javascript
 async function validatorFunction () {
 	// This schema object would probably be hosted elsewhere
 	const schema = {
@@ -99,7 +104,7 @@ async function validatorFunction () {
 		console.error(err.message) // Generic Message alerting that there have been errors
 	}
 }
-
+```
 ## Options
 
 ### Mongoose Schema Options
@@ -134,14 +139,18 @@ Date Validators:
 ### MSV_Options
 Two extra fields can be added to schema lines that will be processed by MSV.  These fields can be provided in the same ways as mongoose, as either simply a value, an array with value and message or an object with valuer and message.
 
+```javascript
 {
 	convert: boolean; //Do we want to attempt to convert this line into its desired type
 	skip: boolean; //Do we want to skip this line when processing the input?  This option is intended to be added only in specific use cases and shouldn't be placed in the main schema as it even overrides "disableLocalOptions" for the fields upon which it is placed
 
 }
+```
 
 ### Global Options
 The following validator options are able to be sent with the input to determine how the application functions.
+
+```javascript
 {
 	/**
 		* Do we want to attempt to convert the inputs to their desired type?
@@ -164,31 +173,38 @@ The following validator options are able to be sent with the input to determine 
 		*/
 	doNotThrow?: boolean;
 }
-
+```
 
 ### Custom Error Messages
 
 Custom Error Messages can be provided for all of the schema defined Inputs.
 
 Via array input:
+```javascript
 {
 	name: {type: String, required: [true, "You need to provide a name, even if its just a mononym!"]}
 }
+```
 
 Via Object input
+```javascript
 {
 	name: {type: String, required: { value: true, message: "You need to provide a name, even if its just a mononym!"}}
 }
+```
 
 Due to the enum option's value being an array the only way to add a message would be to pass in the value and message in object format
+```javascript
 {
 	name: {type: String, enum: { value: ["Dene", "Doc", "Hank", "The Monarch"], message: "You're not a Venture!"}}
 }
+```
 
 ## Examples
 
 ### Example of Data control using Trim function and combined Schemas
 
+```javascript
 let userObject = {
 	name: {type: String, required: true},
 	age: {type: Number, required: true},
@@ -210,7 +226,7 @@ async function processResponse(userProfile, role) {
 	 return await validate(userProfile, {trimExtraFields: true})
  }
 }
-
+```
 
 ## Issues
 
