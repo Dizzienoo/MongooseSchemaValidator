@@ -1,7 +1,8 @@
 import CheckSchema from "./checkSchema";
-import { IGlobalOptions, IResponse } from "./interfaces";
+import { IGlobalOptions } from "./interfaces";
 import processInput from "./processInput";
 import { isValidGlobalOption } from "./Utilities/checkOptions";
+import { InputException, OptionsException, SchemaException } from "./Utilities/exceptions";
 
 /**
  * Validates the Input vs the Pre-Created Schema
@@ -62,38 +63,3 @@ async function attemptProcessInput(
 	return processedInput.data;
 }
 
-/**
- * A Schema Exception to highlight Errors in the Schema
- *
- * @param schemaErrors The errors detected in the way the actual schema is set up
- */
-function SchemaException(schemaErrors: object[]) {
-	return {
-		message: `Schema Unable to be parsed due to errors`,
-		errors: schemaErrors,
-	};
-}
-
-/**
- * An Input Exception to highlight errors with the Input
- *
- * @param inputErrors Errors generated in the Process Input function
- */
-function InputException(inputErrors: object[]) {
-	return {
-		message: `The Input Provided has errors`,
-		errors: inputErrors,
-	};
-}
-
-/**
- * An Options Exception to highlight errors with the Options
- *
- * @param optionsErrors Errors generated in the Process Options function
- */
-function OptionsException(optionsErrors: object[]) {
-	return {
-		message: `The Options Provided have errors`,
-		errors: optionsErrors,
-	};
-}

@@ -1,8 +1,6 @@
 import { IGlobalOptions, IResponse } from "./interfaces";
 import addError from "./Utilities/addError";
-import buildLocalOptions from "./Utilities/buildLocalOptions";
 import isObject from "./Utilities/isObject";
-import keyIsAllowedType from "./Utilities/keyIsAllowedType";
 import processInputType from "./Utilities/processInputType";
 
 export default async function (schema: object, input: object, globalOptions: IGlobalOptions): Promise<IResponse> {

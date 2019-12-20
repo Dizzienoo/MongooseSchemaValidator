@@ -1,4 +1,4 @@
-import { EAllowedTypes, EMSVOptionTypes, IGlobalOptions, IResponse } from "./interfaces";
+import { EAllowedTypes, IResponse } from "./interfaces";
 import addError from "./Utilities/addError";
 import { isValidSchemaOption } from "./Utilities/checkOptions";
 import ConvertSchemaTypes from "./Utilities/convertSchemaTypes";

@@ -59,23 +59,6 @@ export enum ESupportedMongooseOptions {
 	SKIP = "skip",
 }
 
-/**
- * The Options that are part of the Mongoose Schema already
- */
-export interface IMongooseOptions {
-	enum?: string[];
-	minLength?: number;
-	maxLength?: number;
-	lowercase?: boolean;
-	uppercase?: boolean;
-	trim?: boolean;
-	max?: Date | number;
-	min?: Date | number;
-	required?: boolean;
-	convert?: boolean;
-	skip?: boolean;
-}
-
 export interface ICombinedOptions extends ISchemaOptions, IGlobalOptions { }
 
 /**
@@ -86,61 +69,55 @@ export interface IMongooseOptionsResponse {
 	data: ISchemaOptions;
 }
 
+/**
+ * The Options that can come out of the schema once it is processed
+ */
 interface ISchemaOptions {
 	required?: {
-		value: IMongooseOptions["required"],
+		value: boolean,
 		message?: string,
 	};
 	enum?: {
-		value: IMongooseOptions["enum"],
+		value: string[],
 		message?: string,
 	};
 	minLength?: {
-		value: IMongooseOptions["minLength"],
+		value: number,
 		message?: string,
 	};
 	maxLength?: {
-		value: IMongooseOptions["maxLength"],
+		value: number,
 		message?: string,
 	};
 	lowercase?: {
-		value: IMongooseOptions["lowercase"],
+		value: boolean,
 		message?: string,
 	};
 	uppercase?: {
-		value: IMongooseOptions["uppercase"],
+		value: boolean,
 		message?: string,
 	};
 	trim?: {
-		value: IMongooseOptions["trim"],
+		value: boolean,
 		message?: string,
 	};
 	max?: {
-		value: IMongooseOptions["max"],
+		value: Date | number,
 		message?: string,
 	};
 	min?: {
-		value: IMongooseOptions["min"],
+		value: Date | number,
 		message?: string,
 	};
 	skip?: {
-		value: IMongooseOptions["skip"],
+		value: boolean,
 		message?: string,
 	};
 	convert?: {
-		value: IMongooseOptions["convert"],
+		value: boolean,
 		message?: string,
 	};
 }
-
-/**
- * The allowed Option keys
- */
-export enum EMSVOptionTypes {
-	CONVERT_VALUES = "convertValues",
-	SKIP = "skip",
-}
-
 
 /**
  * The fields the schema and input functions return
@@ -196,35 +173,4 @@ export interface IHandleDateResponse {
 export interface IHandleMongooseIdResponse {
 	errors: object[];
 	data: Schema.Types.ObjectId;
-}
-
-/**
- * The potential responses from parsing all available incoming local options
- */
-export interface ILocalOptionsResponse {
-	convert?: boolean;
-	enum?: string[];
-	minLength?: number;
-	maxLength?: number;
-	lowercase?: boolean;
-	uppercase?: boolean;
-	trim?: boolean;
-	max?: Date | number;
-	min?: Date | number;
-	required?: boolean;
-}
-
-export interface IPotentialLocalOptions {
-	MSV_Options?: {
-		convert?: boolean;
-	};
-	enum?: string[];
-	minLength?: number;
-	maxLength?: number;
-	lowercase?: boolean;
-	uppercase?: boolean;
-	trim?: boolean;
-	max?: Date | number;
-	min?: Date | number;
-	required?: boolean;
 }

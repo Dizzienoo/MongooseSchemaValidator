@@ -1087,4 +1087,3 @@ describe(`Mongoose Id Input Testing`, () => {
 
 });
 
-// // TODO: ADD IN BUFFER, DECIMAL128 and MAP TYPES AND SUPPORT THEM

@@ -21,7 +21,7 @@ const MSV = require("mongoose-schema-validator")
 
 ### TypeScript
 
-import {} from "mongoose-schema-validator"
+import { buildValidator } from "mongoose-schema-validator"
 
 ### Do Not Throw Option
 The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block
@@ -130,7 +130,6 @@ Date Validators:
 	max: Date;
 	min: Date;
 
-
 ### MSV_Options
 By adding the MSV_Options field to a line in the schema you can add some more granular control to certain incoming or outgoing fields on the fly.
 All these field are optional and are false by default.  All fields either expect a value related to the value types below or, if you wish to include a custom message, a {value: "", message: ""} object
@@ -160,6 +159,9 @@ The following validator options are able to be sent with the input to determine 
 		* Use this option to disable any local options set at the schema level.  This will not disable the mongoose options or the custom Error messages provided, only the MSV_Options
 		*/
 	disableLocalOptions?: boolean;
+	/**
+		* If the validator finds errors do we want it to throw an error.  Only works on the validator, the schema creation will throw regardless.
+		*/
 	doNotThrow?: boolean;
 }
 
@@ -171,7 +173,29 @@ Custom Error Messages can be passed to the Mongoose and MSV checks for each
 
 ## Examples
 
-// TODO: ADD IN OUTGOING TRIMMER EXAMPLE HERE
+### Example of Data control using Trim function and combined Schemas
+
+let userObject = {
+	name: {type: String, required: true},
+	age: {type: Number, required: true},
+}
+
+let adminObject = Object.assign({}, userObject, {
+	dateRegistered: {type: Date, default: Date.now()},
+	lastLogin: {type: Date, default: Date.now()},
+})
+// The full database schema may have even more fields, or you may have more "layers" of information you wish to return
+
+async function processResponse(userProfile, role) {
+ if (role === "USER") {
+	 let validate = await buildValidator(userObject)
+	 return await validate(userProfile, {trimExtraFields: true})
+ }
+ else {
+	 let validate = await buildValidator(adminObject)
+	 return await validate(userProfile, {trimExtraFields: true})
+ }
+}
 
 
 ## Issues
@@ -186,5 +210,4 @@ https://github.com/Dizzienoo/MongooseSchemaValidator/issues
 
 ## Future Plans
 
-// TODO: SORT OUT MSV_Options
-// TODO: CUSTOM ERROR MESSAGES
+Support for Buffer, Decimal128, and Map Types
