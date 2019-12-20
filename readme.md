@@ -131,12 +131,11 @@ Date Validators:
 	min: Date;
 
 ### MSV_Options
-By adding the MSV_Options field to a line in the schema you can add some more granular control to certain incoming or outgoing fields on the fly.
-All these field are optional and are false by default.  All fields either expect a value related to the value types below or, if you wish to include a custom message, a {value: "", message: ""} object
+Two extra fields can be added to schema lines that will be processed by MSV.  These fields can be provided in the same ways as mongoose, as either simply a value, an array with value and message or an object with valuer and message.
 
 {
 	convert: boolean; //Do we want to attempt to convert this line into its desired type
-	skip: boolean; //Do we want to skip this line when processing the schema.  This will override all other validators for this field, including the mongoose ones.
+	skip: boolean; //Do we want to skip this line when processing the input?  This option is intended to be added only in specific use cases and shouldn't be placed in the main schema as it even overrides "disableLocalOptions" for the fields upon which it is placed
 
 }
 
@@ -204,7 +203,6 @@ Currently the project is in Beta and probably not suitable for production use.
 
 Please report and bugs or issues to:
 https://github.com/Dizzienoo/MongooseSchemaValidator/issues
-
 
 
 
