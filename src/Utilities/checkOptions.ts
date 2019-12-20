@@ -6,6 +6,7 @@ import {
 	IMongooseOptionsResponse,
 } from "../interfaces";
 import addError from "./addError";
+import isObject from "./isObject";
 
 /**
  * Takes in a Mongoose Option and Handles Appropriately
@@ -54,6 +55,10 @@ export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): 
 							case ESupportedMongooseOptions.ENUM:
 								// Handle the enum
 								response = processEnumOption(SchemaOption, fieldKey, response);
+								break;
+							case ESupportedMongooseOptions.MATCH:
+								// Handle the match
+								response = processMatchOption(SchemaOption, fieldKey, response);
 								break;
 							// Otherwise, this option shouldn't be on this type
 							default:
@@ -166,6 +171,7 @@ function isMonitoredKey(key: string): boolean {
 		key === ESupportedMongooseOptions.LOWERCASE ||
 		key === ESupportedMongooseOptions.UPPERCASE ||
 		key === ESupportedMongooseOptions.TRIM ||
+		key === ESupportedMongooseOptions.MATCH ||
 		key === ESupportedMongooseOptions.REQUIRED ||
 		key === ESupportedMongooseOptions.CONVERT ||
 		key === ESupportedMongooseOptions.SKIP
@@ -315,5 +321,82 @@ function processEnumOption(
 	if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
 		response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
 	}
+	return response;
+}
+
+/**
+ * Utility Function to process Match Options without re-writing the same code 10 times
+ *
+ * @param SchemaOption A potential mongoose option from the schema
+ * @param fieldKey The key we are examining
+ * @param response The full response to be sent back to the parent function
+ */
+function processMatchOption(
+	SchemaOption: object, fieldKey: string, response: IMongooseOptionsResponse,
+): IMongooseOptionsResponse {
+	if (SchemaOption[fieldKey] === undefined) {
+		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+	}
+	else if (Array.isArray(SchemaOption[fieldKey])) {
+		let isValid = true;
+		let regex;
+		try {
+			regex = new RegExp(SchemaOption[fieldKey][0]);
+		}
+		catch (err) {
+			isValid = false;
+		}
+		if (!isValid) {
+			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+		}
+		else {
+			response.data[fieldKey] = { value: regex };
+			if (SchemaOption[fieldKey][1] !== undefined && typeof SchemaOption[fieldKey][1] !== `string`) {
+				response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+			}
+			else if (SchemaOption[fieldKey][1] !== undefined) {
+				response.data[fieldKey].message = SchemaOption[fieldKey][1];
+			}
+		}
+	}
+	else if (isObject(SchemaOption[fieldKey]) && - SchemaOption[fieldKey].value !== undefined) {
+		let isValid = true;
+		let regex;
+		try {
+			regex = new RegExp(SchemaOption[fieldKey].value);
+		}
+		catch (err) {
+			isValid = false;
+		}
+		if (!isValid) {
+			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+		}
+		else {
+			response.data[fieldKey] = { value: regex };
+			if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
+				response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+			}
+			else if (SchemaOption[fieldKey].message !== undefined) {
+				response.data[fieldKey].message = SchemaOption[fieldKey].message;
+			}
+		}
+	}
+	else {
+		let isValid = true;
+		let regex;
+		try {
+			regex = new RegExp(SchemaOption[fieldKey]);
+		}
+		catch (err) {
+			isValid = false;
+		}
+		if (!isValid) {
+			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+		}
+		else {
+			response.data[fieldKey] = { value: regex };
+		}
+	}
+
 	return response;
 }

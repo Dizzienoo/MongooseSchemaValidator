@@ -1,119 +1,118 @@
+import { Schema } from "mongoose";
 import { buildValidator } from "..";
 
-// import { Schema, Types } from "mongoose";
-// import { buildValidator } from "../index";
 
-// describe(`Test Schema Validator`, () => {
+describe(`Test Schema Validator`, () => {
 
-// 	test(`Check that just string into the schema field fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator(`string`);
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [{ Schema: `The Schema provided is not an object` }],
-// 			});
-// 		}
-// 	});
+	test(`Check that just string into the schema field fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator(`string`);
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [{ Schema: `The Schema provided is not an object` }],
+			});
+		}
+	});
 
-// 	test(`Check that just an array into the schema field fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator([]);
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [{ Schema: `The Schema provided is not an object` }],
-// 			});
-// 		}
-// 	});
+	test(`Check that just an array into the schema field fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator([]);
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [{ Schema: `The Schema provided is not an object` }],
+			});
+		}
+	});
 
-// 	test(`Check that empty object into the schema field fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator({});
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [{ Schema: `The Schema provided is not an object` }],
-// 			});
-// 		}
-// 	});
+	test(`Check that empty object into the schema field fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator({});
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [{ Schema: `The Schema provided is not an object` }],
+			});
+		}
+	});
 
-// 	test(`Check that just a number into the schema field fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator(1);
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [{ Schema: `The Schema provided is not an object` }],
-// 			});
-// 		}
-// 	});
+	test(`Check that just a number into the schema field fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator(1);
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [{ Schema: `The Schema provided is not an object` }],
+			});
+		}
+	});
 
-// 	test(`Check that just a boolean into the schema field fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator(true);
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [{ Schema: `The Schema provided is not an object` }],
-// 			});
-// 		}
-// 	});
+	test(`Check that just a boolean into the schema field fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator(true);
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [{ Schema: `The Schema provided is not an object` }],
+			});
+		}
+	});
 
-// 	test(`Check that a schema with no type fails`, async () => {
-// 		try {
-// 			// @ts-ignore
-// 			await buildValidator({
-// 				name: String,
-// 				date: Number,
-// 				month: `Date`,
-// 				flag: Boolean,
-// 				actualDate: Date,
-// 				objectID: Schema.Types.ObjectId,
-// 				object: {
-// 					nested: String,
-// 					flag2: `Date`,
-// 					mixedArray: [],
-// 				},
-// 				allowedArray: [{ type: String }],
-// 				shallowArray: [String],
-// 				invalidShallowArray: [`Strung`],
-// 				toobigArray: [{ oneObj: String }, { twoObj: String }],
-// 				invalidType: { type: `WRONG` },
-// 				allowedType: { type: String },
-// 			});
-// 			throw Error(`Failed To Recieve Expected Error`);
-// 		}
-// 		catch (err) {
-// 			expect(err).toEqual({
-// 				message: `Schema Unable to be parsed due to errors`,
-// 				errors: [
-// 					{ month: `Type Provided "Date" is not an allowed type` },
-// 					{ 'object.flag2': `Type Provided "Date" is not an allowed type` },
-// 					{ invalidShallowArray: `The provided array does not contain deeper object fields or a valid input type` },
-// 					{ toobigArray: `Provided Section has more than one object in the array, this is not valid for a schema` },
-// 					{ 'invalidType.type': `Type Provided "WRONG" is not an allowed type"` },
-// 				],
-// 			});
-// 		}
-// 	});
+	test(`Check that a schema with no type fails`, async () => {
+		try {
+			// @ts-ignore
+			await buildValidator({
+				name: String,
+				date: Number,
+				month: `Date`,
+				flag: Boolean,
+				actualDate: Date,
+				objectID: Schema.Types.ObjectId,
+				object: {
+					nested: String,
+					flag2: `Date`,
+					mixedArray: [],
+				},
+				allowedArray: [{ type: String }],
+				shallowArray: [String],
+				invalidShallowArray: [`Strung`],
+				toobigArray: [{ oneObj: String }, { twoObj: String }],
+				invalidType: { type: `WRONG` },
+				allowedType: { type: String },
+			});
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [
+					{ month: `Type Provided "Date" is not an allowed type` },
+					{ 'object.flag2': `Type Provided "Date" is not an allowed type` },
+					{ invalidShallowArray: `The provided array does not contain deeper object fields or a valid input type` },
+					{ toobigArray: `Provided Section has more than one object in the array, this is not valid for a schema` },
+					{ 'invalidType.type': `Type Provided "WRONG" is not an allowed type"` },
+				],
+			});
+		}
+	});
 
-// });
+});
 
 describe(`Test the do not throw option`, () => {
 

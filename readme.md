@@ -9,6 +9,7 @@ Currently the project is in Beta and probably not suitable for production use.
 ## Installation
 
 npm i mongoose-schema-validator
+
 yarn add mongoose-schema-validator
 
 Package has been built using Typescript and has type definitions in the package.
@@ -118,7 +119,7 @@ String Validators:
 	lowercase: boolean;
 	uppercase: boolean;
 	trim: boolean;
-!! Currently Match is not supported!
+	match: RegExp;
 
 Number Validators:
 
@@ -167,8 +168,22 @@ The following validator options are able to be sent with the input to determine 
 
 ### Custom Error Messages
 
-Custom Error Messages can be passed to the Mongoose and MSV checks for each 
+Custom Error Messages can be provided for all of the schema defined Inputs.
 
+Via array input:
+{
+	name: {type: String, required: [true, "You need to provide a name, even if its just a mononym!"]}
+}
+
+Via Object input
+{
+	name: {type: String, required: { value: true, message: "You need to provide a name, even if its just a mononym!"}}
+}
+
+Due to the enum option's value being an array the only way to add a message would be to pass in the value and message in object format
+{
+	name: {type: String, enum: { value: ["Dene", "Doc", "Hank", "The Monarch"], message: "You're not a Venture!"}}
+}
 
 ## Examples
 

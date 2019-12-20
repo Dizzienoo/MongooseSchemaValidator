@@ -52,6 +52,7 @@ export enum ESupportedMongooseOptions {
 	LOWERCASE = "lowercase",
 	UPPERCASE = "uppercase",
 	TRIM = "trim",
+	MATCH = "match",
 	MAX = "max",
 	MIN = "min",
 	REQUIRED = "required",
@@ -99,6 +100,10 @@ interface ISchemaOptions {
 	};
 	trim?: {
 		value: boolean,
+		message?: string,
+	};
+	match?: {
+		value: string,
 		message?: string,
 	};
 	max?: {

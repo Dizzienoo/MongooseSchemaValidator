@@ -52,6 +52,14 @@ export default function handleString(
 			// Add the Data to the response
 			response.data = inputValue;
 		}
+		// If there is a regexp to match against
+		if (options.match) {
+			if (!new RegExp(options.match.value).test(response.data)) {
+				response.errors.push(
+					addError(path, key, options.match.message || `The input for "${key}" does not match the provided RegExp "${options.match.value}"`),
+				);
+			}
+		}
 		// If the response's length is longer than the max length
 		if (options.maxLength && response.data.length > options.maxLength.value) {
 			response.errors.push(

@@ -1,6 +1,5 @@
 import { buildValidator } from "..";
 
-
 describe(`Test the Require Option inputs`, () => {
 
 	test(`Send in an invalid Field. Expect Success`, async () => {
@@ -2520,6 +2519,106 @@ describe(`Test the Max Option`, () => {
 		})).toEqual({
 			name: newDate,
 			name2: newDate,
+		});
+	});
+
+});
+
+describe(`Test the Match Option`, () => {
+
+	test(`Send in match Key with a valid value but invalid message. Expect Failure`, async () => {
+		try {
+			await buildValidator({
+				name: { type: String, match: { value: true, message: true } },
+			});
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [
+					{
+						"schemaOptions.match.message": `Message provided in the Schema Option "match" should be a string`,
+					},
+				],
+			});
+		}
+	});
+
+	test(`Send in match Key with a valid value but invalid message. Expect Failure`, async () => {
+		try {
+			await buildValidator({
+				name: { type: String, match: [true, true] },
+			});
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `Schema Unable to be parsed due to errors`,
+				errors: [
+					{
+						"schemaOptions.match.message": `Message provided in the Schema Option "match" should be a string`,
+					},
+				],
+			});
+		}
+	});
+
+	test(`Send in match Key with a valid value and message. Expect Success`, async () => {
+		const validator = await buildValidator({
+			name: { type: String, match: { value: `Adam`, message: `This field is match` } },
+		});
+		expect(await validator({ name: `Adam` })).toEqual({
+			name: `Adam`,
+		});
+	});
+
+	test(`Send in match Key with a valid value and message. Expect Success`, async () => {
+		const validator = await buildValidator({
+			name: { type: String, match: { value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: `This field is match` } },
+		});
+		expect(await validator({ name: `test@testmail.com` })).toEqual({
+			name: `test@testmail.com`,
+		});
+	});
+
+	test(`Send in match Key with a valid value and message. Expect Success`, async () => {
+		const validator = await buildValidator({
+			name: { type: String, match: [/(GIR 0AA)|((([ABCDEFGHIJKLMNOPRSTUWYZ][0-9][0-9]?)|(([ABCDEFGHIJKLMNOPRSTUWYZ][ABCDEFGHKLMNOPQRSTUVWXY][0-9][0-9]?)|(([ABCDEFGHIJKLMNOPRSTUWYZ][0-9][ABCDEFGHJKSTUW])|([ABCDEFGHIJKLMNOPRSTUWYZ][ABCDEFGHKLMNOPQRSTUVWXY][0-9][ABEHMNPRVWXY])))) [0-9][ABDEFGHJLNPQRSTUWXYZ]{2})/, `This field is match`] },
+		});
+		expect(await validator({ name: `GU15 2DE` })).toEqual({
+			name: `GU15 2DE`,
+		});
+	});
+
+	test(`Send in Schema with match field and Input. Expect Success`, async () => {
+		const validator = await buildValidator({
+			name: { type: String, match: true },
+			name2: { type: String },
+		});
+		expect(await validator({
+			name: `true`,
+			name2: `123`,
+		})).toEqual({
+			name: `true`,
+			name2: `123`,
+		});
+	});
+
+	test(`Send in Schema with match field but missing in Input but ignoring match option. Expect Success`, async () => {
+		const validator = await buildValidator({
+			name2: { type: String },
+			name: { type: String, match: { value: true }, skip: true },
+			name3: { type: String },
+		});
+		expect(await validator({
+			name2: `lower`,
+			name: ` false`,
+			name3: `lower`,
+		})).toEqual({
+			name2: `lower`,
+			name: ` false`,
+			name3: `lower`,
 		});
 	});
 
