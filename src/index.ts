@@ -1,5 +1,5 @@
 import CheckSchema from "./checkSchema";
-import { IGlobalOptions } from "./interfaces";
+import { IDoNotThrowResponse, IGlobalOptions } from "./interfaces";
 import processInput from "./processInput";
 import { isValidGlobalOption } from "./Utilities/checkOptions";
 import { InputException, OptionsException, SchemaException } from "./Utilities/exceptions";
@@ -39,7 +39,7 @@ export async function buildValidator(schema: object) {
  */
 async function attemptProcessInput(
 	processedSchema: object, input: object, options: IGlobalOptions = {},
-): Promise<object | object[]> {
+): Promise<object | IDoNotThrowResponse> {
 	const globalOptions = await isValidGlobalOption(options);
 	if (globalOptions.errors.length) {
 		if (options.doNotThrow === true) {

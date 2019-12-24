@@ -179,3 +179,11 @@ export interface IHandleMongooseIdResponse {
 	errors: object[];
 	data: Schema.Types.ObjectId;
 }
+
+/**
+ * Response Object when returning with "Do Not Throw" option
+ */
+export interface IDoNotThrowResponse {
+	data: object;
+	errors: object[];
+}
