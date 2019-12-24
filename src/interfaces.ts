@@ -36,10 +36,6 @@ export interface IGlobalOptions {
 	 * Use this option to disable any local options set at the schema level
 	 */
 	disableLocalOptions?: boolean;
-	/**
-	 * Wether the system throws an error when it detects issues with the input or not
-	 */
-	doNotThrow?: boolean;
 }
 
 /**

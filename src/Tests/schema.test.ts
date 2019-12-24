@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { buildValidator } from "..";
+import { buildNonThrowValidator, buildValidator } from "..";
 
 
 describe(`Test Schema Validator`, () => {
@@ -117,14 +117,26 @@ describe(`Test Schema Validator`, () => {
 describe(`Test the do not throw option`, () => {
 
 	test(`Send in input that should Error but with doNotThrow Option. Expect Success`, async () => {
-		const validate = await buildValidator({
+		const validate = await buildNonThrowValidator({
 			input: String,
 		});
 		expect(await validate({
 			input: true,
-		}, { doNotThrow: true })).toEqual({
+		})).toEqual({
 			data: {},
 			errors: [{ input: `The input for "input" is not a string` }],
+		});
+	});
+
+	test(`Send in input that shouldn't Error but with doNotThrow Option. Expect Success`, async () => {
+		const validate = await buildNonThrowValidator({
+			input: String,
+		});
+		expect(await validate({
+			input: `true`,
+		})).toEqual({
+			data: { input: `true` },
+			errors: [],
 		});
 	});
 });

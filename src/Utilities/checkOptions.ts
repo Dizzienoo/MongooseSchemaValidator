@@ -144,14 +144,6 @@ export function isValidGlobalOption(globalOptions: IGlobalOptions): IGlobalOptio
 			response.errors.push(addError(`globalOptions`, `disableLocalOptions`, `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`));
 		}
 	}
-	if (globalOptions.doNotThrow) {
-		if (globalOptions.doNotThrow === true || globalOptions.doNotThrow === false) {
-			response.data.doNotThrow = globalOptions.doNotThrow;
-		}
-		else {
-			response.errors.push(addError(`globalOptions`, `doNotThrow`, `Option provided in the global Options, "doNotThrow", needs to be be a boolean`));
-		}
-	}
 	return response;
 }
 

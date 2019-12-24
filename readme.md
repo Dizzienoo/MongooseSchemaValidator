@@ -23,14 +23,14 @@ const MSV = require("mongoose-schema-validator")
 ```
 ### TypeScript
 ```javascript
-import { buildValidator } from "mongoose-schema-validator"
+import { buildValidator,	buildNonThrowValidator } from "mongoose-schema-validator"
 ```
 ### Do Not Throw Option
-The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block
+The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block.  This needs to be declared with the "buildNonThrowValidator" setup as previously having this as a simple option was throwing TS Typing Errors
 
 ```javascript
 async function validatorFunction () {
-	let validate = await MSV.buildValidator({
+	let validate = await MSV.buildNonThrowValidator({
 		name: String,
 		age: Number,
 		DOB: Date
@@ -39,13 +39,13 @@ async function validatorFunction () {
 		name: "Dizzienoo",
 		age: "15",
 		DOB: Date.now(),
-	}{ convert: true, doNotThrow: true }) // Full list of the options to send is below
+	}, { convert: true) // Full list of the options to send is below
 	if (valid.errors.length) {
 		//Handle Errors
-		throw Error(valid.errors)
+		throw Error(valid.errors);
 	}
 	//Otherwise, we have our validated code
-	console.log(response.data)
+	console.log(response.data);
 }
 ```
 
@@ -64,8 +64,9 @@ async function validatorFunction () {
 		name: "Dizzienoo",
 		age: "15",
 		DOB: Date.now(),
-	}{ convert: true }) // Full list of the options to send is below
+	}, { convert: true }) // Full list of the options to send is below
 	//Process and use our validated code
+	console.log(valid);
 	}
 	catch (err) {
 		// If there are errors in the input they are caught here
@@ -96,7 +97,7 @@ async function validatorFunction () {
 		name: "Dizzienoo",
 		age: "15",
 		DOB: Date.now(),
-	}{ convert: true }) // Full list of the options to send is below
+	}, { convert: true }) // Full list of the options to send is below
 	//Process and use our validated code
 	}
 	catch (err) {

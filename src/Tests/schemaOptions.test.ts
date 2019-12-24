@@ -260,9 +260,6 @@ describe(`Test the Require Option inputs`, () => {
 					{
 						'globalOptions.disableLocalOptions': `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`,
 					},
-					{
-						'globalOptions.doNotThrow': `Option provided in the global Options, "doNotThrow", needs to be be a boolean`,
-					},
 				],
 			});
 		}
