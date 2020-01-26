@@ -151,7 +151,8 @@ function recursiveCheck(
 		schemaKeys.forEach((schemaKey) => {
 			if (
 				schema[schemaKey].required?.value === true &&
-				!globalOptions.ignoreRequired
+				!globalOptions.ignoreRequired &&
+				schema[schemaKey].skip?.value !== true
 			) {
 				response.errors.push(
 					addError(path, schemaKey, schema[schemaKey].required.message || `The input for "${schemaKey}" is required but empty`),

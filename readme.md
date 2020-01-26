@@ -254,6 +254,7 @@ async function processResponse(userProfile, role) {
 ## Change Log
 
 1.0.7 - Fixed Error thrown when converting string to Object Id
+1.0.8 - Fixed Error that {skip: true} wasn't ignoring required
 
 ## Issues
 
