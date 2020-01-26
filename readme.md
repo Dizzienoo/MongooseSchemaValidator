@@ -251,6 +251,10 @@ async function processResponse(userProfile, role) {
 }
 ```
 
+## Change Log
+
+1.0.7 - Fixed Error thrown when converting string to Object Id
+
 ## Issues
 
 Currently the project is in Beta and probably not suitable for production use.
