@@ -21,7 +21,8 @@ export default function handleMongooseId(
 	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
 		(options.convertValues === true)) &&
 		inputValue !== undefined) {
-		inputValue = new Schema.Types.ObjectId(inputValue.toString());
+		// @ts-ignore
+		inputValue = Types.ObjectId(inputValue.toString());
 	}
 	if (!/^[a-fA-F0-9]{24}$/.test(inputValue.toString())) {
 		if ((options.convert?.value === true && options.disableLocalOptions !== true) || (options.convertValues === true)) {
