@@ -17,7 +17,9 @@ export default function handleMongooseId(
 		errors: [],
 		data: null,
 	};
+	// If the key is empty key = path
 	if (key === ``) { key = path; }
+	// If we are supposed to convert, there is something to convert and it isn't undefined
 	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
 		(options.convertValues === true)) &&
 		inputValue !== undefined) {

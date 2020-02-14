@@ -68,7 +68,7 @@ function recursiveCheck(
 							// Then we need to add any options from this block to local options
 							// Process The input values
 							const processResponse = processInputType(
-								schema[schemaKey][0].type, arrayKey, path, `${schemaKey}[${i}]`, globalOptions, schema[schemaKey],
+								schema[schemaKey][0].type, arrayKey, path, `${schemaKey}[${i}]`, globalOptions, schema[schemaKey][0],
 							);
 							if (processResponse.errors.length) {
 								response.errors = response.errors.concat(processResponse.errors);
@@ -149,10 +149,24 @@ function recursiveCheck(
 	// If there are any schema keys left, check if they are required
 	if (schemaKeys.length) {
 		schemaKeys.forEach((schemaKey) => {
-			if (
+			//If the Schema Key is an Array
+			if (Array.isArray(schema[schemaKey])) {
+				if (
+					schema[schemaKey][0].required?.value === true &&
+					!globalOptions.ignoreRequired &&
+					schema[schemaKey][0].skip?.value !== true
+
+				) {
+					response.errors.push(
+						addError(path, schemaKey, schema[schemaKey][0].required.message || `The input for "${schemaKey}" is required but empty`),
+					);
+				}
+			}
+			else if (
 				schema[schemaKey].required?.value === true &&
 				!globalOptions.ignoreRequired &&
 				schema[schemaKey].skip?.value !== true
+
 			) {
 				response.errors.push(
 					addError(path, schemaKey, schema[schemaKey].required.message || `The input for "${schemaKey}" is required but empty`),

@@ -1085,5 +1085,18 @@ describe(`Mongoose Id Input Testing`, () => {
 		}
 	});
 
+	test(`Send in non-MongooseId input where MongooseId is expected.  Expect Success`, async () => {
+		const validator = await buildValidator({
+			name: [{ type: Schema.Types.ObjectId, skip: true }],
+			name2: { type: String },
+		});
+		expect(await validator({
+			name: [`AA`],
+			name2: `AAAA`,
+		}, {})).toEqual({
+			name: [`AA`],
+			name2: `AAAA`,
+		});
+	});
 });
 

@@ -255,6 +255,7 @@ async function processResponse(userProfile, role) {
 
 1.0.7 - Fixed Error thrown when converting string to Object Id
 1.0.8 - Fixed Error that {skip: true} wasn't ignoring required
+1.0.9 - Fixed Error where local options weren-t being handled properly for embeded array objects
 
 ## Issues
 
