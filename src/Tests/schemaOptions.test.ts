@@ -104,7 +104,11 @@ describe(`Test the Require Option inputs`, () => {
 			name: { type: String, required: { value: true, message: `This field is required` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			data: {
+				name: `Adam`,
+			},
+			errors: {},
+			error: false,
 		});
 	});
 
@@ -113,7 +117,11 @@ describe(`Test the Require Option inputs`, () => {
 			name: { type: String, required: [true, `This field is required`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			data: {
+				name: `Adam`,
+			},
+			errors: {},
+			error: false,
 		});
 	});
 
@@ -191,8 +199,12 @@ describe(`Test the Require Option inputs`, () => {
 			name: `A String`,
 			name2: `123`,
 		}, { ignoreRequired: true })).toEqual({
-			name: `A String`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `A String`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -205,7 +217,11 @@ describe(`Test the Require Option inputs`, () => {
 		expect(await validator({
 			name2: `123`,
 		}, { ignoreRequired: true })).toEqual({
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name2: `123`,
+			},
 		});
 	});
 
@@ -343,7 +359,11 @@ describe(`Test the Skip Option inputs`, () => {
 			name: { type: String, skip: { value: true, message: `This field is skip` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -353,7 +373,11 @@ describe(`Test the Skip Option inputs`, () => {
 			name: { type: String, skip: [true, `This field is skip`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -363,7 +387,11 @@ describe(`Test the Skip Option inputs`, () => {
 			name: { type: String, skip: [true] },
 		});
 		expect(await validator({ name: true })).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -373,7 +401,11 @@ describe(`Test the Skip Option inputs`, () => {
 			name: [String],
 		});
 		expect(await validator({ name: [true] }, { convertValues: true })).toEqual({
-			name: [`true`],
+			error: false,
+			errors: {},
+			data: {
+				name: [`true`],
+			},
 		});
 	});
 
@@ -476,7 +508,11 @@ describe(`Test the Convert Option Inputs`, () => {
 			name: { type: String, convert: { value: true, message: `This field is convert` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -485,7 +521,11 @@ describe(`Test the Convert Option Inputs`, () => {
 			name: { type: String, convert: [true, `This field is convert`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -494,7 +534,11 @@ describe(`Test the Convert Option Inputs`, () => {
 			name: { type: String, convert: [true] },
 		});
 		expect(await validator({ name: true })).toEqual({
-			name: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+			},
 		});
 	});
 
@@ -597,7 +641,11 @@ describe(`Test the Min Length Option`, () => {
 			name: { type: String, minLength: { value: 2, message: `This field is minLength` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -606,7 +654,11 @@ describe(`Test the Min Length Option`, () => {
 			name: { type: String, minLength: [2, `This field is minLength`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -688,8 +740,12 @@ describe(`Test the Min Length Option`, () => {
 			name: `A String`,
 			name2: `123`,
 		})).toEqual({
-			name: `A String`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `A String`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -702,8 +758,12 @@ describe(`Test the Min Length Option`, () => {
 			name: `Space`,
 			name2: `123`,
 		})).toEqual({
-			name: `Space`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Space`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -716,8 +776,12 @@ describe(`Test the Min Length Option`, () => {
 			name: `Space`,
 			name2: `123`,
 		})).toEqual({
-			name: `Space`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Space`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -820,7 +884,11 @@ describe(`Test the Max Length Option`, () => {
 			name: { type: String, maxLength: { value: 5, message: `This field is maxLength` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -829,7 +897,11 @@ describe(`Test the Max Length Option`, () => {
 			name: { type: String, maxLength: [6, `This field is maxLength`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -911,8 +983,12 @@ describe(`Test the Max Length Option`, () => {
 			name: `A String`,
 			name2: `123`,
 		})).toEqual({
-			name: `A String`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `A String`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -925,8 +1001,12 @@ describe(`Test the Max Length Option`, () => {
 			name: `Space`,
 			name2: `123`,
 		})).toEqual({
-			name: `Space`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Space`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -939,8 +1019,12 @@ describe(`Test the Max Length Option`, () => {
 			name: `Space`,
 			name2: `123`,
 		})).toEqual({
-			name: `Space`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Space`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -1043,7 +1127,11 @@ describe(`Test the lowercase Option`, () => {
 			name: { type: String, lowercase: { value: true, message: `This field is lowercase` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `adam`,
+			},
 		});
 	});
 
@@ -1052,7 +1140,11 @@ describe(`Test the lowercase Option`, () => {
 			name: { type: String, lowercase: [true, `This field is lowercase`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `adam`,
+			},
 		});
 	});
 
@@ -1065,8 +1157,12 @@ describe(`Test the lowercase Option`, () => {
 			name: `A String`,
 			name2: `123`,
 		})).toEqual({
-			name: `a string`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `a string`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -1081,9 +1177,13 @@ describe(`Test the lowercase Option`, () => {
 			name: `Space`,
 			name3: `UPPER`,
 		})).toEqual({
-			name2: `UPPER`,
-			name: `Space`,
-			name3: `UPPER`,
+			error: false,
+			errors: {},
+			data: {
+				name2: `UPPER`,
+				name: `Space`,
+				name3: `UPPER`,
+			},
 		});
 	});
 
@@ -1096,8 +1196,12 @@ describe(`Test the lowercase Option`, () => {
 			name: `Space`,
 			name2: `Fred`,
 		})).toEqual({
-			name: `space`,
-			name2: `Fred`,
+			error: false,
+			errors: {},
+			data: {
+				name: `space`,
+				name2: `Fred`,
+			},
 		});
 	});
 
@@ -1200,7 +1304,11 @@ describe(`Test the uppercase Option`, () => {
 			name: { type: String, uppercase: { value: true, message: `This field is uppercase` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `ADAM`,
+			error: false,
+			errors: {},
+			data: {
+				name: `ADAM`,
+			},
 		});
 	});
 
@@ -1209,7 +1317,11 @@ describe(`Test the uppercase Option`, () => {
 			name: { type: String, uppercase: [true, `This field is uppercase`] },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `ADAM`,
+			error: false,
+			errors: {},
+			data: {
+				name: `ADAM`,
+			},
 		});
 	});
 
@@ -1222,8 +1334,12 @@ describe(`Test the uppercase Option`, () => {
 			name: `A String`,
 			name2: `123`,
 		})).toEqual({
-			name: `A STRING`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `A STRING`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -1238,9 +1354,13 @@ describe(`Test the uppercase Option`, () => {
 			name: `SPACE`,
 			name3: `lower`,
 		})).toEqual({
-			name2: `lower`,
-			name: `SPACE`,
-			name3: `lower`,
+			error: false,
+			errors: {},
+			data: {
+				name2: `lower`,
+				name: `SPACE`,
+				name3: `lower`,
+			},
 		});
 	});
 
@@ -1253,8 +1373,12 @@ describe(`Test the uppercase Option`, () => {
 			name: `SPACE`,
 			name2: `Fred`,
 		})).toEqual({
-			name: `SPACE`,
-			name2: `Fred`,
+			error: false,
+			errors: {},
+			data: {
+				name: `SPACE`,
+				name2: `Fred`,
+			},
 		});
 	});
 
@@ -1357,7 +1481,11 @@ describe(`Test the trim Option`, () => {
 			name: { type: String, trim: { value: true, message: `This field is trim` } },
 		});
 		expect(await validator({ name: `Adam ` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -1366,7 +1494,11 @@ describe(`Test the trim Option`, () => {
 			name: { type: String, trim: [true, `This field is trim`] },
 		});
 		expect(await validator({ name: ` Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -1379,8 +1511,12 @@ describe(`Test the trim Option`, () => {
 			name: `A String    `,
 			name2: `123`,
 		})).toEqual({
-			name: `A String`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `A String`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -1395,9 +1531,13 @@ describe(`Test the trim Option`, () => {
 			name: ` Space `,
 			name3: `lower`,
 		})).toEqual({
-			name2: `lower`,
-			name: ` Space `,
-			name3: `lower`,
+			error: false,
+			errors: {},
+			data: {
+				name2: `lower`,
+				name: ` Space `,
+				name3: `lower`,
+			},
 		});
 	});
 
@@ -1410,8 +1550,12 @@ describe(`Test the trim Option`, () => {
 			name: `Space   `,
 			name2: `Fred`,
 		})).toEqual({
-			name: `Space`,
-			name2: `Fred`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Space`,
+				name2: `Fred`,
+			},
 		});
 	});
 
@@ -1608,7 +1752,11 @@ describe(`Test the Min Option`, () => {
 			name: { type: Number, min: { value: 2, message: `This field is min` } },
 		});
 		expect(await validator({ name: 3 })).toEqual({
-			name: 3,
+			error: false,
+			errors: {},
+			data: {
+				name: 3,
+			},
 		});
 	});
 
@@ -1617,7 +1765,11 @@ describe(`Test the Min Option`, () => {
 			name: { type: Number, min: [2, `This field is min`] },
 		});
 		expect(await validator({ name: 3 })).toEqual({
-			name: 3,
+			error: false,
+			errors: {},
+			data: {
+				name: 3,
+			},
 		});
 	});
 
@@ -1699,8 +1851,12 @@ describe(`Test the Min Option`, () => {
 			name: 20,
 			name2: 123,
 		})).toEqual({
-			name: 20,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 20,
+				name2: 123,
+			},
 		});
 	});
 
@@ -1713,8 +1869,12 @@ describe(`Test the Min Option`, () => {
 			name: 4,
 			name2: 123,
 		})).toEqual({
-			name: 4,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 4,
+				name2: 123,
+			},
 		});
 	});
 
@@ -1727,8 +1887,12 @@ describe(`Test the Min Option`, () => {
 			name: 4,
 			name2: 123,
 		})).toEqual({
-			name: 4,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 4,
+				name2: 123,
+			},
 		});
 	});
 
@@ -1831,7 +1995,11 @@ describe(`Test the Max Option`, () => {
 			name: { type: Number, max: { value: 5, message: `This field is max` } },
 		});
 		expect(await validator({ name: 3 })).toEqual({
-			name: 3,
+			error: false,
+			errors: {},
+			data: {
+				name: 3,
+			},
 		});
 	});
 
@@ -1840,7 +2008,11 @@ describe(`Test the Max Option`, () => {
 			name: { type: Number, max: [6, `This field is max`] },
 		});
 		expect(await validator({ name: 3 })).toEqual({
-			name: 3,
+			error: false,
+			errors: {},
+			data: {
+				name: 3,
+			},
 		});
 	});
 
@@ -1922,8 +2094,12 @@ describe(`Test the Max Option`, () => {
 			name: 2,
 			name2: 123,
 		})).toEqual({
-			name: 2,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 2,
+				name2: 123,
+			},
 		});
 	});
 
@@ -1936,8 +2112,12 @@ describe(`Test the Max Option`, () => {
 			name: 4,
 			name2: 123,
 		})).toEqual({
-			name: 4,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 4,
+				name2: 123,
+			},
 		});
 	});
 
@@ -1950,8 +2130,12 @@ describe(`Test the Max Option`, () => {
 			name: 4,
 			name2: 123,
 		})).toEqual({
-			name: 4,
-			name2: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 4,
+				name2: 123,
+			},
 		});
 	});
 
@@ -2055,7 +2239,11 @@ describe(`Test the Min Option`, () => {
 		});
 		const newDate = new Date(Date.now());
 		expect(await validator({ name: newDate })).toEqual({
-			name: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+			},
 		});
 	});
 
@@ -2066,7 +2254,11 @@ describe(`Test the Min Option`, () => {
 
 		const newDate = new Date(Date.now());
 		expect(await validator({ name: newDate })).toEqual({
-			name: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+			},
 		});
 	});
 
@@ -2152,8 +2344,12 @@ describe(`Test the Min Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2167,8 +2363,12 @@ describe(`Test the Min Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2182,8 +2382,12 @@ describe(`Test the Min Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2287,7 +2491,11 @@ describe(`Test the Max Option`, () => {
 		});
 		const newDate = new Date(Date.now());
 		expect(await validator({ name: newDate })).toEqual({
-			name: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+			},
 		});
 	});
 
@@ -2298,7 +2506,11 @@ describe(`Test the Max Option`, () => {
 
 		const newDate = new Date(Date.now());
 		expect(await validator({ name: newDate })).toEqual({
-			name: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+			},
 		});
 	});
 
@@ -2384,8 +2596,12 @@ describe(`Test the Max Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2399,8 +2615,12 @@ describe(`Test the Max Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2414,8 +2634,12 @@ describe(`Test the Max Option`, () => {
 			name: newDate,
 			name2: newDate,
 		})).toEqual({
-			name: newDate,
-			name2: newDate,
+			error: false,
+			errors: {},
+			data: {
+				name: newDate,
+				name2: newDate,
+			},
 		});
 	});
 
@@ -2464,7 +2688,11 @@ describe(`Test the Match Option`, () => {
 			name: { type: String, match: { value: `Adam`, message: `This field is match` } },
 		});
 		expect(await validator({ name: `Adam` })).toEqual({
-			name: `Adam`,
+			error: false,
+			errors: {},
+			data: {
+				name: `Adam`,
+			},
 		});
 	});
 
@@ -2473,7 +2701,11 @@ describe(`Test the Match Option`, () => {
 			name: { type: String, match: { value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: `This field is match` } },
 		});
 		expect(await validator({ name: `test@testmail.com` })).toEqual({
-			name: `test@testmail.com`,
+			error: false,
+			errors: {},
+			data: {
+				name: `test@testmail.com`,
+			},
 		});
 	});
 
@@ -2482,7 +2714,11 @@ describe(`Test the Match Option`, () => {
 			name: { type: String, match: [/(GIR 0AA)|((([ABCDEFGHIJKLMNOPRSTUWYZ][0-9][0-9]?)|(([ABCDEFGHIJKLMNOPRSTUWYZ][ABCDEFGHKLMNOPQRSTUVWXY][0-9][0-9]?)|(([ABCDEFGHIJKLMNOPRSTUWYZ][0-9][ABCDEFGHJKSTUW])|([ABCDEFGHIJKLMNOPRSTUWYZ][ABCDEFGHKLMNOPQRSTUVWXY][0-9][ABEHMNPRVWXY])))) [0-9][ABDEFGHJLNPQRSTUWXYZ]{2})/, `This field is match`] },
 		});
 		expect(await validator({ name: `GU15 2DE` })).toEqual({
-			name: `GU15 2DE`,
+			error: false,
+			errors: {},
+			data: {
+				name: `GU15 2DE`,
+			},
 		});
 	});
 
@@ -2495,8 +2731,12 @@ describe(`Test the Match Option`, () => {
 			name: `true`,
 			name2: `123`,
 		})).toEqual({
-			name: `true`,
-			name2: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+				name2: `123`,
+			},
 		});
 	});
 
@@ -2511,9 +2751,13 @@ describe(`Test the Match Option`, () => {
 			name: ` false`,
 			name3: `lower`,
 		})).toEqual({
-			name2: `lower`,
-			name: ` false`,
-			name3: `lower`,
+			error: false,
+			errors: {},
+			data: {
+				name2: `lower`,
+				name: ` false`,
+				name3: `lower`,
+			},
 		});
 	});
 });

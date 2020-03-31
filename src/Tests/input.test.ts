@@ -10,7 +10,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: `hello`,
 		}, {})).toEqual({
-			name: `hello`,
+			error: false,
+			errors: {},
+			data: {
+				name: `hello`,
+			},
 		});
 	});
 
@@ -21,7 +25,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: `hello`,
 		}, {})).toEqual({
-			name: `hello`,
+			error: false,
+			errors: {},
+			data: {
+				name: `hello`,
+			},
 		});
 	});
 
@@ -53,7 +61,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: 123,
 		}, { convertValues: true })).toEqual({
-			name: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `123`,
+			},
 		});
 	});
 
@@ -64,7 +76,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: 123,
 		}, {})).toEqual({
-			name: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `123`,
+			},
 		});
 	});
 
@@ -98,7 +114,13 @@ describe(`String Input Testing`, () => {
 			},
 		});
 		expect(await validator({ name: { type: { deep: `Hello` } } }, {}))
-			.toEqual({ name: { type: { deep: `Hello` } } });
+			.toEqual({
+				error: false,
+				errors: {},
+				data: {
+					name: { type: { deep: `Hello` } },
+				},
+			});
 	});
 
 	test(`Send in convertable input where string is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
@@ -108,7 +130,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: true,
 		}, { disableLocalOptions: true, convertValues: true })).toEqual({
-			name: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+			},
 		});
 	});
 
@@ -119,7 +145,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: true,
 		}, { convertValues: true })).toEqual({
-			name: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+			},
 		});
 	});
 
@@ -152,7 +182,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: `123`,
 		})).toEqual({
-			name: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `123`,
+			},
 		});
 	});
 
@@ -163,7 +197,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: 123,
 		}, { convertValues: true })).toEqual({
-			name: `123`,
+			error: false,
+			errors: {},
+			data: {
+				name: `123`,
+			},
 		});
 	});
 
@@ -216,7 +254,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: `One`,
 		})).toEqual({
-			name: `One`,
+			error: false,
+			errors: {},
+			data: {
+				name: `One`,
+			},
 		});
 	});
 
@@ -227,7 +269,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: true,
 		}, { convertValues: true })).toEqual({
-			name: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+			},
 		});
 	});
 
@@ -259,7 +305,11 @@ describe(`String Input Testing`, () => {
 		expect(await validator({
 			name: `true `,
 		}, { convertValues: true })).toEqual({
-			name: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: `true`,
+			},
 		});
 	});
 
@@ -275,7 +325,11 @@ describe(`Shallow Array Input Testing`, () => {
 		expect(await validator({
 			name: [`true`],
 		})).toEqual({
-			name: [`true`],
+			error: false,
+			errors: {},
+			data: {
+				name: [`true`],
+			},
 		});
 	});
 
@@ -286,7 +340,11 @@ describe(`Shallow Array Input Testing`, () => {
 		expect(await validator({
 			name: [`true`, `red`, `blue`],
 		})).toEqual({
-			name: [`true`, `red`, `blue`],
+			error: false,
+			errors: {},
+			data: {
+				name: [`true`, `red`, `blue`],
+			},
 		});
 	});
 
@@ -347,7 +405,11 @@ describe(`Deep Array Input Testing`, () => {
 		expect(await validator({
 			name: [`true`],
 		})).toEqual({
-			name: [`true`],
+			error: false,
+			errors: {},
+			data: {
+				name: [`true`],
+			},
 		});
 	});
 
@@ -358,7 +420,11 @@ describe(`Deep Array Input Testing`, () => {
 		expect(await validator({
 			name: [{ stile: `true` }],
 		})).toEqual({
-			name: [{ stile: `true` }],
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }],
+			},
 		});
 	});
 
@@ -389,16 +455,20 @@ describe(`Deep Array Input Testing`, () => {
 				},
 			}],
 		}, { convertValues: true })).toEqual({
-			name: [{
-				stile: {
-					underneath: {
-						deeper: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: [{
+					stile: {
+						underneath: {
+							deeper: `true`,
+						},
+						infront: {
+							lotsofDepth: `1234`,
+						},
 					},
-					infront: {
-						lotsofDepth: `1234`,
-					},
-				},
-			}],
+				}],
+			},
 		});
 	});
 
@@ -429,13 +499,17 @@ describe(`Deep Array Input Testing`, () => {
 				},
 			}],
 		}, { convertValues: true, trimExtraFields: true })).toEqual({
-			name: [{
-				stile: {
-					underneath: {
-						deeper: `true`,
+			error: false,
+			errors: {},
+			data: {
+				name: [{
+					stile: {
+						underneath: {
+							deeper: `true`,
+						},
 					},
-				},
-			}],
+				}],
+			},
 		});
 	});
 
@@ -473,7 +547,9 @@ describe(`Deep Array Input Testing`, () => {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
 				errors: {
-					"stile.infront.lotsofDepth": `The input for "lotsofDepth" is required but empty`,
+					name: [
+						{ stile: { infront: { lotsofDepth: `The input for "lotsofDepth" is required but empty` } } },
+					],
 				},
 			});
 		}
@@ -555,7 +631,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: 321,
 		}, {})).toEqual({
-			name: 321,
+			error: false,
+			errors: {},
+			data: {
+				name: 321,
+			},
 		});
 	});
 
@@ -566,7 +646,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: 44312,
 		}, {})).toEqual({
-			name: 44312,
+			error: false,
+			errors: {},
+			data: {
+				name: 44312,
+			},
 		});
 	});
 
@@ -598,7 +682,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: `123`,
 		}, { convertValues: true })).toEqual({
-			name: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 123,
+			},
 		});
 	});
 
@@ -609,7 +697,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: `123`,
 		}, {})).toEqual({
-			name: 123,
+			error: false,
+			errors: {},
+			data: {
+				name: 123,
+			},
 		});
 	});
 
@@ -643,7 +735,13 @@ describe(`Number Input Testing`, () => {
 			},
 		});
 		expect(await validator({ name: { type: { deep: 572 } } }, {}))
-			.toEqual({ name: { type: { deep: 572 } } });
+			.toEqual({
+				error: false,
+				errors: {},
+				data: {
+					name: { type: { deep: 572 } },
+				},
+			});
 	});
 
 	test(`Send in convertable input where Number is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
@@ -653,7 +751,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: `57823`,
 		}, { disableLocalOptions: true, convertValues: true })).toEqual({
-			name: 57823,
+			error: false,
+			errors: {},
+			data: {
+				name: 57823,
+			},
 		});
 	});
 
@@ -664,7 +766,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: `57823`,
 		}, { disableLocalOptions: true, convertValues: true })).toEqual({
-			name: 57823,
+			error: false,
+			errors: {},
+			data: {
+				name: 57823,
+			},
 		});
 	});
 
@@ -675,7 +781,11 @@ describe(`Number Input Testing`, () => {
 		expect(await validator({
 			name: 10,
 		}, { disableLocalOptions: true, convertValues: true })).toEqual({
-			name: 10,
+			error: false,
+			errors: {},
+			data: {
+				name: 10,
+			},
 		});
 	});
 
@@ -732,7 +842,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: true,
 		}, {})).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -743,7 +857,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: false,
 		}, {})).toEqual({
-			name: false,
+			error: false,
+			errors: {},
+			data: {
+				name: false,
+			},
 		});
 	});
 
@@ -775,7 +893,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `true`,
 		}, { convertValues: true })).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -786,7 +908,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `1`,
 		}, { convertValues: true })).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -797,7 +923,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `yes`,
 		}, { convertValues: true })).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -808,7 +938,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `true`,
 		}, {})).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -819,7 +953,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `false`,
 		}, { convertValues: true })).toEqual({
-			name: false,
+			error: false,
+			errors: {},
+			data: {
+				name: false,
+			},
 		});
 	});
 
@@ -830,7 +968,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `0`,
 		}, { convertValues: true })).toEqual({
-			name: false,
+			error: false,
+			errors: {},
+			data: {
+				name: false,
+			},
 		});
 	});
 
@@ -841,7 +983,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `no`,
 		}, { convertValues: true })).toEqual({
-			name: false,
+			error: false,
+			errors: {},
+			data: {
+				name: false,
+			},
 		});
 	});
 
@@ -852,7 +998,11 @@ describe(`Boolean Input Testing`, () => {
 		expect(await validator({
 			name: `true`,
 		}, {})).toEqual({
-			name: true,
+			error: false,
+			errors: {},
+			data: {
+				name: true,
+			},
 		});
 	});
 
@@ -889,7 +1039,11 @@ describe(`Date Input Testing`, () => {
 		expect(await validator({
 			name: currDate,
 		}, {})).toEqual({
-			name: currDate,
+			error: false,
+			errors: {},
+			data: {
+				name: currDate,
+			},
 		});
 	});
 
@@ -901,7 +1055,11 @@ describe(`Date Input Testing`, () => {
 		expect(await validator({
 			name: currDate,
 		}, {})).toEqual({
-			name: currDate,
+			error: false,
+			errors: {},
+			data: {
+				name: currDate,
+			},
 		});
 	});
 
@@ -956,7 +1114,11 @@ describe(`Date Input Testing`, () => {
 		expect(await validator({
 			name: currDate,
 		}, { convertValues: true })).toEqual({
-			name: new Date(currDate),
+			error: false,
+			errors: {},
+			data: {
+				name: new Date(currDate),
+			},
 		});
 	});
 
@@ -968,7 +1130,11 @@ describe(`Date Input Testing`, () => {
 		expect(await validator({
 			name: currDate,
 		}, {})).toEqual({
-			name: new Date(currDate),
+			error: false,
+			errors: {},
+			data: {
+				name: new Date(currDate),
+			},
 		});
 	});
 
@@ -980,7 +1146,11 @@ describe(`Date Input Testing`, () => {
 		expect(await validator({
 			name: currDate,
 		})).toEqual({
-			name: currDate,
+			error: false,
+			errors: {},
+			data: {
+				name: currDate,
+			},
 		});
 	});
 
@@ -1040,7 +1210,11 @@ describe(`Mongoose Id Input Testing`, () => {
 		expect(await validator({
 			name: objectId,
 		}, {})).toEqual({
-			name: objectId,
+			error: false,
+			errors: {},
+			data: {
+				name: objectId,
+			},
 		});
 	});
 
@@ -1051,7 +1225,11 @@ describe(`Mongoose Id Input Testing`, () => {
 		expect(await validator({
 			name: `5cf8c9103ab4c607bc830d7a`,
 		}, {})).toEqual({
-			name: `5cf8c9103ab4c607bc830d7a`,
+			error: false,
+			errors: {},
+			data: {
+				name: `5cf8c9103ab4c607bc830d7a`,
+			},
 		});
 	});
 
@@ -1062,7 +1240,11 @@ describe(`Mongoose Id Input Testing`, () => {
 		expect(await validator({
 			name: `5cf8c9103ab4c607bc830d7a`,
 		}, {})).toEqual({
-			name: `5cf8c9103ab4c607bc830d7a`,
+			error: false,
+			errors: {},
+			data: {
+				name: `5cf8c9103ab4c607bc830d7a`,
+			},
 		});
 	});
 
@@ -1096,8 +1278,12 @@ describe(`Mongoose Id Input Testing`, () => {
 			name: [`AA`],
 			name2: `AAAA`,
 		}, {})).toEqual({
-			name: [`AA`],
-			name2: `AAAA`,
+			error: false,
+			errors: {},
+			data: {
+				name: [`AA`],
+				name2: `AAAA`,
+			},
 		});
 	});
 });

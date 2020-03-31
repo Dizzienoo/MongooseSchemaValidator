@@ -18,6 +18,7 @@ export enum EAllowedTypes {
  * @property {boolean} trimExtraFields Remove any fields that are not defined in the schema?
  * @property {boolean} ignoreRequired Don't throw errors for fields marked as required in the schema but missing
  * @property {boolean} disableLocalOptions Use this option to disable any local options set at the schema level
+ * @property {boolean} throwOnError If set to false the system will not throw an error when it detects one in the input, it will simply return them as part of the error object and error will be set to true
  */
 export interface IGlobalOptions {
 	/**

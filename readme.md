@@ -34,19 +34,28 @@ async function validatorFunction () {
 	let validate = await MSV.buildValidator({
 		name: String,
 		age: Number,
-		DOB: Date
+		awesome: Boolean,
 	})
 	let valid = await validate({
 		name: "Dizzienoo",
 		age: "15",
-		DOB: Date.now(),
+		awesome: "true",
 	}, { convert: true, throwOnError: false) // Full list of the options to send is below
 	if (valid.error) {
 		//Handle Errors
 		throw Error(valid.errors);
 	}
 	//Otherwise, we have our validated code
-	console.log(response.data);
+	console.log(valid.data);
+	/**
+	 * valid.data:
+	 * {
+	 *	name: "Dizzienoo",
+	*	age: "15",
+	*	awesome: true,
+	* }
+	*
+	*/
 }
 ```
 
@@ -67,6 +76,7 @@ async function validatorFunction () {
 		DOB: Date.now(),
 	}, { convert: true }) // Full list of the options to send is below
 	//Process and use our validated code
+	// The validated schema will be in valid.data
 	console.log(valid);
 	}
 	catch (err) {
@@ -270,6 +280,8 @@ async function processResponse(userProfile, role) {
 	An array of error objects will only be returned if the input itself is an array 
 
 1.21 - Changes Response to allow for ResponseObject
+
+1.22 - Changed the throw Response to also return the full object, for better typescript support
 
 ## Issues
 

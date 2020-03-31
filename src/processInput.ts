@@ -29,10 +29,9 @@ export default async function (schema: object, input: object, globalOptions: IGl
  * @param schema The Schema to Check Against
  * @param input The input we are checking
  * @param globalOptions The Options provided with the check
- * @param path The location fo the input depth
  */
 function recursiveCheck(
-	schema: object, input: object, globalOptions: IGlobalOptions = null, path: string = ``,
+	schema: object, input: object, globalOptions: IGlobalOptions = null,
 ): IResponse {
 	// Create an array of errors to return
 	const response = {
@@ -40,8 +39,6 @@ function recursiveCheck(
 		errors: {},
 		data: {},
 	};
-	// If the Path starts with a full stop, remove the full stop
-	if (path.startsWith(`.`)) { path = path.replace(`.`, ``); }
 	// Get the Schema Keys
 	let schemaKeys = Object.keys(schema);
 	// Get the input keys
@@ -72,7 +69,7 @@ function recursiveCheck(
 							// Then we need to add any options from this block to local options
 							// Process The input values
 							const processResponse = processInputType(
-								schema[schemaKey][0].type, arrayKey, path, schemaKey, globalOptions, schema[schemaKey][0],
+								schema[schemaKey][0].type, arrayKey, schemaKey, globalOptions, schema[schemaKey][0],
 							);
 							if (processResponse.error) {
 								response.error = true;
@@ -95,7 +92,7 @@ function recursiveCheck(
 						// If there is more depth to the object
 						input[schemaKey].forEach((arrayKey, i) => {
 							// Go in and recursively dive into the objects
-							const recursiveResponse = recursiveCheck(schema[schemaKey][0], arrayKey, globalOptions, path);
+							const recursiveResponse = recursiveCheck(schema[schemaKey][0], arrayKey, globalOptions);
 							let responseKeys = [];
 							if (recursiveResponse.data !== null) {
 								responseKeys = Object.keys(recursiveResponse.data);
@@ -122,7 +119,6 @@ function recursiveCheck(
 					const checkResponse = processInputType(
 						schema[schemaKey].type,
 						input[schemaKey],
-						path,
 						schemaKey,
 						globalOptions,
 						schema[schemaKey],
@@ -140,7 +136,7 @@ function recursiveCheck(
 				// Otherwise
 				else {
 					// we want to deep dive
-					const deepResponse = recursiveCheck(schema[schemaKey], input[schemaKey], globalOptions, `${path}.${schemaKey}`);
+					const deepResponse = recursiveCheck(schema[schemaKey], input[schemaKey], globalOptions);
 					if (deepResponse.error) {
 						response.error = true;
 						response.errors[schemaKey] = deepResponse.errors;

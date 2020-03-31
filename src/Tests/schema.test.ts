@@ -153,7 +153,11 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 			name: [{ stile: `true` }],
 			extra: `string`,
 		}, { trimExtraFields: true })).toEqual({
-			name: [{ stile: `true` }],
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }],
+			},
 		});
 	});
 
@@ -165,7 +169,11 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 			name: [{ stile: `true` }, { press: `extra` }],
 			extra: `string`,
 		}, { trimExtraFields: true })).toEqual({
-			name: [{ stile: `true` }],
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }],
+			},
 		});
 	});
 
@@ -177,8 +185,12 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 			name: [{ stile: `true` }, { press: `extra` }],
 			extra: `string`,
 		})).toEqual({
-			name: [{ stile: `true` }, { press: `extra` }],
-			extra: `string`,
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }, { press: `extra` }],
+				extra: `string`,
+			},
 		});
 	});
 
@@ -203,14 +215,18 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
 			},
 		})).toEqual({
-			name: [{ stile: `true` }, { press: `extra` }],
-			extra: `string`,
-			complicated: {
-				deep: {
-					object: 4433,
-					andAnExtra: true,
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }, { press: `extra` }],
+				extra: `string`,
+				complicated: {
+					deep: {
+						object: 4433,
+						andAnExtra: true,
+					},
+					witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
 				},
-				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
 			},
 		});
 	});
@@ -236,12 +252,16 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 				witha: [{ finarray: true }, { finarray: true }, { somethingElse: true }, { finarray: true }],
 			},
 		}, { trimExtraFields: true })).toEqual({
-			name: [{ stile: `true` }],
-			complicated: {
-				deep: {
-					object: 4433,
+			error: false,
+			errors: {},
+			data: {
+				name: [{ stile: `true` }],
+				complicated: {
+					deep: {
+						object: 4433,
+					},
+					witha: [{ finarray: true }, { finarray: true }, { finarray: true }],
 				},
-				witha: [{ finarray: true }, { finarray: true }, { finarray: true }],
 			},
 		});
 	});

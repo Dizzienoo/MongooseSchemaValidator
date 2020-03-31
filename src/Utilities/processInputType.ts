@@ -19,7 +19,6 @@ import {
  *
  * @param schemaValue
  * @param inputValue
- * @param path
  * @param key
  * @param globalOptions
  * @param localOptions
@@ -27,7 +26,6 @@ import {
 export default function processInputType(
 	schemaValue: EAllowedTypes,
 	inputValue: any,
-	path: string,
 	key: string,
 	globalOptions: IGlobalOptions = null,
 	localOptions: IGlobalOptions = null):
