@@ -269,6 +269,8 @@ async function processResponse(userProfile, role) {
 	error handling easily on throwOnError = false setups.
 	An array of error objects will only be returned if the input itself is an array 
 
+1.21 - Changes Response to allow for ResponseObject
+
 ## Issues
 
 Currently the project is in Beta and probably not suitable for production use.
