@@ -3,7 +3,7 @@
  *
  * @param schemaErrors The errors detected in the way the actual schema is set up
  */
-export function SchemaException(schemaErrors: object[]) {
+export function SchemaException(schemaErrors: object) {
 	return {
 		message: `Schema Unable to be parsed due to errors`,
 		errors: schemaErrors,
@@ -15,7 +15,7 @@ export function SchemaException(schemaErrors: object[]) {
  *
  * @param inputErrors Errors generated in the Process Input function
  */
-export function InputException(inputErrors: object[]) {
+export function InputException(inputErrors: object) {
 	return {
 		message: `The Input Provided has errors`,
 		errors: inputErrors,
@@ -27,7 +27,7 @@ export function InputException(inputErrors: object[]) {
  *
  * @param optionsErrors Errors generated in the Process Options function
  */
-export function OptionsException(optionsErrors: object[]) {
+export function OptionsException(optionsErrors: object) {
 	return {
 		message: `The Options Provided have errors`,
 		errors: optionsErrors,

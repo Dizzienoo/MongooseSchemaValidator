@@ -5,7 +5,6 @@ import {
 	IGlobalOptionsResponse,
 	IMongooseOptionsResponse,
 } from "../interfaces";
-import addError from "./addError";
 import isObject from "./isObject";
 
 /**
@@ -16,7 +15,8 @@ import isObject from "./isObject";
  */
 export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): IMongooseOptionsResponse {
 	let response: IMongooseOptionsResponse = {
-		errors: [],
+		error: false,
+		errors: {},
 		data: {},
 	};
 	// Get the Keys from the incoming Object
@@ -62,7 +62,8 @@ export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): 
 								break;
 							// Otherwise, this option shouldn't be on this type
 							default:
-								response.errors.push(addError(`schemaOptions`, `${fieldKey}`, `Option "${fieldKey}" is not an accepted key on "${type}"`));
+								response.error = true;
+								response.errors[fieldKey] = `Option "${fieldKey}" is not an accepted key on "${type}"`;
 								break;
 						}
 						break;
@@ -75,7 +76,8 @@ export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): 
 								break;
 							// Otherwise, this option shouldn't be on this type
 							default:
-								response.errors.push(addError(`schemaOptions`, `${fieldKey}`, `Option "${fieldKey}" is not an accepted key on "${type}"`));
+								response.error = true;
+								response.errors[fieldKey] = `Option "${fieldKey}" is not an accepted key on "${type}"`;
 								break;
 						}
 						break;
@@ -88,12 +90,14 @@ export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): 
 								break;
 							// Otherwise, this option shouldn't be on this type
 							default:
-								response.errors.push(addError(`schemaOptions`, `${fieldKey}`, `Option "${fieldKey}" is not an accepted key on "${type}"`));
+								response.error = true;
+								response.errors[fieldKey] = `Option "${fieldKey}" is not an accepted key on "${type}"`;
 								break;
 						}
 						break;
 					default:
-						response.errors.push(addError(`schemaOptions`, `${fieldKey}`, `Option "${fieldKey}" is not an accepted key on "${type}"`));
+						response.error = true;
+						response.errors[fieldKey] = `Option "${fieldKey}" is not an accepted key on "${type}"`;
 						break;
 				}
 			}
@@ -109,39 +113,53 @@ export function isValidSchemaOption(SchemaOption: object, type: EAllowedTypes): 
  */
 export function isValidGlobalOption(globalOptions: IGlobalOptions): IGlobalOptionsResponse {
 	const response: IGlobalOptionsResponse = {
-		errors: [],
+		error: false,
+		errors: {},
 		data: {},
 	};
-	if (globalOptions.convertValues) {
+	if (globalOptions.convertValues !== undefined) {
 		if (globalOptions.convertValues === true || globalOptions.convertValues === false) {
 			response.data.convertValues = globalOptions.convertValues;
 		}
 		else {
-			response.errors.push(addError(`globalOptions`, `convertValues`, `Option provided in the global Options, "convertValues", needs to be be a boolean`));
+			response.error = true;
+			response.errors[`convertValues`] = `Option provided in the global Options, "convertValues", needs to be be a boolean`;
 		}
 	}
-	if (globalOptions.trimExtraFields) {
+	if (globalOptions.trimExtraFields !== undefined) {
 		if (globalOptions.trimExtraFields === true || globalOptions.trimExtraFields === false) {
 			response.data.trimExtraFields = globalOptions.trimExtraFields;
 		}
 		else {
-			response.errors.push(addError(`globalOptions`, `trimExtraFields`, `Option provided in the global Options, "trimExtraFields", needs to be be a boolean`));
+			response.error = true;
+			response.errors[`trimExtraFields`] = `Option provided in the global Options, "trimExtraFields", needs to be be a boolean`;
 		}
 	}
-	if (globalOptions.ignoreRequired) {
+	if (globalOptions.ignoreRequired !== undefined) {
 		if (globalOptions.ignoreRequired === true || globalOptions.ignoreRequired === false) {
 			response.data.ignoreRequired = globalOptions.ignoreRequired;
 		}
 		else {
-			response.errors.push(addError(`globalOptions`, `ignoreRequired`, `Option provided in the global Options, "ignoreRequired", needs to be be a boolean`));
+			response.error = true;
+			response.errors[`ignoreRequired`] = `Option provided in the global Options, "ignoreRequired", needs to be be a boolean`;
 		}
 	}
-	if (globalOptions.disableLocalOptions) {
+	if (globalOptions.disableLocalOptions !== undefined) {
 		if (globalOptions.disableLocalOptions === true || globalOptions.disableLocalOptions === false) {
 			response.data.disableLocalOptions = globalOptions.disableLocalOptions;
 		}
 		else {
-			response.errors.push(addError(`globalOptions`, `disableLocalOptions`, `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`));
+			response.error = true;
+			response.errors[`disableLocalOptions`] = `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`;
+		}
+	}
+	if (globalOptions.throwOnError !== undefined) {
+		if (globalOptions.throwOnError === true || globalOptions.throwOnError === false) {
+			response.data.throwOnError = globalOptions.throwOnError;
+		}
+		else {
+			response.error = true;
+			response.errors[`disableLocalOptions`] = `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`;
 		}
 	}
 	return response;
@@ -189,10 +207,20 @@ function processBooleanOption(
 			response.data[fieldKey] = { value: SchemaOption[fieldKey][0] };
 		}
 		else {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a boolean`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a boolean`;
 		}
 		if (SchemaOption[fieldKey][1] !== undefined && typeof SchemaOption[fieldKey][1] !== `string`) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 		}
 		else if (SchemaOption[fieldKey][1] !== undefined) {
 			response.data[fieldKey].message = SchemaOption[fieldKey][1];
@@ -202,10 +230,20 @@ function processBooleanOption(
 		response.data[fieldKey] = SchemaOption[fieldKey];
 	}
 	else {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a boolean`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a boolean`;
 	}
 	if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 	}
 	return response;
 }
@@ -228,10 +266,20 @@ function processNumberOption(
 			response.data[fieldKey] = { value: SchemaOption[fieldKey][0] };
 		}
 		else {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a number`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a number`;
 		}
 		if (SchemaOption[fieldKey][1] !== undefined && typeof SchemaOption[fieldKey][1] !== `string`) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 		}
 		else if (SchemaOption[fieldKey][1] !== undefined) {
 			response.data[fieldKey].message = SchemaOption[fieldKey][1];
@@ -241,10 +289,20 @@ function processNumberOption(
 		response.data[fieldKey] = SchemaOption[fieldKey];
 	}
 	else {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a number`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a number`;
 	}
 	if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 	}
 	return response;
 }
@@ -267,10 +325,20 @@ function processDateOption(
 			response.data[fieldKey] = { value: new Date(SchemaOption[fieldKey][0]) };
 		}
 		else {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a date`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a date`;
 		}
 		if (SchemaOption[fieldKey][1] !== undefined && typeof SchemaOption[fieldKey][1] !== `string`) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 		}
 		else if (SchemaOption[fieldKey][1] !== undefined) {
 			response.data[fieldKey].message = SchemaOption[fieldKey][1];
@@ -283,10 +351,20 @@ function processDateOption(
 		}
 	}
 	else {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a date`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a date`;
 	}
 	if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 	}
 	return response;
 }
@@ -308,10 +386,20 @@ function processEnumOption(
 		response.data[fieldKey] = { value: SchemaOption[fieldKey].value };
 	}
 	else {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a number`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a number`;
 	}
 	if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 	}
 	return response;
 }
@@ -327,7 +415,12 @@ function processMatchOption(
 	SchemaOption: object, fieldKey: string, response: IMongooseOptionsResponse,
 ): IMongooseOptionsResponse {
 	if (SchemaOption[fieldKey] === undefined) {
-		response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+		if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+			response.error = true;
+			response.errors[fieldKey] = {};
+		}
+		response.error = true;
+		response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a Regexp`;
 	}
 	else if (Array.isArray(SchemaOption[fieldKey])) {
 		let isValid = true;
@@ -339,12 +432,22 @@ function processMatchOption(
 			isValid = false;
 		}
 		if (!isValid) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a Regexp`;
 		}
 		else {
 			response.data[fieldKey] = { value: regex };
 			if (SchemaOption[fieldKey][1] !== undefined && typeof SchemaOption[fieldKey][1] !== `string`) {
-				response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+				if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+					response.error = true;
+					response.errors[fieldKey] = {};
+				}
+				response.error = true;
+				response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 			}
 			else if (SchemaOption[fieldKey][1] !== undefined) {
 				response.data[fieldKey].message = SchemaOption[fieldKey][1];
@@ -361,12 +464,22 @@ function processMatchOption(
 			isValid = false;
 		}
 		if (!isValid) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a Regexp`;
 		}
 		else {
 			response.data[fieldKey] = { value: regex };
 			if (SchemaOption[fieldKey].message !== undefined && typeof SchemaOption[fieldKey].message !== `string`) {
-				response.errors.push(addError(`schemaOptions`, `${fieldKey}.message`, `Message provided in the Schema Option "${fieldKey}" should be a string`));
+				if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+					response.error = true;
+					response.errors[fieldKey] = {};
+				}
+				response.error = true;
+				response.errors[fieldKey].message = `Message provided in the Schema Option "${fieldKey}" should be a string`;
 			}
 			else if (SchemaOption[fieldKey].message !== undefined) {
 				response.data[fieldKey].message = SchemaOption[fieldKey].message;
@@ -383,7 +496,12 @@ function processMatchOption(
 			isValid = false;
 		}
 		if (!isValid) {
-			response.errors.push(addError(`schemaOptions`, `${fieldKey}.value`, `Value provided in the Schema Option "${fieldKey}" should be a Regexp`));
+			if (!response.errors[fieldKey] || !Object.keys(response.errors[fieldKey]).length) {
+				response.error = true;
+				response.errors[fieldKey] = {};
+			}
+			response.error = true;
+			response.errors[fieldKey].value = `Value provided in the Schema Option "${fieldKey}" should be a Regexp`;
 		}
 		else {
 			response.data[fieldKey] = { value: regex };

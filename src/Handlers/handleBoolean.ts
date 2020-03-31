@@ -1,5 +1,5 @@
 import { ICombinedOptions, IHandleBooleanResponse } from "../interfaces";
-import addError from "../Utilities/addError";
+
 
 /**
  * Handle a Boolean Input attempting to convert / process as necessary
@@ -10,13 +10,13 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleBoolean(
-	inputValue: boolean, options: ICombinedOptions, path: string, key: string,
+	inputValue: boolean, options: ICombinedOptions, key: string,
 ): IHandleBooleanResponse {
 	const response: IHandleBooleanResponse = {
-		errors: [],
+		error: false,
+		errors: {},
 		data: null,
 	};
-	if (key === ``) { key = path; }
 	if (((options.convert?.value === true && options.disableLocalOptions !== true) ||
 		(options.convertValues === true)) &&
 		inputValue !== undefined && typeof inputValue !== `boolean`) {
@@ -31,14 +31,12 @@ export default function handleBoolean(
 	}
 	if (typeof inputValue !== `boolean`) {
 		if (options.required?.value === true && options.ignoreRequired !== true && inputValue === undefined) {
-			response.errors.push(
-				addError(path, key, `The input for "${key}" is not a boolean and cannot be converted into one`),
-			);
+			response.error = true;
+			response.errors[key] = `The input for "${key}" is not a boolean and cannot be converted into one`;
 		}
 		else {
-			response.errors.push(
-				addError(path, key, `The input for "${key}" is not a boolean`),
-			);
+			response.error = true;
+			response.errors[key] = `The input for "${key}" is not a boolean`;
 		}
 	}
 	else {

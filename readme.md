@@ -23,14 +23,15 @@ const MSV = require("mongoose-schema-validator")
 ```
 ### TypeScript
 ```javascript
-import { buildValidator,	buildNonThrowValidator } from "mongoose-schema-validator"
+import { buildValidator } from "mongoose-schema-validator"
 ```
 ### Do Not Throw Option
-The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block.  This needs to be declared with the "buildNonThrowValidator" setup as previously having this as a simple option was throwing TS Typing Errors
+The Do not throw option will return the errors the validator has found but without the throwing an error, saving a try, catch block.  This needs to be declared with the "throwOnError" option set to false.  
+Schema Errors will still throw an error, this is to make sure they are picked up on startup as opposed to on run.
 
 ```javascript
 async function validatorFunction () {
-	let validate = await MSV.buildNonThrowValidator({
+	let validate = await MSV.buildValidator({
 		name: String,
 		age: Number,
 		DOB: Date
@@ -39,8 +40,8 @@ async function validatorFunction () {
 		name: "Dizzienoo",
 		age: "15",
 		DOB: Date.now(),
-	}, { convert: true) // Full list of the options to send is below
-	if (valid.errors.length) {
+	}, { convert: true, throwOnError: false) // Full list of the options to send is below
+	if (valid.error) {
 		//Handle Errors
 		throw Error(valid.errors);
 	}
@@ -150,7 +151,6 @@ Two extra fields can be added to schema lines that will be processed by MSV.  Th
 	// shouldn't be placed in the main schema as it even overrides 
 	// "disableLocalOptions" for the fields upon which it is placed
 	skip: boolean;
-
 }
 ```
 
@@ -181,7 +181,7 @@ The following validator options are able to be sent with the input to determine 
 		* If the validator finds errors do we want it to throw an error.  
 		* Only works on the validator, the schema creation will throw regardless.
 		*/
-	doNotThrow?: boolean;
+	throwOnError?: boolean;
 }
 ```
 
@@ -261,13 +261,20 @@ async function processResponse(userProfile, role) {
 
 1.1.0 - Actually fixed previous bug in build
 
+1.20 - Merged Don't throw and normal validators into one function and made throwOnError an Option.  
+	This is a breaking change for anyone using "buildNonThrowValidator".  Now use buildValidator and set
+	throwOnError to false in the validate function's options.
+	Changed the error response format from an array to an object that resembles the layout of the input.  
+	For quick checking the response also now has a error boolean so checking if(response.error){} will solve
+	error handling easily on throwOnError = false setups.
+	An array of error objects will only be returned if the input itself is an array 
+
 ## Issues
 
 Currently the project is in Beta and probably not suitable for production use.
 
 Please report and bugs or issues to:
 https://github.com/Dizzienoo/MongooseSchemaValidator/issues
-
 
 
 ## Future Plans

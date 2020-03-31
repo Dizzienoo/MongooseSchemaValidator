@@ -1,6 +1,5 @@
 import { EAllowedTypes } from "../interfaces";
 
-
 /**
  * Checks if a Schema Key is one of the EAllowedTypes
  * @param schemaKeys The Schema Key to check

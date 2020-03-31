@@ -38,11 +38,10 @@ describe(`String Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a string`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a string`,
+				},
 			});
 		}
 	});
@@ -82,11 +81,10 @@ describe(`String Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a string`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a string`,
+				},
 			});
 		}
 	});
@@ -130,19 +128,18 @@ describe(`String Input Testing`, () => {
 			const validator = await buildValidator({
 				name: [{ type: String }],
 			});
-			console.log(await validator({
+			await validator({
 				name: `hello`,
-			}));
+			});
 			throw Error(`Failed To Recieve Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `Expecting an Array of entries but did not recieve one`,
-					},
-				],
+				errors:
+				{
+					name: `Expecting an Array of entries but did not recieve one`,
+				},
 			});
 		}
 	});
@@ -183,11 +180,10 @@ describe(`String Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is shorter than the allowed minimum, "4"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is shorter than the allowed minimum, "4"`,
+				},
 			});
 		}
 	});
@@ -205,11 +201,10 @@ describe(`String Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is longer than the allowed maximum, "10"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is longer than the allowed maximum, "10"`,
+				},
 			});
 		}
 	});
@@ -249,11 +244,10 @@ describe(`String Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not one of the designated allowed Enums`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not one of the designated allowed Enums`,
+				},
 			});
 		}
 	});
@@ -309,14 +303,34 @@ describe(`Shallow Array Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						"name[0]": `The input for \"name[0]\" is not a string`,
-					},
-					{
-						"name[1]": `The input for \"name[1]\" is not a string`,
-					},
-				],
+				errors: {
+					name: [
+						{ 0: `The input for \"name\" is not a string` },
+						{ 1: `The input for \"name\" is not a string` },
+					],
+				},
+			});
+		}
+	});
+
+	test(`Send in shallow array with multiple incorrect inputs.  Expect Failure`, async () => {
+		try {
+			const validator = await buildValidator({
+				name: [String],
+			});
+			await validator({
+				name: [`true`, false],
+			});
+			throw Error(`Failed To Recieve Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `The Input Provided has errors`,
+				errors: {
+					name: [
+						{ 1: `The input for \"name\" is not a string` },
+					],
+				},
 			});
 		}
 	});
@@ -458,9 +472,9 @@ describe(`Deep Array Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [{
+				errors: {
 					"stile.infront.lotsofDepth": `The input for "lotsofDepth" is required but empty`,
-				}],
+				},
 			});
 		}
 	});
@@ -520,13 +534,12 @@ describe(`Deep Array Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						"stile.infront.lotsofDepth": `The input for "lotsofDepth" is required but empty`,
+				errors: {
+					stile: {
+						infront: { lotsofDepth: `The input for "lotsofDepth" is required but empty` },
+						underneath: { deeper: `The input for "deeper" is marked as required but no value has been provided` },
 					},
-					{
-						"stile.underneath.deeper": `The input for "deeper" is marked as required but no value has been provided`,
-					}],
+				},
 			});
 		}
 	});
@@ -570,11 +583,10 @@ describe(`Number Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a number`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a number`,
+				},
 			});
 		}
 	});
@@ -614,11 +626,10 @@ describe(`Number Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a number`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a number`,
+				},
 			});
 		}
 	});
@@ -681,11 +692,10 @@ describe(`Number Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is smaller than the minimum "5"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is smaller than the minimum "5"`,
+				},
 			});
 		}
 	});
@@ -703,11 +713,10 @@ describe(`Number Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is larger than the maximum "50"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is larger than the maximum "50"`,
+				},
 			});
 		}
 	});
@@ -751,11 +760,10 @@ describe(`Boolean Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a boolean`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a boolean`,
+				},
 			});
 		}
 	});
@@ -861,11 +869,10 @@ describe(`Boolean Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a boolean`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a boolean`,
+				},
 			});
 		}
 	});
@@ -911,11 +918,10 @@ describe(`Date Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a date`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a date`,
+				},
 			});
 		}
 	});
@@ -934,11 +940,10 @@ describe(`Date Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a date`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a date`,
+				},
 			});
 		}
 	});
@@ -993,11 +998,10 @@ describe(`Date Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is smaller than the minimum "Mon Jan 01 2018 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is smaller than the minimum "Mon Jan 01 2018 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
+				},
 			});
 		}
 	});
@@ -1016,11 +1020,10 @@ describe(`Date Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is larger than the maximum "Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is larger than the maximum "Tue Dec 01 2020 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
+				},
 			});
 		}
 	});
@@ -1076,11 +1079,10 @@ describe(`Mongoose Id Input Testing`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is not a MongooseId`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is not a MongooseId`,
+				},
 			});
 		}
 	});

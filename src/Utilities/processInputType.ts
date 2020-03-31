@@ -13,7 +13,6 @@ import {
 	IHandleNumberResponse,
 	IHandleStringResponse,
 } from "../interfaces";
-import addError from "./addError";
 
 /**
  * Takes in a schema key and an input and fires the correct processing function to process the input
@@ -39,29 +38,31 @@ export default function processInputType(
 	if (options.skip?.value !== true) {
 		switch (schemaValue) {
 			case EAllowedTypes.BOOLEAN_TYPE:
-				return handleBoolean(inputValue, options, path, key);
+				return handleBoolean(inputValue, options, key);
 			case EAllowedTypes.STRING_TYPE:
-				return handleString(inputValue, options, path, key);
+				return handleString(inputValue, options, key);
 			case EAllowedTypes.NUMBER_TYPE:
-				return handleNumber(inputValue, options, path, key);
+				return handleNumber(inputValue, options, key);
 			case EAllowedTypes.MONGOOSE_TYPE:
-				return handleMongooseId(inputValue, options, path, key);
+				return handleMongooseId(inputValue, options, key);
 			case EAllowedTypes.DATE_TYPE:
-				return handleDate(inputValue, options, path, key);
+				return handleDate(inputValue, options, key);
 			case EAllowedTypes.MIXED_TYPE:
 				return inputValue;
 			default:
 				return {
 					data: null,
-					errors: [
-						addError(path, key, `The type provided "${schemaValue}" isn't supported.  This is likely a parser error.`),
-					],
+					error: true,
+					errors: {
+						[key]: `The type provided "${schemaValue}" isn't supported.  This is likely a parser error.`,
+					},
 				};
 		}
 	}
 	else {
 		return {
-			errors: [],
+			error: false,
+			errors: {},
 			data: inputValue,
 		};
 	}

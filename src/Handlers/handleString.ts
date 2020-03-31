@@ -1,5 +1,4 @@
 import { ICombinedOptions, IHandleStringResponse } from "../interfaces";
-import addError from "../Utilities/addError";
 
 /**
  * Handle a String Input attempting to convert / process as necessary
@@ -10,14 +9,13 @@ import addError from "../Utilities/addError";
  * @param key The key of the value
  */
 export default function handleString(
-	inputValue: string, options: ICombinedOptions, path: string, key,
+	inputValue: string, options: ICombinedOptions, key,
 ): IHandleStringResponse {
 	const response: IHandleStringResponse = {
-		errors: [],
+		error: false,
+		errors: {},
 		data: null,
 	};
-	// If the key is empty key = path
-	if (key === ``) { key = path; }
 	// If we are supposed to convert, there is something to convert and it isn't a string
 	if (
 		((options.convert?.value === true && options.disableLocalOptions !== true) ||
@@ -28,23 +26,20 @@ export default function handleString(
 	}
 	// If the input is required, the ignore required rule isn't set and we don't have an input
 	if (options.required?.value === true && options.ignoreRequired !== true && inputValue === undefined) {
-		response.errors.push(
-			addError(path, key, `The input for "${key}" is marked as required but no value has been provided`),
-		);
+		response.error = true;
+		response.errors[key] = `The input for "${key}" is marked as required but no value has been provided`;
 	}
 	// Otherwise if there is an input to parse
 	else if (inputValue !== undefined) {
 		// If the input isn't a string
 		if (typeof inputValue !== `string`) {
 			if ((options.convert?.value === true && options.disableLocalOptions !== true) || (options.convertValues === true)) {
-				response.errors.push(
-					addError(path, key, `The input for "${key}" is not a string and cannot be converted into one`),
-				);
+				response.error = true;
+				response.errors[key] = `The input for "${key}" is not a string and cannot be converted into one`;
 			}
 			else {
-				response.errors.push(
-					addError(path, key, `The input for "${key}" is not a string`),
-				);
+				response.error = true;
+				response.errors[key] = `The input for "${key}" is not a string`;
 			}
 		}
 		// Otherwise, we are good to add the value to the response
@@ -55,22 +50,19 @@ export default function handleString(
 		// If there is a regexp to match against
 		if (options.match) {
 			if (!new RegExp(options.match.value).test(response.data)) {
-				response.errors.push(
-					addError(path, key, options.match.message || `The input for "${key}" does not match the provided RegExp "${options.match.value}"`),
-				);
+				response.error = true;
+				response.errors[key] = options.match.message || `The input for "${key}" does not match the provided RegExp "${options.match.value}"`;
 			}
 		}
 		// If the response's length is longer than the max length
 		if (options.maxLength && response.data.length > options.maxLength.value) {
-			response.errors.push(
-				addError(path, key, options.maxLength.message || `The input for "${key}" is longer than the allowed maximum, "${options.maxLength.value}"`),
-			);
+			response.error = true;
+			response.errors[key] = options.maxLength.message || `The input for "${key}" is longer than the allowed maximum, "${options.maxLength.value}"`;
 		}
 		// If the response's length is shorter than the min length
 		if (options.minLength && response.data.length < options.minLength.value) {
-			response.errors.push(
-				addError(path, key, options.minLength.message || `The input for "${key}" is shorter than the allowed minimum, "${options.minLength.value}"`),
-			);
+			response.error = true;
+			response.errors[key] = options.minLength.message || `The input for "${key}" is shorter than the allowed minimum, "${options.minLength.value}"`;
 		}
 		// Convert input to Lowercase
 		if (options.lowercase) {
@@ -82,9 +74,8 @@ export default function handleString(
 		}
 		if (options.enum !== undefined && options.enum !== null) {
 			if (!options.enum.value.includes(response.data)) {
-				response.errors.push(
-					addError(path, key, `The input for "${key}" is not one of the designated allowed Enums`),
-				);
+				response.error = true;
+				response.errors[key] = `The input for "${key}" is not one of the designated allowed Enums`;
 			}
 		}
 		if (options.trim?.value === true) {

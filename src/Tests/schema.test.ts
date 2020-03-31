@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { buildNonThrowValidator, buildValidator } from "..";
+import { buildValidator } from "..";
 
 
 describe(`Test Schema Validator`, () => {
@@ -13,7 +13,7 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [{ Schema: `The Schema provided is not an object` }],
+				errors: { Schema: `The Schema provided is not an object` },
 			});
 		}
 	});
@@ -27,7 +27,7 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [{ Schema: `The Schema provided is not an object` }],
+				errors: { Schema: `The Schema provided is not an object` },
 			});
 		}
 	});
@@ -41,7 +41,7 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [{ Schema: `The Schema provided is not an object` }],
+				errors: { Schema: `The Schema provided is not an object` },
 			});
 		}
 	});
@@ -55,7 +55,7 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [{ Schema: `The Schema provided is not an object` }],
+				errors: { Schema: `The Schema provided is not an object` },
 			});
 		}
 	});
@@ -69,7 +69,7 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [{ Schema: `The Schema provided is not an object` }],
+				errors: { Schema: `The Schema provided is not an object` },
 			});
 		}
 	});
@@ -101,13 +101,13 @@ describe(`Test Schema Validator`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{ month: `Type Provided "Date" is not an allowed type` },
-					{ 'object.flag2': `Type Provided "Date" is not an allowed type` },
-					{ invalidShallowArray: `The provided array does not contain deeper object fields or a valid input type` },
-					{ toobigArray: `Provided Section has more than one object in the array, this is not valid for a schema` },
-					{ 'invalidType.type': `Type Provided "WRONG" is not an allowed type"` },
-				],
+				errors: {
+					month: `Type Provided "Date" is not an allowed type`,
+					object: { flag2: `Type Provided "Date" is not an allowed type` },
+					invalidShallowArray: `The provided array does not contain deeper object fields or a valid input type`,
+					toobigArray: `Provided Section has more than one object in the array, this is not valid for a schema`,
+					invalidType: { type: `Type Provided "WRONG" is not an allowed type"` },
+				},
 			});
 		}
 	});
@@ -117,26 +117,28 @@ describe(`Test Schema Validator`, () => {
 describe(`Test the do not throw option`, () => {
 
 	test(`Send in input that should Error but with doNotThrow Option. Expect Success`, async () => {
-		const validate = await buildNonThrowValidator({
+		const validate = await buildValidator({
 			input: String,
 		});
 		expect(await validate({
 			input: true,
-		})).toEqual({
+		}, { throwOnError: false })).toEqual({
 			data: {},
-			errors: [{ input: `The input for "input" is not a string` }],
+			error: true,
+			errors: { input: `The input for "input" is not a string` },
 		});
 	});
 
 	test(`Send in input that shouldn't Error but with doNotThrow Option. Expect Success`, async () => {
-		const validate = await buildNonThrowValidator({
+		const validate = await buildValidator({
 			input: String,
 		});
 		expect(await validate({
 			input: `true`,
-		})).toEqual({
+		}, { throwOnError: false })).toEqual({
+			error: false,
 			data: { input: `true` },
-			errors: [],
+			errors: {},
 		});
 	});
 });

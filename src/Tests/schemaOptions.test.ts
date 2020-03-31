@@ -24,11 +24,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.required.value": `Value provided in the Schema Option "required" should be a boolean`,
-					},
-				],
+				errors: {
+					name: { required: { value: `Value provided in the Schema Option "required" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -43,11 +41,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.required.value": `Value provided in the Schema Option "required" should be a boolean`,
-					},
-				],
+				errors: {
+					name: { required: { value: `Value provided in the Schema Option "required" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -62,11 +58,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.required.value": `Value provided in the Schema Option "required" should be a boolean`,
-					},
-				],
+				errors: {
+					name: { required: { value: `Value provided in the Schema Option "required" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -81,11 +75,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.required.message": `Message provided in the Schema Option "required" should be a string`,
-					},
-				],
+				errors: {
+					name: { required: { message: `Message provided in the Schema Option "required" should be a string` } },
+				},
 			});
 		}
 	});
@@ -100,11 +92,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.required.message": `Message provided in the Schema Option "required" should be a string`,
-					},
-				],
+				errors: {
+					name: { required: { message: `Message provided in the Schema Option "required" should be a string` } },
+				},
 			});
 		}
 	});
@@ -141,11 +131,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is required but empty`,
-					},
-				],
+				errors: {
+					name: `The input for "name" is required but empty`,
+				},
 			});
 		}
 	});
@@ -164,11 +152,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is required`,
-					},
-				],
+				errors: {
+					name: `This field is required`,
+				},
 			});
 		}
 	});
@@ -188,11 +174,9 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is required`,
-					},
-				],
+				errors: {
+					name: `This field is required`,
+				},
 			});
 		}
 	});
@@ -247,20 +231,14 @@ describe(`Test the Require Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Options Provided have errors`,
-				errors: [
-					{
-						'globalOptions.convertValues': `Option provided in the global Options, "convertValues", needs to be be a boolean`,
+				errors: {
+					globalOptions: {
+						convertValues: `Option provided in the global Options, "convertValues", needs to be be a boolean`,
+						trimExtraFields: `Option provided in the global Options, "trimExtraFields", needs to be be a boolean`,
+						ignoreRequired: `Option provided in the global Options, "ignoreRequired", needs to be be a boolean`,
+						disableLocalOptions: `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`,
 					},
-					{
-						'globalOptions.trimExtraFields': `Option provided in the global Options, "trimExtraFields", needs to be be a boolean`,
-					},
-					{
-						'globalOptions.ignoreRequired': `Option provided in the global Options, "ignoreRequired", needs to be be a boolean`,
-					},
-					{
-						'globalOptions.disableLocalOptions': `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`,
-					},
-				],
+				},
 			});
 		}
 	});
@@ -279,11 +257,10 @@ describe(`Test the Skip Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.skip.value": `Value provided in the Schema Option "skip" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { skip: { value: `Value provided in the Schema Option "skip" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -298,11 +275,10 @@ describe(`Test the Skip Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.skip.value": `Value provided in the Schema Option "skip" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { skip: { value: `Value provided in the Schema Option "skip" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -317,11 +293,10 @@ describe(`Test the Skip Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.skip.value": `Value provided in the Schema Option "skip" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { skip: { value: `Value provided in the Schema Option "skip" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -336,11 +311,10 @@ describe(`Test the Skip Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.skip.message": `Message provided in the Schema Option "skip" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { skip: { message: `Message provided in the Schema Option "skip" should be a string` } },
+				},
 			});
 		}
 	});
@@ -355,11 +329,10 @@ describe(`Test the Skip Option inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.skip.message": `Message provided in the Schema Option "skip" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { skip: { message: `Message provided in the Schema Option "skip" should be a string` } },
+				},
 			});
 		}
 	});
@@ -418,11 +391,10 @@ describe(`Test the Convert Option Inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.convert.value": `Value provided in the Schema Option "convert" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { convert: { value: `Value provided in the Schema Option "convert" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -437,11 +409,10 @@ describe(`Test the Convert Option Inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.convert.value": `Value provided in the Schema Option "convert" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { convert: { value: `Value provided in the Schema Option "convert" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -456,11 +427,10 @@ describe(`Test the Convert Option Inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.convert.value": `Value provided in the Schema Option "convert" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { convert: { value: `Value provided in the Schema Option "convert" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -475,11 +445,10 @@ describe(`Test the Convert Option Inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.convert.message": `Message provided in the Schema Option "convert" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { convert: { message: `Message provided in the Schema Option "convert" should be a string` } },
+				},
 			});
 		}
 	});
@@ -494,11 +463,10 @@ describe(`Test the Convert Option Inputs`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.convert.message": `Message provided in the Schema Option "convert" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { convert: { message: `Message provided in the Schema Option "convert" should be a string` } },
+				},
 			});
 		}
 	});
@@ -544,11 +512,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.minLength.value": `Value provided in the Schema Option "minLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { minLength: { value: `Value provided in the Schema Option "minLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -563,11 +530,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.minLength.value": `Value provided in the Schema Option "minLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { minLength: { value: `Value provided in the Schema Option "minLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -582,11 +548,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.minLength.value": `Value provided in the Schema Option "minLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { minLength: { value: `Value provided in the Schema Option "minLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -601,11 +566,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.minLength.message": `Message provided in the Schema Option "minLength" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { minLength: { message: `Message provided in the Schema Option "minLength" should be a string` } },
+				},
 			});
 		}
 	});
@@ -620,11 +584,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.minLength.message": `Message provided in the Schema Option "minLength" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { minLength: { message: `Message provided in the Schema Option "minLength" should be a string` } },
+				},
 			});
 		}
 	});
@@ -662,11 +625,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is shorter than the allowed minimum, "12"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is shorter than the allowed minimum, "12"`,
+				},
 			});
 		}
 	});
@@ -686,11 +648,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is minLength`,
-					},
-				],
+				errors:
+				{
+					name: `This field is minLength`,
+				},
 			});
 		}
 	});
@@ -710,11 +671,10 @@ describe(`Test the Min Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is minLength`,
-					},
-				],
+				errors:
+				{
+					name: `This field is minLength`,
+				},
 			});
 		}
 	});
@@ -775,11 +735,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.maxLength.value": `Value provided in the Schema Option "maxLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { maxLength: { value: `Value provided in the Schema Option "maxLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -794,11 +753,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.maxLength.value": `Value provided in the Schema Option "maxLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { maxLength: { value: `Value provided in the Schema Option "maxLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -813,11 +771,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.maxLength.value": `Value provided in the Schema Option "maxLength" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { maxLength: { value: `Value provided in the Schema Option "maxLength" should be a number` } },
+				},
 			});
 		}
 	});
@@ -832,11 +789,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.maxLength.message": `Message provided in the Schema Option "maxLength" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { maxLength: { message: `Message provided in the Schema Option "maxLength" should be a string` } },
+				},
 			});
 		}
 	});
@@ -851,11 +807,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.maxLength.message": `Message provided in the Schema Option "maxLength" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { maxLength: { message: `Message provided in the Schema Option "maxLength" should be a string` } },
+				},
 			});
 		}
 	});
@@ -893,11 +848,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is longer than the allowed maximum, "4"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is longer than the allowed maximum, "4"`,
+				},
 			});
 		}
 	});
@@ -917,11 +871,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is maxLength`,
-					},
-				],
+				errors:
+				{
+					name: `This field is maxLength`,
+				},
 			});
 		}
 	});
@@ -941,11 +894,10 @@ describe(`Test the Max Length Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is maxLength`,
-					},
-				],
+				errors:
+				{
+					name: `This field is maxLength`,
+				},
 			});
 		}
 	});
@@ -1006,11 +958,10 @@ describe(`Test the lowercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.lowercase.value": `Value provided in the Schema Option "lowercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { lowercase: { value: `Value provided in the Schema Option "lowercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1025,11 +976,10 @@ describe(`Test the lowercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.lowercase.value": `Value provided in the Schema Option "lowercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { lowercase: { value: `Value provided in the Schema Option "lowercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1044,11 +994,10 @@ describe(`Test the lowercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.lowercase.value": `Value provided in the Schema Option "lowercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { lowercase: { value: `Value provided in the Schema Option "lowercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1063,11 +1012,10 @@ describe(`Test the lowercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.lowercase.message": `Message provided in the Schema Option "lowercase" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { lowercase: { message: `Message provided in the Schema Option "lowercase" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1082,11 +1030,10 @@ describe(`Test the lowercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.lowercase.message": `Message provided in the Schema Option "lowercase" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { lowercase: { message: `Message provided in the Schema Option "lowercase" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1168,11 +1115,10 @@ describe(`Test the uppercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.uppercase.value": `Value provided in the Schema Option "uppercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { uppercase: { value: `Value provided in the Schema Option "uppercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1187,11 +1133,10 @@ describe(`Test the uppercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.uppercase.value": `Value provided in the Schema Option "uppercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { uppercase: { value: `Value provided in the Schema Option "uppercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1206,11 +1151,10 @@ describe(`Test the uppercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.uppercase.value": `Value provided in the Schema Option "uppercase" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { uppercase: { value: `Value provided in the Schema Option "uppercase" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1225,11 +1169,10 @@ describe(`Test the uppercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.uppercase.message": `Message provided in the Schema Option "uppercase" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { uppercase: { message: `Message provided in the Schema Option "uppercase" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1244,11 +1187,10 @@ describe(`Test the uppercase Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.uppercase.message": `Message provided in the Schema Option "uppercase" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { uppercase: { message: `Message provided in the Schema Option "uppercase" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1330,11 +1272,10 @@ describe(`Test the trim Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim.value": `Value provided in the Schema Option "trim" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { trim: { value: `Value provided in the Schema Option "trim" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1349,11 +1290,10 @@ describe(`Test the trim Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim.value": `Value provided in the Schema Option "trim" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { trim: { value: `Value provided in the Schema Option "trim" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1368,11 +1308,10 @@ describe(`Test the trim Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim.value": `Value provided in the Schema Option "trim" should be a boolean`,
-					},
-				],
+				errors:
+				{
+					name: { trim: { value: `Value provided in the Schema Option "trim" should be a boolean` } },
+				},
 			});
 		}
 	});
@@ -1387,11 +1326,10 @@ describe(`Test the trim Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim.message": `Message provided in the Schema Option "trim" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { trim: { message: `Message provided in the Schema Option "trim" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1406,11 +1344,10 @@ describe(`Test the trim Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim.message": `Message provided in the Schema Option "trim" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { trim: { message: `Message provided in the Schema Option "trim" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1492,11 +1429,10 @@ describe(`Test the trim Option on non-trim type`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim": `Option "trim" is not an accepted key on "NUMBER_TYPE"`,
-					},
-				],
+				errors:
+				{
+					name: { trim: `Option "trim" is not an accepted key on "NUMBER_TYPE"` },
+				},
 			});
 		}
 	});
@@ -1511,11 +1447,10 @@ describe(`Test the trim Option on non-trim type`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim": `Option "trim" is not an accepted key on "NUMBER_TYPE"`,
-					},
-				],
+				errors:
+				{
+					name: { trim: `Option "trim" is not an accepted key on "NUMBER_TYPE"` },
+				},
 			});
 		}
 	});
@@ -1530,11 +1465,10 @@ describe(`Test the trim Option on non-trim type`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim": `Option "trim" is not an accepted key on "NUMBER_TYPE"`,
-					},
-				],
+				errors:
+				{
+					name: { trim: `Option "trim" is not an accepted key on "NUMBER_TYPE"` },
+				},
 			});
 		}
 	});
@@ -1549,11 +1483,10 @@ describe(`Test the trim Option on non-trim type`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim": `Option "trim" is not an accepted key on "NUMBER_TYPE"`,
-					},
-				],
+				errors:
+				{
+					name: { trim: `Option "trim" is not an accepted key on "NUMBER_TYPE"` },
+				},
 			});
 		}
 	});
@@ -1568,11 +1501,10 @@ describe(`Test the trim Option on non-trim type`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.trim": `Option "trim" is not an accepted key on "NUMBER_TYPE"`,
-					},
-				],
+				errors:
+				{
+					name: { trim: `Option "trim" is not an accepted key on "NUMBER_TYPE"` },
+				},
 			});
 		}
 	});
@@ -1591,11 +1523,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1610,11 +1541,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1629,11 +1559,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1648,11 +1577,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.message": `Message provided in the Schema Option "min" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { min: { message: `Message provided in the Schema Option "min" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1667,11 +1595,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.message": `Message provided in the Schema Option "min" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { min: { message: `Message provided in the Schema Option "min" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1709,11 +1636,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is smaller than the minimum "40"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is smaller than the minimum "40"`,
+				},
 			});
 		}
 	});
@@ -1733,11 +1659,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is min`,
-					},
-				],
+				errors:
+				{
+					name: `This field is min`,
+				},
 			});
 		}
 	});
@@ -1757,11 +1682,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is min`,
-					},
-				],
+				errors:
+				{
+					name: `This field is min`,
+				},
 			});
 		}
 	});
@@ -1822,11 +1746,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1841,11 +1764,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1860,11 +1782,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a number`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a number` } },
+				},
 			});
 		}
 	});
@@ -1879,11 +1800,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.message": `Message provided in the Schema Option "max" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { max: { message: `Message provided in the Schema Option "max" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1898,11 +1818,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.message": `Message provided in the Schema Option "max" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { max: { message: `Message provided in the Schema Option "max" should be a string` } },
+				},
 			});
 		}
 	});
@@ -1940,11 +1859,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is larger than the maximum "4"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is larger than the maximum "4"`,
+				},
 			});
 		}
 	});
@@ -1964,11 +1882,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is max`,
-					},
-				],
+				errors:
+				{
+					name: `This field is max`,
+				},
 			});
 		}
 	});
@@ -1988,11 +1905,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is max`,
-					},
-				],
+				errors:
+				{
+					name: `This field is max`,
+				},
 			});
 		}
 	});
@@ -2053,11 +1969,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2072,11 +1987,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2091,11 +2005,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.value": `Value provided in the Schema Option "min" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { min: { value: `Value provided in the Schema Option "min" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2110,11 +2023,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.message": `Message provided in the Schema Option "min" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { min: { message: `Message provided in the Schema Option "min" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2129,11 +2041,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.min.message": `Message provided in the Schema Option "min" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { min: { message: `Message provided in the Schema Option "min" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2175,11 +2086,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is smaller than the minimum "Wed Feb 01 2040 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is smaller than the minimum "Wed Feb 01 2040 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
+				},
 			});
 		}
 	});
@@ -2200,11 +2110,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is min`,
-					},
-				],
+				errors:
+				{
+					name: `This field is min`,
+				},
 			});
 		}
 	});
@@ -2225,11 +2134,10 @@ describe(`Test the Min Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is min`,
-					},
-				],
+				errors:
+				{
+					name: `This field is min`,
+				},
 			});
 		}
 	});
@@ -2293,11 +2201,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2312,11 +2219,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2331,11 +2237,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.value": `Value provided in the Schema Option "max" should be a date`,
-					},
-				],
+				errors:
+				{
+					name: { max: { value: `Value provided in the Schema Option "max" should be a date` } },
+				},
 			});
 		}
 	});
@@ -2350,11 +2255,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.message": `Message provided in the Schema Option "max" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { max: { message: `Message provided in the Schema Option "max" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2369,11 +2273,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.max.message": `Message provided in the Schema Option "max" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { max: { message: `Message provided in the Schema Option "max" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2415,11 +2318,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `The input for "name" is larger than the maximum "Thu Feb 01 1940 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
-					},
-				],
+				errors:
+				{
+					name: `The input for "name" is larger than the maximum "Thu Feb 01 1940 00:00:00 GMT+0000 (Greenwich Mean Time)"`,
+				},
 			});
 		}
 	});
@@ -2440,11 +2342,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is max`,
-					},
-				],
+				errors:
+				{
+					name: `This field is max`,
+				},
 			});
 		}
 	});
@@ -2465,11 +2366,10 @@ describe(`Test the Max Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
-				errors: [
-					{
-						name: `This field is max`,
-					},
-				],
+				errors:
+				{
+					name: `This field is max`,
+				},
 			});
 		}
 	});
@@ -2533,11 +2433,10 @@ describe(`Test the Match Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.match.message": `Message provided in the Schema Option "match" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { match: { message: `Message provided in the Schema Option "match" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2552,11 +2451,10 @@ describe(`Test the Match Option`, () => {
 		catch (err) {
 			expect(err).toEqual({
 				message: `Schema Unable to be parsed due to errors`,
-				errors: [
-					{
-						"schemaOptions.match.message": `Message provided in the Schema Option "match" should be a string`,
-					},
-				],
+				errors:
+				{
+					name: { match: { message: `Message provided in the Schema Option "match" should be a string` } },
+				},
 			});
 		}
 	});
@@ -2618,5 +2516,4 @@ describe(`Test the Match Option`, () => {
 			name3: `lower`,
 		});
 	});
-
 });

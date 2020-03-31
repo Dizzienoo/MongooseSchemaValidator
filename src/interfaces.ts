@@ -36,6 +36,10 @@ export interface IGlobalOptions {
 	 * Use this option to disable any local options set at the schema level
 	 */
 	disableLocalOptions?: boolean;
+	/**
+	 * Does the Validator Throw an Error or just return errors
+	 */
+	throwOnError?: boolean;
 }
 
 /**
@@ -61,8 +65,7 @@ export interface ICombinedOptions extends ISchemaOptions, IGlobalOptions { }
 /**
  * The Schema Options that the system can expect to have to handle
  */
-export interface IMongooseOptionsResponse {
-	errors: object[];
+export interface IMongooseOptionsResponse extends IInputBaseResponse {
 	data: ISchemaOptions;
 }
 
@@ -124,62 +127,57 @@ interface ISchemaOptions {
  * The fields the schema and input functions return
  */
 export interface IResponse {
-	errors: object[];
+	error: boolean;
+	errors: object;
 	data: object;
+}
+
+/**
+ * The Base model for the Process Input Type Responses
+ */
+interface IInputBaseResponse {
+	error: boolean;
+	errors: object;
 }
 
 /**
  * The response from the global options parser
  */
-export interface IGlobalOptionsResponse {
-	errors: object[];
+export interface IGlobalOptionsResponse extends IInputBaseResponse {
 	data: IGlobalOptions;
 }
 
 /**
  * Response from the Handle String Function
  */
-export interface IHandleStringResponse {
-	errors: object[];
+export interface IHandleStringResponse extends IInputBaseResponse {
 	data: string;
 }
 
 /**
  * Response from the Handle Number Function
  */
-export interface IHandleNumberResponse {
-	errors: object[];
+export interface IHandleNumberResponse extends IInputBaseResponse {
 	data: number;
 }
 
 /**
  * Response from the Handle Boolean Function
  */
-export interface IHandleBooleanResponse {
-	errors: object[];
+export interface IHandleBooleanResponse extends IInputBaseResponse {
 	data: boolean;
 }
 
 /**
  * Response from the Handle Date Function
  */
-export interface IHandleDateResponse {
-	errors: object[];
+export interface IHandleDateResponse extends IInputBaseResponse {
 	data: Date;
 }
 
 /**
  * Response from the Handle MongooseId Function
  */
-export interface IHandleMongooseIdResponse {
-	errors: object[];
+export interface IHandleMongooseIdResponse extends IInputBaseResponse {
 	data: Schema.Types.ObjectId;
-}
-
-/**
- * Response Object when returning with "Do Not Throw" option
- */
-export interface IDoNotThrowResponse {
-	data: object;
-	errors: object[];
 }

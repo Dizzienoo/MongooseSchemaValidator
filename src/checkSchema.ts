@@ -1,5 +1,4 @@
 import { EAllowedTypes, IResponse } from "./interfaces";
-import addError from "./Utilities/addError";
 import { isValidSchemaOption } from "./Utilities/checkOptions";
 import ConvertSchemaTypes from "./Utilities/convertSchemaTypes";
 import isObject from "./Utilities/isObject";
@@ -11,13 +10,15 @@ import isObject from "./Utilities/isObject";
  */
 export default async function (schema: object): Promise<IResponse> {
 	const response = {
-		errors: [],
+		error: false,
+		errors: {},
 		data: null,
 	};
 	// Make sure that the original input is okay
 	if (schema === null || typeof schema !== `object` || Array.isArray(schema) || Object.keys(schema).length < 1) {
 		return {
-			errors: [{ Schema: `The Schema provided is not an object` }],
+			error: true,
+			errors: { Schema: `The Schema provided is not an object` },
 			data: null,
 		};
 	}
@@ -25,7 +26,8 @@ export default async function (schema: object): Promise<IResponse> {
 	response.data = await ConvertSchemaTypes(schema);
 	// Then pass to the recursive function to check for errors
 	const recursiveResponse = await recursiveCheck(response.data);
-	if (recursiveResponse.errors.length) {
+	if (recursiveResponse.error) {
+		response.error = true;
 		response.errors = recursiveResponse.errors;
 	}
 	else {
@@ -39,29 +41,31 @@ export default async function (schema: object): Promise<IResponse> {
  * Recursively check every level of the schema for confirmity
  *
  * @param schema The Schema Object to check
- * @param path The previous path that is being innvestigated
  */
-function recursiveCheck(schema: object, path: string = ``): IResponse {
+function recursiveCheck(schema: object): IResponse {
 	const response: IResponse = {
 		data: {},
-		errors: [],
+		errors: {},
+		error: false,
 	};
-	// If the Path starts with a full stop, remove the full stop
-	if (path.startsWith(`.`)) { path = path.replace(`.`, ``); }
 	// Get the Keys on the Schema
 	const keys = Object.keys(schema);
 	// If the object includes the key "type" check if the type is an allowed type
 	if (keys.includes(`type`) && !isObject(schema[`type`])) {
 		// Check that the Type Declared is allowed
-		if (!isAllowedType(schema[`type`])) { response.errors.push(addError(path, `type`, `Type Provided "${schema[`type`]}" is not an allowed type"`)); }
+		if (!isAllowedType(schema[`type`])) {
+			response.error = true;
+			response.errors[`type`] = `Type Provided "${schema[`type`]}" is not an allowed type"`;
+		}
 		// If there is a type to work with
 		else {
 			// Check for any incoming options and set them up accordingly
 			const optionsErrors = isValidSchemaOption(schema, schema[`type`]);
 			// If the options are not set up correctly
-			if (optionsErrors.errors.length) {
+			if (optionsErrors.error) {
 				// Add the errors to the error array
-				response.errors = response.errors.concat(optionsErrors.errors);
+				response.error = true;
+				response.errors = optionsErrors.errors;
 			}
 			else {
 				response.data = optionsErrors.data;
@@ -78,20 +82,25 @@ function recursiveCheck(schema: object, path: string = ``): IResponse {
 			if (Array.isArray(schema[k])) {
 				// If the Array is longer than one
 				if (schema[k].length > 1) {
-					response.errors.push(addError(path, k, `Provided Section has more than one object in the array, this is not valid for a schema`));
+					response.error = true;
+					response.errors[k] = `Provided Section has more than one object in the array, this is not valid for a schema`;
 				}
 				// Otherwise, if the array is shallow (doesn't contain an object)
 				else if (!isObject(schema[k][0])) {
 					// If the input isn't a propper type in the shallow array
 					if (!isAllowedType(schema[k][0])) {
 						// Add an error
-						response.errors.push(addError(path, k, `The provided array does not contain deeper object fields or a valid input type`));
+						response.error = true;
+						response.errors[k] = `The provided array does not contain deeper object fields or a valid input type`;
 					}
 				}
 				// Otherwise, we want to check the object inside the array
 				else {
-					const nestedErrors = recursiveCheck(schema[k][0], `${path}.${k}`);
-					if (nestedErrors.errors.length) { response.errors = response.errors.concat(nestedErrors.errors); }
+					const nestedErrors = recursiveCheck(schema[k][0]);
+					if (nestedErrors.error) {
+						response.error = true;
+						response.errors[k] = nestedErrors.errors;
+					}
 					else {
 						if (response.data[k] === undefined) { response.data[k] = []; }
 						response.data[k][0] = nestedErrors.data;
@@ -103,8 +112,11 @@ function recursiveCheck(schema: object, path: string = ``): IResponse {
 			}
 			// If the object we are inspecting is a deeper object, check the object
 			else if (isObject(schema[k])) {
-				const nestedErrors = recursiveCheck(schema[k], `${path}.${k}`);
-				if (nestedErrors.errors.length) { response.errors = response.errors.concat(nestedErrors.errors); }
+				const nestedErrors = recursiveCheck(schema[k]);
+				if (nestedErrors.error) {
+					response.error = true;
+					response.errors[k] = nestedErrors.errors;
+				}
 				else {
 					response.data[k] = nestedErrors.data;
 					if (nestedErrors.data[`type`] !== undefined) {
@@ -114,7 +126,8 @@ function recursiveCheck(schema: object, path: string = ``): IResponse {
 			}
 			// Otherwise, check that the object is a permitted type
 			else if (!isAllowedType(schema[k])) {
-				response.errors.push(addError(path, k, `Type Provided "${schema[k]}" is not an allowed type`));
+				response.error = true;
+				response.errors[k] = `Type Provided "${schema[k]}" is not an allowed type`;
 			}
 		});
 	}
