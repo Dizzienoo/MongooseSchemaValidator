@@ -271,7 +271,7 @@ async function processResponse(userProfile, role) {
 
 1.1.0 - Actually fixed previous bug in build
 
-1.20 - Merged Don't throw and normal validators into one function and made throwOnError an Option.  
+1.2.0 - Merged Don't throw and normal validators into one function and made throwOnError an Option.  
 	This is a breaking change for anyone using "buildNonThrowValidator".  Now use buildValidator and set
 	throwOnError to false in the validate function's options.
 	Changed the error response format from an array to an object that resembles the layout of the input.  
@@ -279,9 +279,11 @@ async function processResponse(userProfile, role) {
 	error handling easily on throwOnError = false setups.
 	An array of error objects will only be returned if the input itself is an array 
 
-1.21 - Changes Response to allow for ResponseObject
+1.2.1 - Changes Response to allow for ResponseObject
 
-1.22 - Changed the throw Response to also return the full object, for better typescript support
+1.2.2 - Changed the throw Response to also return the full object, for better typescript support
+
+1.2.3 - Updated how errors are added as earlier errors were, in some cases, being over written.
 
 ## Issues
 

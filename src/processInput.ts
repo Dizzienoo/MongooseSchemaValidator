@@ -125,7 +125,7 @@ function recursiveCheck(
 					);
 					if (checkResponse.error) {
 						response.error = true;
-						response.errors = checkResponse.errors;
+						response.errors = Object.assign(response.errors, checkResponse.errors);
 					}
 					else if (checkResponse.data !== null) {
 						if (response.data === null) { response.data = {}; }
