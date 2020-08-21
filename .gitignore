@@ -7,3 +7,4 @@ test-results.xml
 src/Tests/full.test.ts
 
 yarn.lock
+yarn-error.log
