@@ -8,7 +8,7 @@ describe(`Test Schema Validator`, () => {
 		try {
 			// @ts-ignore
 			await buildValidator(`string`);
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -22,7 +22,7 @@ describe(`Test Schema Validator`, () => {
 		try {
 			// @ts-ignore
 			await buildValidator([]);
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -36,7 +36,7 @@ describe(`Test Schema Validator`, () => {
 		try {
 			// @ts-ignore
 			await buildValidator({});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -50,7 +50,7 @@ describe(`Test Schema Validator`, () => {
 		try {
 			// @ts-ignore
 			await buildValidator(1);
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -64,7 +64,7 @@ describe(`Test Schema Validator`, () => {
 		try {
 			// @ts-ignore
 			await buildValidator(true);
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -96,7 +96,7 @@ describe(`Test Schema Validator`, () => {
 				invalidType: { type: `WRONG` },
 				allowedType: { type: String },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({

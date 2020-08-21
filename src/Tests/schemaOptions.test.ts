@@ -7,10 +7,10 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, MSV_Options: { KEY: true } },
 			});
-			throw Error(`Failed To Recieve Error`);
+			throw Error(`Failed To Receive Error`);
 		}
 		catch (err) {
-			expect(err).toEqual(Error(`Failed To Recieve Error`));
+			expect(err).toEqual(Error(`Failed To Receive Error`));
 		}
 	});
 
@@ -19,7 +19,7 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, required: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -36,7 +36,7 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, required: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -53,7 +53,7 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, required: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -70,7 +70,7 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, required: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -87,7 +87,7 @@ describe(`Test the Require Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, required: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -134,7 +134,7 @@ describe(`Test the Require Option inputs`, () => {
 			await validator({
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -155,7 +155,7 @@ describe(`Test the Require Option inputs`, () => {
 			await validator({
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -177,7 +177,7 @@ describe(`Test the Require Option inputs`, () => {
 			await validator({
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -242,7 +242,7 @@ describe(`Test the Require Option inputs`, () => {
 				// @ts-ignore
 				doNotThrow: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -268,7 +268,7 @@ describe(`Test the Skip Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, skip: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -286,7 +286,7 @@ describe(`Test the Skip Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, skip: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -304,7 +304,7 @@ describe(`Test the Skip Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, skip: [`fail`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -322,7 +322,7 @@ describe(`Test the Skip Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, skip: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -340,7 +340,7 @@ describe(`Test the Skip Option inputs`, () => {
 			await buildValidator({
 				name: { type: String, skip: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -418,7 +418,7 @@ describe(`Test the Convert Option Inputs`, () => {
 			await buildValidator({
 				name: { type: String, convert: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -436,7 +436,7 @@ describe(`Test the Convert Option Inputs`, () => {
 			await buildValidator({
 				name: { type: String, convert: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -454,7 +454,7 @@ describe(`Test the Convert Option Inputs`, () => {
 			await buildValidator({
 				name: { type: String, convert: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -472,7 +472,7 @@ describe(`Test the Convert Option Inputs`, () => {
 			await buildValidator({
 				name: { type: String, convert: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -490,7 +490,7 @@ describe(`Test the Convert Option Inputs`, () => {
 			await buildValidator({
 				name: { type: String, convert: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -529,7 +529,7 @@ describe(`Test the Convert Option Inputs`, () => {
 		});
 	});
 
-	test(`Send in convert Key with a valid value and message with convertable input. Expect Success`, async () => {
+	test(`Send in convert Key with a valid value and message with convertible input. Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String, convert: [true] },
 		});
@@ -551,7 +551,7 @@ describe(`Test the Min Length Option`, () => {
 			await buildValidator({
 				name: { type: String, minLength: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -569,7 +569,7 @@ describe(`Test the Min Length Option`, () => {
 			await buildValidator({
 				name: { type: String, minLength: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -587,7 +587,7 @@ describe(`Test the Min Length Option`, () => {
 			await buildValidator({
 				name: { type: String, minLength: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -605,7 +605,7 @@ describe(`Test the Min Length Option`, () => {
 			await buildValidator({
 				name: { type: String, minLength: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -623,7 +623,7 @@ describe(`Test the Min Length Option`, () => {
 			await buildValidator({
 				name: { type: String, minLength: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -672,7 +672,7 @@ describe(`Test the Min Length Option`, () => {
 				name: `Special`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -695,7 +695,7 @@ describe(`Test the Min Length Option`, () => {
 				name: `special`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -718,7 +718,7 @@ describe(`Test the Min Length Option`, () => {
 				name: `lessthan`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -794,7 +794,7 @@ describe(`Test the Max Length Option`, () => {
 			await buildValidator({
 				name: { type: String, maxLength: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -812,7 +812,7 @@ describe(`Test the Max Length Option`, () => {
 			await buildValidator({
 				name: { type: String, maxLength: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -830,7 +830,7 @@ describe(`Test the Max Length Option`, () => {
 			await buildValidator({
 				name: { type: String, maxLength: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -848,7 +848,7 @@ describe(`Test the Max Length Option`, () => {
 			await buildValidator({
 				name: { type: String, maxLength: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -866,7 +866,7 @@ describe(`Test the Max Length Option`, () => {
 			await buildValidator({
 				name: { type: String, maxLength: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -915,7 +915,7 @@ describe(`Test the Max Length Option`, () => {
 				name: `Special`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -938,7 +938,7 @@ describe(`Test the Max Length Option`, () => {
 				name: `special`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -961,7 +961,7 @@ describe(`Test the Max Length Option`, () => {
 				name: `morethan`,
 				name2: `123`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1037,7 +1037,7 @@ describe(`Test the lowercase Option`, () => {
 			await buildValidator({
 				name: { type: String, lowercase: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1055,7 +1055,7 @@ describe(`Test the lowercase Option`, () => {
 			await buildValidator({
 				name: { type: String, lowercase: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1073,7 +1073,7 @@ describe(`Test the lowercase Option`, () => {
 			await buildValidator({
 				name: { type: String, lowercase: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1091,7 +1091,7 @@ describe(`Test the lowercase Option`, () => {
 			await buildValidator({
 				name: { type: String, lowercase: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1109,7 +1109,7 @@ describe(`Test the lowercase Option`, () => {
 			await buildValidator({
 				name: { type: String, lowercase: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1214,7 +1214,7 @@ describe(`Test the uppercase Option`, () => {
 			await buildValidator({
 				name: { type: String, uppercase: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1232,7 +1232,7 @@ describe(`Test the uppercase Option`, () => {
 			await buildValidator({
 				name: { type: String, uppercase: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1250,7 +1250,7 @@ describe(`Test the uppercase Option`, () => {
 			await buildValidator({
 				name: { type: String, uppercase: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1268,7 +1268,7 @@ describe(`Test the uppercase Option`, () => {
 			await buildValidator({
 				name: { type: String, uppercase: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1286,7 +1286,7 @@ describe(`Test the uppercase Option`, () => {
 			await buildValidator({
 				name: { type: String, uppercase: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1391,7 +1391,7 @@ describe(`Test the trim Option`, () => {
 			await buildValidator({
 				name: { type: String, trim: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1409,7 +1409,7 @@ describe(`Test the trim Option`, () => {
 			await buildValidator({
 				name: { type: String, trim: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1427,7 +1427,7 @@ describe(`Test the trim Option`, () => {
 			await buildValidator({
 				name: { type: String, trim: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1445,7 +1445,7 @@ describe(`Test the trim Option`, () => {
 			await buildValidator({
 				name: { type: String, trim: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1463,7 +1463,7 @@ describe(`Test the trim Option`, () => {
 			await buildValidator({
 				name: { type: String, trim: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1568,7 +1568,7 @@ describe(`Test the trim Option on non-trim type`, () => {
 			await buildValidator({
 				name: { type: Number, trim: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1586,7 +1586,7 @@ describe(`Test the trim Option on non-trim type`, () => {
 			await buildValidator({
 				name: { type: Number, trim: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1604,7 +1604,7 @@ describe(`Test the trim Option on non-trim type`, () => {
 			await buildValidator({
 				name: { type: Number, trim: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1622,7 +1622,7 @@ describe(`Test the trim Option on non-trim type`, () => {
 			await buildValidator({
 				name: { type: Number, trim: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1640,7 +1640,7 @@ describe(`Test the trim Option on non-trim type`, () => {
 			await buildValidator({
 				name: { type: Number, trim: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1662,7 +1662,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Number, min: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1680,7 +1680,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Number, min: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1698,7 +1698,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Number, min: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1716,7 +1716,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Number, min: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1734,7 +1734,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Number, min: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1783,7 +1783,7 @@ describe(`Test the Min Option`, () => {
 				name: 15,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1806,7 +1806,7 @@ describe(`Test the Min Option`, () => {
 				name: 15,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1829,7 +1829,7 @@ describe(`Test the Min Option`, () => {
 				name: 8,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1905,7 +1905,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Number, max: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1923,7 +1923,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Number, max: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1941,7 +1941,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Number, max: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1959,7 +1959,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Number, max: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1977,7 +1977,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Number, max: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2026,7 +2026,7 @@ describe(`Test the Max Option`, () => {
 				name: 15,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2049,7 +2049,7 @@ describe(`Test the Max Option`, () => {
 				name: 15,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2072,7 +2072,7 @@ describe(`Test the Max Option`, () => {
 				name: 8,
 				name2: 123,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2148,7 +2148,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Date, min: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2166,7 +2166,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Date, min: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2184,7 +2184,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Date, min: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2202,7 +2202,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Date, min: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2220,7 +2220,7 @@ describe(`Test the Min Option`, () => {
 			await buildValidator({
 				name: { type: Date, min: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2273,7 +2273,7 @@ describe(`Test the Min Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2297,7 +2297,7 @@ describe(`Test the Min Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2321,7 +2321,7 @@ describe(`Test the Min Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2400,7 +2400,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Date, max: `fail` },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2418,7 +2418,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Date, max: [`fly`] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2436,7 +2436,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Date, max: { value: `fail` } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2454,7 +2454,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Date, max: { value: 123, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2472,7 +2472,7 @@ describe(`Test the Max Option`, () => {
 			await buildValidator({
 				name: { type: Date, max: [123, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2525,7 +2525,7 @@ describe(`Test the Max Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2549,7 +2549,7 @@ describe(`Test the Max Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2573,7 +2573,7 @@ describe(`Test the Max Option`, () => {
 				name: newDate,
 				name2: newDate,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2652,7 +2652,7 @@ describe(`Test the Match Option`, () => {
 			await buildValidator({
 				name: { type: String, match: { value: true, message: true } },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -2670,7 +2670,7 @@ describe(`Test the Match Option`, () => {
 			await buildValidator({
 				name: { type: String, match: [true, true] },
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({

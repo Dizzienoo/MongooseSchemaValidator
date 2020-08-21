@@ -5,3 +5,5 @@ node_modules
 test-results.xml
 
 src/Tests/full.test.ts
+
+yarn.lock

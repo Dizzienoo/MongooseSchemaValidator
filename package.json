@@ -1,6 +1,6 @@
 {
   "name": "mongoose-schema-validator",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "main": "lib/index.js",
   "license": "MIT",
   "repository": {
@@ -11,7 +11,11 @@
     "url": "https://github.com/Dizzienoo/MongooseSchemaValidator/issues"
   },
   "homepage": "https://github.com/Dizzienoo/MongooseSchemaValidator",
-  "keywords": ["mongoose", "validator", "schema"],
+  "keywords": [
+    "mongoose",
+    "validator",
+    "schema"
+  ],
   "author": "Dizzienoo",
   "devDependencies": {
     "@types/jest": "^24.0.23",
@@ -31,5 +35,7 @@
   "dependencies": {
     "mongoose": "^5.7.7"
   },
-  "files": ["lib/**/*"]
+  "files": [
+    "lib/**/*"
+  ]
 }

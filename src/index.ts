@@ -18,7 +18,7 @@ export async function buildValidator(schema: object) {
 	}
 	else {
 		/**
-		 * Ready to recieve an input and process it against previously provided schema
+		 * Ready to receive an input and process it against previously provided schema
 		 *
 		 * @param input The data that needs to be validated against the mongoose schema
 		 * @param options Any global options for this processing attempt

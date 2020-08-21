@@ -33,7 +33,7 @@ describe(`String Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to string input where string is expected but convert not flagged.  Expect Failure`, async () => {
+	test(`Send in convertible to string input where string is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: String },
@@ -41,7 +41,7 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: 123,
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -54,7 +54,7 @@ describe(`String Input Testing`, () => {
 		}
 	});
 
-	test(`Send in convertable input where string is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where string is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String },
 		});
@@ -69,7 +69,7 @@ describe(`String Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where string is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
+	test(`Send in convertible input where string is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String, convert: true },
 		});
@@ -84,7 +84,7 @@ describe(`String Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where string is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
+	test(`Send in convertible input where string is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: String, convert: true },
@@ -92,7 +92,7 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: 123,
 			}, { disableLocalOptions: true });
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -123,7 +123,7 @@ describe(`String Input Testing`, () => {
 			});
 	});
 
-	test(`Send in convertable input where string is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
+	test(`Send in convertible input where string is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String, convert: true },
 		});
@@ -138,7 +138,7 @@ describe(`String Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to string input where string is expected and convert is disabled locally but overridden globally.  Expect Success`, async () => {
+	test(`Send in convertible to string input where string is expected and convert is disabled locally but overridden globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String, convert: false },
 		});
@@ -161,14 +161,14 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: `hello`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
 				message: `The Input Provided has errors`,
 				errors:
 				{
-					name: `Expecting an Array of entries but did not recieve one`,
+					name: `Expecting an Array of entries but did not receive one`,
 				},
 			});
 		}
@@ -213,7 +213,7 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: `hey`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -234,7 +234,7 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: `hey there how's it going?`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -262,7 +262,7 @@ describe(`String Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to string within enum params.  Expect Success`, async () => {
+	test(`Send in convertible to string within enum params.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: String, enum: [`One`, `Two`, `Three`, `true`] },
 		});
@@ -285,7 +285,7 @@ describe(`String Input Testing`, () => {
 			await validator({
 				name: `hey there how's it going?`,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -356,7 +356,7 @@ describe(`Shallow Array Input Testing`, () => {
 			await validator({
 				name: [true, false],
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -379,7 +379,7 @@ describe(`Shallow Array Input Testing`, () => {
 			await validator({
 				name: [`true`, false],
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -654,7 +654,7 @@ describe(`Number Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to Number input where Number is expected but convert not flagged.  Expect Failure`, async () => {
+	test(`Send in convertible to Number input where Number is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: Number },
@@ -662,7 +662,7 @@ describe(`Number Input Testing`, () => {
 			await validator({
 				name: `123`,
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -675,7 +675,7 @@ describe(`Number Input Testing`, () => {
 		}
 	});
 
-	test(`Send in convertable input where Number is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Number is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Number },
 		});
@@ -690,7 +690,7 @@ describe(`Number Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Number is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
+	test(`Send in convertible input where Number is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Number, convert: true },
 		});
@@ -705,7 +705,7 @@ describe(`Number Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Number is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
+	test(`Send in convertible input where Number is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: Number, convert: true },
@@ -713,7 +713,7 @@ describe(`Number Input Testing`, () => {
 			await validator({
 				name: `123`,
 			}, { disableLocalOptions: true });
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -744,7 +744,7 @@ describe(`Number Input Testing`, () => {
 			});
 	});
 
-	test(`Send in convertable input where Number is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
+	test(`Send in convertible input where Number is expected and is flagged globally and locally but local is disabled.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Number, convert: true },
 		});
@@ -759,7 +759,7 @@ describe(`Number Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to Number input where Number is expected and convert is flagged locally but overridden globally.  Expect Success`, async () => {
+	test(`Send in convertible to Number input where Number is expected and convert is flagged locally but overridden globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Number, convert: false },
 		});
@@ -797,7 +797,7 @@ describe(`Number Input Testing`, () => {
 			await validator({
 				name: 2,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -818,7 +818,7 @@ describe(`Number Input Testing`, () => {
 			await validator({
 				name: 88,
 			});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -865,7 +865,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable to Boolean input where Boolean is expected but convert not flagged.  Expect Failure`, async () => {
+	test(`Send in convertible to Boolean input where Boolean is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: Boolean },
@@ -873,7 +873,7 @@ describe(`Boolean Input Testing`, () => {
 			await validator({
 				name: `123`,
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -886,7 +886,7 @@ describe(`Boolean Input Testing`, () => {
 		}
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -901,7 +901,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -916,7 +916,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -931,7 +931,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean, convert: true },
 		});
@@ -946,7 +946,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -961,7 +961,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -976,7 +976,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean },
 		});
@@ -991,7 +991,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
+	test(`Send in convertible input where Boolean is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Boolean, convert: true },
 		});
@@ -1006,7 +1006,7 @@ describe(`Boolean Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Boolean is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
+	test(`Send in convertible input where Boolean is expected and is flagged locally but local is disabled.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: Boolean, convert: true },
@@ -1014,7 +1014,7 @@ describe(`Boolean Input Testing`, () => {
 			await validator({
 				name: `true`,
 			}, { disableLocalOptions: true });
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1071,7 +1071,7 @@ describe(`Date Input Testing`, () => {
 			await validator({
 				name: `hello`,
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1084,7 +1084,7 @@ describe(`Date Input Testing`, () => {
 		}
 	});
 
-	test(`Send in convertable to Date input where Date is expected but convert not flagged.  Expect Failure`, async () => {
+	test(`Send in convertible to Date input where Date is expected but convert not flagged.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
 				name: { type: Date },
@@ -1093,7 +1093,7 @@ describe(`Date Input Testing`, () => {
 			await validator({
 				name: currDate.toUTCString(),
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1106,7 +1106,7 @@ describe(`Date Input Testing`, () => {
 		}
 	});
 
-	test(`Send in convertable input where Date is expected and convert is flagged globally.  Expect Success`, async () => {
+	test(`Send in convertible input where Date is expected and convert is flagged globally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Date },
 		});
@@ -1122,7 +1122,7 @@ describe(`Date Input Testing`, () => {
 		});
 	});
 
-	test(`Send in convertable input where Date is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
+	test(`Send in convertible input where Date is expected and convert is not flagged globally but is locally.  Expect Success`, async () => {
 		const validator = await buildValidator({
 			name: { type: Date, convert: true },
 		});
@@ -1163,7 +1163,7 @@ describe(`Date Input Testing`, () => {
 			expect(await validator({
 				name: currDate,
 			}));
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1185,7 +1185,7 @@ describe(`Date Input Testing`, () => {
 			expect(await validator({
 				name: currDate,
 			}));
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1256,7 +1256,7 @@ describe(`Mongoose Id Input Testing`, () => {
 			await validator({
 				name: `AAAA`,
 			}, {});
-			throw Error(`Failed To Recieve Expected Error`);
+			throw Error(`Failed To Receive Expected Error`);
 		}
 		catch (err) {
 			expect(err).toEqual({
@@ -1287,4 +1287,3 @@ describe(`Mongoose Id Input Testing`, () => {
 		});
 	});
 });
-

@@ -101,7 +101,7 @@ async function validatorFunction () {
 	}
 	//Creating a close on the object amd adding extra options before processing
 	const outgoingSchema = Object.assign({}, schema)
-	schema.name.MSV_Options = {skip: true}
+	schema.name.skip: true
 	let validate = await MSV.buildValidator()
 	try {
 	let valid = await validate({
@@ -284,6 +284,8 @@ async function processResponse(userProfile, role) {
 1.2.2 - Changed the throw Response to also return the full object, for better typescript support
 
 1.2.3 - Updated how errors are added as earlier errors were, in some cases, being over written.
+
+1.2.4 - Fixed Typos in error response and fixed error in documentation.
 
 ## Issues
 

@@ -56,7 +56,7 @@ function recursiveCheck(
 				// Then we want to handle the array
 				if (!Array.isArray(input[schemaKey])) {
 					response.error = true;
-					response.errors[`${schemaKey}`] = `Expecting an Array of entries but did not recieve one`;
+					response.errors[`${schemaKey}`] = `Expecting an Array of entries but did not receive one`;
 				}
 				else {
 					// Check the inside of the Array Object
