@@ -289,5 +289,17 @@ describe('Test the Mixed Input Option', () => {
 		mixedField: {type: mongoose.Mixed}
 		})).not.toThrow();
 	})
+
+	test('Send in a mixed type as part of a bigger Schema, expect Success', async () => {
+		expect(await buildValidator({
+			title: { type: String, required: true, minlength: 3, maxlength: 100, text: true },
+			stuff: { type: String, maxlength: 1000 },
+			another: { type: Schema.Types.ObjectId, ref: `image` },
+			startDate: { type: Number, required: true },
+			endDate: { type: Number, required: true },
+			mixedFD: { type: Schema.Types.Mixed },
+		})).not.toThrow();
+	})
+	
 	
 })
