@@ -7,6 +7,7 @@ import { EAllowedTypes } from "../interfaces";
  */
 export default async function (input: object): Promise<object> {
 
+	
 	const stringified = await JSON.stringify(input, (key, value) => {
 		if (typeof value === `function`) {
 			const funcValue = value.toString();
@@ -24,6 +25,9 @@ export default async function (input: object): Promise<object> {
 			}
 			else if (funcValue.includes(`ObjectId(key, options)`)) {
 				return (key === `type`) ? EAllowedTypes.MONGOOSE_TYPE : { type: EAllowedTypes.MONGOOSE_TYPE };
+			}
+			else if (funcValue.includes(`Mixed(path, options)`) || funcValue.includes(`Object()`)) {
+				return (key === "type") ? EAllowedTypes.MIXED_TYPE : {type: EAllowedTypes.MIXED_TYPE};
 			}
 		} else if (Array.isArray(value) && value.length === 0) {
 			return EAllowedTypes.MIXED_TYPE;

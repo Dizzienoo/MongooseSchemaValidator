@@ -46,7 +46,7 @@ export default function processInputType(
 			case EAllowedTypes.DATE_TYPE:
 				return handleDate(inputValue, options, key);
 			case EAllowedTypes.MIXED_TYPE:
-				return inputValue;
+				return {data: inputValue, error: false, errors: {}};
 			default:
 				return {
 					data: null,

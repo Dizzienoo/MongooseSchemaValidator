@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import * as mongoose from "mongoose";
 import { buildValidator } from "..";
 
 
@@ -267,3 +268,26 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 	});
 
 });
+
+describe('Test the Mixed Input Option', () => {
+	
+	test('Send in a Mixed Field, expect Success', async () => {
+		expect(await buildValidator({
+			mixedField: {type: Schema.Types.Mixed}
+		})).not.toThrow();
+	})
+	
+	test('Send in an Object Type, expect Success', async () => {
+		expect(await buildValidator({
+		mixedField: {type: Object}
+		})).not.toThrow();
+	})
+
+	test('Send in another Mixed Type, expect Success', async () => {
+		expect(await buildValidator({
+			//@ts-expect-error
+		mixedField: {type: mongoose.Mixed}
+		})).not.toThrow();
+	})
+	
+})
