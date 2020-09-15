@@ -1394,6 +1394,5 @@ describe('Mixed input type Testing', () => {
 			data: input
 		})
 	})
-	
 
 })
