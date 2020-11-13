@@ -2760,4 +2760,26 @@ describe(`Test the Match Option`, () => {
 			},
 		});
 	});
+
+	test(`Send in Schema with array to skip, Expect Success`, async () => {
+		const validator = await buildValidator({
+			name2: { type: String },
+			name: [{ type: String, match: { value: true }, skip: true }],
+			name3: { type: String },
+		});
+		expect(await validator({
+			name2: `lower`,
+			name: ` false`,
+			name3: `lower`,
+		})).toEqual({
+			error: false,
+			errors: {},
+			data: {
+				name2: `lower`,
+				name: ` false`,
+				name3: `lower`,
+			},
+		});
+	});
+
 });
