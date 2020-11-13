@@ -1396,4 +1396,24 @@ describe('Mixed input type Testing', () => {
 		})
 	})
 
+	test('Send in a nested Array Skip, expect Success', async () => {
+		const validator = await buildValidator({
+			title: { type: String, required: true, minlength: 3, maxlength: 100, text: true },
+			description: { type: String, maxlength: 1000 },
+			image: { type: Schema.Types.ObjectId, ref: `image` },
+			phases: [{ type: Schema.Types.ObjectId, ref: `eventPhase`, required: true, skip: true }],
+		})
+		const input = {
+			title: "String",
+			phases: "error"
+		}
+		const response = await validator(input);
+		expect(response).toEqual({
+			error: false,
+			errors: {},
+			data: input
+		})
+	})
+	
+
 })
