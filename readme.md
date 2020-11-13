@@ -102,7 +102,7 @@ async function validatorFunction () {
 	//Creating a close on the object amd adding extra options before processing
 	const outgoingSchema = Object.assign({}, schema)
 	schema.name.skip: true
-	let validate = await MSV.buildValidator()
+	let validate = await MSV.buildValidator(outgoingSchema)
 	try {
 	let valid = await validate({
 		name: "Dizzienoo",
