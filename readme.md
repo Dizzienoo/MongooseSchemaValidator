@@ -192,6 +192,12 @@ The following validator options are able to be sent with the input to determine 
 		* Only works on the validator, the schema creation will throw regardless.
 		*/
 	throwOnError?: boolean;
+	/**
+	 * Wether the Validator should add an index number as a key to an error or 
+	 * wether the error should be places in an array with potentially 
+	 * undefined fields around it
+	 */
+	numberErrors? boolean;
 }
 ```
 
@@ -286,6 +292,8 @@ async function processResponse(userProfile, role) {
 1.2.3 - Updated how errors are added as earlier errors were, in some cases, being over written.
 
 1.2.4 - Fixed Typos in error response and fixed error in documentation.
+
+1.4.0 - Added "numberArray" option to allow for more error flexibility
 
 ## Issues
 
