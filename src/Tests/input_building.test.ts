@@ -371,6 +371,29 @@ describe(`Shallow Array Input Testing`, () => {
 		}
 	});
 
+	test(`Send in shallow array with multiple incorrect inputs, with number Errors to false.  Expect Failure`, async () => {
+		try {
+			const validator = await buildValidator({
+				name: [String],
+			});
+			await validator({
+				name: [true, false],
+			}, {numberErrors: false});
+			throw Error(`Failed To Receive Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `The Input Provided has errors`,
+				errors: {
+					name: [
+						`The input for \"name\" is not a string`,
+						`The input for \"name\" is not a string`,
+					],
+				},
+			});
+		}
+	});
+
 	test(`Send in shallow array with multiple incorrect inputs.  Expect Failure`, async () => {
 		try {
 			const validator = await buildValidator({
@@ -387,6 +410,29 @@ describe(`Shallow Array Input Testing`, () => {
 				errors: {
 					name: [
 						{ 1: `The input for \"name\" is not a string` },
+					],
+				},
+			});
+		}
+	});
+
+	test(`Send in shallow array with multiple incorrect inputs and number Array off.  Expect Failure`, async () => {
+		try {
+			const validator = await buildValidator({
+				name: [String],
+			});
+			await validator({
+				name: [`true`, false],
+			}, {numberErrors: false});
+			throw Error(`Failed To Receive Expected Error`);
+		}
+		catch (err) {
+			expect(err).toEqual({
+				message: `The Input Provided has errors`,
+				errors: {
+					name: [
+						undefined,
+						`The input for \"name\" is not a string`,
 					],
 				},
 			});

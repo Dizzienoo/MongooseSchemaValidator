@@ -159,7 +159,16 @@ export function isValidGlobalOption(globalOptions: IGlobalOptions): IGlobalOptio
 		}
 		else {
 			response.error = true;
-			response.errors[`disableLocalOptions`] = `Option provided in the global Options, "disableLocalOptions", needs to be be a boolean`;
+			response.errors[`throwOnError`] = `Option provided in the global Options, "throwOnError", needs to be be a boolean`;
+		}
+	}
+	if (globalOptions.numberErrors !== undefined) {
+		if (globalOptions.numberErrors === true || globalOptions.numberErrors === false) {
+			response.data.numberErrors = globalOptions.numberErrors;
+		}
+		else {
+			response.error = true;
+			response.errors[`numberErrors`] = `Option provided in the global Options, "numberErrors", needs to be be a boolean`;
 		}
 	}
 	return response;

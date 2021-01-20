@@ -79,10 +79,16 @@ function recursiveCheck(
 									if (!Array.isArray(response.errors[schemaKey])) {
 										response.errors[schemaKey] = [];
 									}
-									// Create an Error that uses the array number as the key
-									const newError = { [i]: processResponse.errors[schemaKey] };
-									// Add that to an array of errors
-									response.errors[schemaKey].push(newError);
+									if (globalOptions.numberErrors === false) {
+										// Send an Error into the Array
+										response.errors[schemaKey][i] = processResponse.errors[schemaKey];
+									}
+									else {
+										// Create an Error that uses the array number as the key
+										const newError = { [i]: processResponse.errors[schemaKey] };
+										// Add that to an array of errors
+										response.errors[schemaKey].push(newError);
+									}
 								}
 								else if (processResponse.data !== null) {
 									if (response.data[schemaKey] === undefined) { response.data[schemaKey] = []; }
