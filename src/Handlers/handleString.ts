@@ -41,6 +41,8 @@ export default function handleString(
 				response.error = true;
 				response.errors[key] = `The input for "${key}" is not a string`;
 			}
+			// Return the response so it doesn't try and do stupid stuff like look for a booleans length
+			return response;
 		}
 		// Otherwise, we are good to add the value to the response
 		else {

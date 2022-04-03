@@ -272,22 +272,20 @@ describe(`Test sending in extra input and it being trimmed or not`, () => {
 describe('Test the Mixed Input Option', () => {
 	
 	test('Send in a Mixed Field, expect Success', async () => {
-		expect(await buildValidator({
-			mixedField: {type: Schema.Types.Mixed}
-		})).not.toThrow();
+		expect(await buildValidator({ mixedField: { type: Schema.Types.Mixed } })).not.toBeNull();
 	})
 	
 	test('Send in an Object Type, expect Success', async () => {
 		expect(await buildValidator({
 		mixedField: {type: Object}
-		})).not.toThrow();
+		})).not.toBeNull();
 	})
 
 	test('Send in another Mixed Type, expect Success', async () => {
 		expect(await buildValidator({
 			//@ts-expect-error
 		mixedField: {type: mongoose.Mixed}
-		})).not.toThrow();
+		})).not.toBeNull();
 	})
 
 	test('Send in a mixed type as part of a bigger Schema, expect Success', async () => {
@@ -298,7 +296,7 @@ describe('Test the Mixed Input Option', () => {
 			startDate: { type: Number, required: true },
 			endDate: { type: Number, required: true },
 			mixedFD: { type: Schema.Types.Mixed },
-		})).not.toThrow();
+		})).not.toBeNull();
 	})
 	
 	

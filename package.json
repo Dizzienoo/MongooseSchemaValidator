@@ -1,6 +1,6 @@
 {
   "name": "mongoose-schema-validator",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "main": "lib/index.js",
   "license": "MIT",
   "repository": {
@@ -37,5 +37,8 @@
   },
   "files": [
     "lib/**/*"
-  ]
+  ],
+  "np": {
+    "contents": "lib"
+  }
 }
