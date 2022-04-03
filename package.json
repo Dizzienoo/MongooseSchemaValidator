@@ -37,8 +37,5 @@
   },
   "files": [
     "lib/**/*"
-  ],
-  "np": {
-    "contents": "lib"
-  }
+  ]
 }
